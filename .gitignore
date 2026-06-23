@@ -24,3 +24,11 @@ data/audio/*.m4a
 
 # Jupyter checkpoints
 .ipynb_checkpoints/
+
+# Catch audio files anywhere in the project
+*.m4a
+*.wav
+*.mp3
+
+# Catch zip archives
+*.zip
