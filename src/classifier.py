@@ -3,7 +3,7 @@ from sentence_transformers import CrossEncoder
 import numpy as np
 
 
-class GoalClassifier:
+class WorkspaceClassifier:
     def __init__(self, model_name="mixedbread-ai/mxbai-rerank-xsmall-v1"):
         """
         Initializes the lightweight Cross-Encoder model for real-time

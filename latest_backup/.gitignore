@@ -1,0 +1,34 @@
+# Virtual environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# macOS junk
+.DS_Store
+
+# Model weights (too large for git)
+*.pt
+*.bin
+*.safetensors
+models/
+
+# Audio recordings (can be large, often personal)
+data/audio/*.wav
+data/audio/*.m4a
+
+# Environment secrets (if you ever add any)
+.env
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Catch audio files anywhere in the project
+*.m4a
+*.wav
+*.mp3
+
+# Catch zip archives
+*.zip

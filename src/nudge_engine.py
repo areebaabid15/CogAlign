@@ -1,93 +1,75 @@
 # src/nudge_engine.py
-from transformers import AutoModelForCausalLM, AutoTokenizer
+import requests
 import time
 
+OLLAMA_URL = "http://localhost:11434/api/chat"
+MODEL_NAME = "qwen2.5:1.5b"
 
 class QwenNudgeEngine:
-    def __init__(self, model_name="Qwen/Qwen2.5-1.5B-Instruct"):
-        print(f"Loading {model_name} into memory (this happens once)...")
-
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModelForCausalLM.from_pretrained(
-            model_name, torch_dtype="auto", low_cpu_mem_usage=True
-        )
-        print("Model loaded successfully!")
-
-        # Store our verified few-shot prompts mapped to escalation levels
+    def __init__(self):
         self.personas = {
             1: {
                 "system": (
-                    "You are a warm, highly supportive academic mentor. Your goal is to gently motivate the student. "
-                    "Constraint: Output exactly one single sentence. Speak directly to the user.\n"
-                    "Example: 'Every paragraph you write right now is a step closer to completing your degree and achieving your long-term goals.'"
+                    "You are a warm, supportive academic mentor. "
+                    "Output exactly one single sentence. Speak directly to the user. "
+                    "Example: 'Every paragraph you write right now is a step closer to completing your degree.'"
                 ),
-                "user": "I am supposed to be working on my dissertation, but I am caught watching cat videos. Give me a 1-sentence motivational nudge.",
+                "user": "I am supposed to be working on my dissertation but I got distracted. Give me a 1-sentence motivational nudge."
             },
             2: {
                 "system": (
-                    "You are a witty, sarcastic best friend. Your humor is sharp, playful, and direct. "
-                    "Constraint: Output exactly one single sentence of dialogue. Do not include any introductory words, quotation marks, or explanations.\n"
-                    "Example: 'I'm sure the admissions board will find your deep knowledge of funny cat reactions incredibly relevant to your degree.'"
+                    "You are a witty, sarcastic best friend. Your humor is sharp and direct. "
+                    "Output exactly one single sentence. No introductory words or quotation marks. "
+                    "Example: 'I'm sure the admissions board will find your scrolling habits incredibly relevant to your degree.'"
                 ),
-                "user": "I am supposed to be working on my dissertation, but I am watching cat videos. Give me a 1-sentence sarcastic roast.",
+                "user": "I am supposed to be working on my dissertation but I got distracted. Give me a 1-sentence sarcastic roast."
             },
             3: {
                 "system": (
-                    "You are a strict, serious university thesis director. Your tone is formal, urgent, and direct. "
-                    "Constraint: Output exactly one single sentence giving a professional order to return to work.\n"
-                    "Example: 'Cease all digital distractions immediately and direct your full attention back to your pending academic writing.'"
+                    "You are a strict university thesis director. Formal, urgent, direct. "
+                    "Output exactly one single sentence giving a professional order to return to work. "
+                    "Example: 'Cease all distractions immediately and return your full attention to your academic work.'"
                 ),
-                "user": "I am caught watching cat videos instead of writing my dissertation. Give me a 1-sentence formal command.",
-            },
+                "user": "I am distracted instead of writing my dissertation. Give me a 1-sentence formal command."
+            }
         }
 
-    def generate_nudge(self, level: int) -> str:
-        """
-        Generates a 1-sentence intervention based on the escalation level (1, 2, or 3).
-        """
-        # Fallback safely to Level 1 if an invalid level is passed
+    def generate_nudge(self, level: int, goal: str = None) -> str:
         if level not in self.personas:
             level = 1
 
         context = self.personas[level]
+        user_msg = context["user"]
+        if goal:
+            user_msg = f"My goal is: '{goal}'. " + user_msg
 
-        # Structure the payload safely as plain strings for Jinja2
-        messages = [
-            {"role": "system", "content": str(context["system"])},
-            {"role": "user", "content": str(context["user"])},
-        ]
+        payload = {
+            "model": MODEL_NAME,
+            "messages": [
+                {"role": "system", "content": context["system"]},
+                {"role": "user", "content": user_msg}
+            ],
+            "stream": False,
+            "options": {"temperature": 0.85}
+        }
 
-        # Render the text format for the model
-        text = self.tokenizer.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True
-        )
-        inputs = self.tokenizer(text, return_tensors="pt")
-
-        # Run generation
-        output = self.model.generate(
-            **inputs, max_new_tokens=50, temperature=0.8, do_sample=True
-        )
-
-        # Decode and isolate the assistant's response
-        raw_out = self.tokenizer.decode(output[0], skip_special_tokens=True)
-        clean_out = raw_out.split("assistant")[-1].strip()
-
-        # Clean up any accidental outer quotation marks
-        return clean_out.strip("\"'")
+        try:
+            response = requests.post(OLLAMA_URL, json=payload, timeout=60)
+            if response.status_code == 200:
+                return response.json()["message"]["content"].strip().strip("\"'")
+            else:
+                return f"[Nudge unavailable — Ollama error {response.status_code}]"
+        except requests.exceptions.Timeout:
+            return "[Nudge unavailable — Ollama timed out]"
+        except Exception as e:
+            return f"[Nudge unavailable — {str(e)}]"
 
 
-
-# Self-test block to verify the module works independently
 if __name__ == "__main__":
-    # Initialize the engine
     engine = QwenNudgeEngine()
-
-    print("\n[Test Run] Simulating a Level 2 Intervention:")
-    start_time = time.time()
-
-    # Try generating a Level 2 sarcastic nudge
-    nudge = engine.generate_nudge(level=2)
-
-    elapsed = time.time() - start_time
-    print(f"Result: {nudge}")
-    print(f"Time taken: {elapsed:.1f}s")
+    for level in [1, 2, 3]:
+        print(f"\n--- Level {level} ---")
+        start = time.time()
+        nudge = engine.generate_nudge(level, goal="writing my dissertation literature review")
+        print(f"Nudge: {nudge}")
+        print(f"Time: {time.time() - start:.1f}s")
