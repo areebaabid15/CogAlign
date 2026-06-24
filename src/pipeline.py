@@ -1,4 +1,9 @@
 # src/pipeline.py
+
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
+
 import os
 import time
 import sounddevice as sd
