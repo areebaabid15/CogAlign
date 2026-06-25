@@ -13,7 +13,7 @@ class WorkspaceClassifier:
         self.model = CrossEncoder(model_name)
         print("Classifier model loaded successfully.")
 
-    def is_related(self, window_text, core_goal, threshold=0.15):
+    def is_related(self, window_text, core_goal, threshold=0.01):
         """
         Compares the active window text against your core research goal.
         Returns True if the score is above the threshold, False otherwise.

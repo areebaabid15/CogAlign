@@ -39,7 +39,7 @@ class CogAlignEngine:
         window_text = f"{app_name} - {window_title}"
 
         is_goal_oriented, score = self.classifier.is_related(
-            window_text, self.core_goal, threshold=0.12
+            window_text, self.core_goal, threshold=0.01
         )
 
         action, level = self.state_machine.evaluate_state(is_goal_oriented)
