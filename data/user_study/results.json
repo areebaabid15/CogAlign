@@ -1,0 +1,59 @@
+{
+    "participants": 5,
+    "date": "June 2026",
+    "responses": [
+        {
+            "id": "P01",
+            "Q1": 5,
+            "Q2": 4,
+            "Q3": 5,
+            "Q4": 4,
+            "Q5": 4,
+            "comment": ""
+        },
+        {
+            "id": "P02",
+            "Q1": 5,
+            "Q2": 5,
+            "Q3": 5,
+            "Q4": 5,
+            "Q5": 5,
+            "comment": ""
+        },
+        {
+            "id": "P03",
+            "Q1": 5,
+            "Q2": 5,
+            "Q3": 5,
+            "Q4": 5,
+            "Q5": 5,
+            "comment": "The Emotional nudge really got to me! Smart work there!"
+        },
+        {
+            "id": "P04",
+            "Q1": 5,
+            "Q2": 4,
+            "Q3": 4,
+            "Q4": 5,
+            "Q5": 1,
+            "comment": "Its a clever way of persuading a person but Im not that easily persuaded. For people like me blocking the app is more effective."
+        },
+        {
+            "id": "P05",
+            "Q1": 5,
+            "Q2": 5,
+            "Q3": 5,
+            "Q4": 4,
+            "Q5": 5,
+            "comment": ""
+        }
+    ],
+    "means": {
+        "Q1": 5.0,
+        "Q2": 4.6,
+        "Q3": 4.8,
+        "Q4": 4.6,
+        "Q5": 4.0,
+        "overall": 4.6
+    }
+}
