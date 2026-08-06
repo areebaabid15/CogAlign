@@ -29,12 +29,12 @@ class WorkspaceClassifier:
         if score < 0 or score > 1:
             score = 1 / (1 + np.exp(-score))
 
-        return bool(score >= threshold), float(score)
+        return bool(score > threshold), float(score)
 
 
 if __name__ == "__main__":
     # Self-test block to verify model predictions
-    classifier = GoalClassifier()
+    classifier = WorkspaceClassifier()
     my_goal = (
         "Writing university postgraduate literature review and thesis documentation"
     )

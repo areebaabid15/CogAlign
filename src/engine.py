@@ -50,7 +50,7 @@ class CogAlignEngine:
 
         if action == "NUDGE":
             print(f"\n🚨 Distraction detected — generating Level {level} nudge...")
-            nudge = self.nudge_engine.generate_nudge(level=level, goal=self.core_goal)
+            nudge = self.nudge_engine.generate_nudge(level=level, goal=self.core_goal,distraction=window_text)
             print(f"\n💬 [{['', 'Empathetic Coach', 'Sarcastic Friend', 'Deadline Supervisor'][level]}]: {nudge}\n")
 
         elif self.state_machine.state == "PASSIVE_LOG":
@@ -62,7 +62,12 @@ class CogAlignEngine:
                 print("\n🛑 CogAlign shutting down — prolonged distraction detected.")
                 sys.exit(0)
         else:
-            print("✅ On task — monitoring silently")
+            if self.state_machine.state == "FOCUS":
+                print("✅ On task — monitoring silently")
+            elif self.state_machine.state == "DISTRACTED_BUFFER":
+                print("⏳ Distraction buffer — watching...")
+            elif self.state_machine.state == "ESCALATING":
+                print("⚠️ Escalating — nudge incoming soon...")
 
     def start(self, interval=3):
         print(f"⏱️ Checking every {interval}s. Press Ctrl+C to stop.\n")
