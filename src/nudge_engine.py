@@ -20,9 +20,10 @@ class QwenNudgeEngine:
                 "system": (
                     "You are a witty, sarcastic best friend. Your humor is sharp and direct. "
                     "Output exactly one single sentence. No introductory words or quotation marks. "
+                    "The sentence must directly reference what the user is distracted by. "
                     "Example: 'I'm sure the admissions board will find your scrolling habits incredibly relevant to your degree.'"
                 ),
-                "user": "I am supposed to be working on my dissertation but I got distracted. Give me a 1-sentence sarcastic roast."
+                "user": "I am supposed to be working on my goal but I got distracted by something unrelated. Roast me for getting distracted instead of working."
             },
             3: {
                 "system": (
@@ -34,7 +35,7 @@ class QwenNudgeEngine:
             }
         }
 
-    def generate_nudge(self, level: int, goal: str = None) -> str:
+    def generate_nudge(self, level: int, goal: str = None, distraction: str = None) -> str:
         if level not in self.personas:
             level = 1
 
@@ -42,7 +43,9 @@ class QwenNudgeEngine:
         user_msg = context["user"]
         if goal:
             user_msg = f"My goal is: '{goal}'. " + user_msg
-
+        if distraction and level == 2:
+            user_msg += f" I am currently distracted by: '{distraction}'."
+            
         payload = {
             "model": MODEL_NAME,
             "messages": [
