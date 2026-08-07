@@ -104,7 +104,8 @@ def test_level3_repeats_then_enters_passive_log():
 def test_level3_does_not_repeat_before_interval_elapses():
     sm = enter_escalating(make_sm(buffer=5, l2=10, l3=15, l3_interval=10))
     sm.distraction_start_time = time.time() - 16
-    sm.evaluate_state(False)  # L3 #1, count=1
+    sm.evaluate_state(False)  # climbs to L2 (one level per qualifying tick)
+    sm.evaluate_state(False)  # climbs to L3, count=1 (elapsed still ~16)
 
     sm.last_l3_time = time.time() - 3  # only 3s since last L3, interval is 10s
     action, level = sm.evaluate_state(False)
@@ -142,44 +143,62 @@ def test_refocus_resets_from_passive_log():
     assert sm.level_3_nudge_count == 0
 
 
-def test_skipped_level2_window_still_reaches_level3():
+def test_skipped_level2_window_climbs_to_level2_then_level3():
     """
-    Regression test for the stuck-at-Level-1 bug: the old implementation required
-    a tick to land exactly inside [level_2_threshold, level_3_threshold) while
-    last_nudge_level_fired == 1. If no tick landed in that window, Level 2 never
-    fired, and Level 3 never fired either since it required last_nudge_level_fired
-    == 2 first, so the machine got stuck at Level 1 permanently. A live run
-    reproduced this by sitting stuck at Level 1 for 50+ ticks.
+    Regression test for the stuck-at-Level-1 bug, updated for the one-level-per-tick
+    design. The original implementation required a tick to land exactly inside
+    [level_2_threshold, level_3_threshold) while last_nudge_level_fired == 1, so a
+    skipped window meant Level 2 (and therefore Level 3) never fired, and the machine
+    got stuck at Level 1 permanently. A live run reproduced this by sitting stuck at
+    Level 1 for 50+ ticks.
 
-    The fix must catch up directly to Level 3 on the next tick, regardless of how
-    much elapsed time was skipped over.
+    The first fix jumped straight to the computed target level, which never got stuck
+    but let Level 2 be skipped entirely. This was then observed live twice in a row.
+    The current design instead climbs exactly one level per qualifying tick, so even
+    when a tick skips straight past the Level 2 window in elapsed time, Level 2 still
+    fires (a bit late) before Level 3 does, on the next qualifying tick.
     """
     sm = enter_escalating(make_sm(buffer=5, l2=10, l3=15))
     assert sm.last_nudge_level_fired == 1
 
-    # Simulate a large gap that jumps straight past the Level 2 window.
+    # Simulate a large gap that jumps straight past the Level 2 window in elapsed time.
     sm.distraction_start_time = time.time() - 50
     action, level = sm.evaluate_state(False)
-
-    assert (action, level) == ("NUDGE", 3)
-    assert sm.last_nudge_level_fired == 3
+    assert (action, level) == ("NUDGE", 2)
+    assert sm.last_nudge_level_fired == 2
     assert sm.state == "ESCALATING"
 
+    # Next qualifying tick (elapsed still far past level_3_threshold) climbs to
+    # Level 3, not stuck at Level 2.
+    sm.distraction_start_time = time.time() - 50
+    action, level = sm.evaluate_state(False)
+    assert (action, level) == ("NUDGE", 3)
+    assert sm.last_nudge_level_fired == 3
+    assert sm.level_3_nudge_count == 1
 
-def test_stuck_at_level1_does_not_persist_across_repeated_ticks():
-    """Same regression, but hammer it with repeated ticks at the skipped-over
-    elapsed time to confirm it doesn't take more than one tick to recover, and
-    that it doesn't then get double-fired on every subsequent tick either."""
+
+def test_never_gets_stuck_regardless_of_skipped_thresholds():
+    """
+    As long as target_level > last_nudge_level_fired, forward progress must happen
+    on every call to evaluate_state, no matter how large the elapsed time skip is.
+    From Level 1, it must take exactly two qualifying ticks (Level 2, then Level 3)
+    to reach Level 3 even under an absurdly large skip, never more, and it must
+    never silently stay stuck while behind target_level.
+    """
     sm = enter_escalating(make_sm(buffer=5, l2=10, l3=15))
 
-    sm.distraction_start_time = time.time() - 50
-    first_action, first_level = sm.evaluate_state(False)
-    assert (first_action, first_level) == ("NUDGE", 3)
+    sm.distraction_start_time = time.time() - 500  # absurdly large skip
+    action, level = sm.evaluate_state(False)
+    assert (action, level) == ("NUDGE", 2)
 
-    # Immediately following ticks at the same elapsed time should stay silent
-    # (no repeat until level_3_interval has passed), not re-fire Level 3 every tick.
-    for _ in range(5):
-        sm.distraction_start_time = time.time() - 50
-        action, level = sm.evaluate_state(False)
-        assert action == "SILENT"
-        assert sm.state == "ESCALATING"
+    sm.distraction_start_time = time.time() - 500
+    action, level = sm.evaluate_state(False)
+    assert (action, level) == ("NUDGE", 3)
+    assert sm.last_nudge_level_fired == 3
+
+    # Now at the max level; further ticks at the same elapsed time must not
+    # re-fire immediately, only once level_3_interval has passed.
+    sm.distraction_start_time = time.time() - 500
+    action, level = sm.evaluate_state(False)
+    assert action == "SILENT"
+    assert sm.state == "ESCALATING"

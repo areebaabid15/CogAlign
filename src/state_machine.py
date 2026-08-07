@@ -69,13 +69,19 @@ class CogAlignStateMachine:
             else:
                 target_level = 1
 
-            # Climb straight to the target level if we're behind it.
+            # Climb exactly one level per qualifying tick rather than jumping
+            # straight to target_level. This guarantees every persona fires in
+            # order, at the cost of a level sometimes firing later than its
+            # exact threshold when a tick lands late (e.g. due to nudge
+            # generation delay). Forward progress still happens on every call
+            # where target_level is ahead of us, so this can never get stuck.
             if target_level > self.last_nudge_level_fired:
-                self.last_nudge_level_fired = target_level
-                if target_level == 3:
+                next_level = self.last_nudge_level_fired + 1
+                self.last_nudge_level_fired = next_level
+                if next_level == 3:
                     self.level_3_nudge_count = 1
                     self.last_l3_time = now
-                return "NUDGE", target_level
+                return "NUDGE", next_level
 
             # Check for Repeated Level 3 Nudges (Every level_3_interval seconds)
             if self.last_nudge_level_fired == 3:
