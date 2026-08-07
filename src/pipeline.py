@@ -46,6 +46,14 @@ def transcribe_goal():
     return goal
 
 
+def confirm_goal(goal):
+    print(f"✨ [WHISPER] Goal transcribed: '{goal}'")
+    correction = input(
+        "Did I hear that right? Press Enter to confirm, or type the correct goal and press Enter: "
+    ).strip()
+    return correction if correction else goal
+
+
 def run_pipeline():
     print("=" * 50)
     print("       COGALIGN — FOCUS MONITORING SYSTEM")
@@ -59,7 +67,7 @@ def run_pipeline():
         print("❌ Could not transcribe audio. Please try again.")
         return
 
-    print(f"✨ [WHISPER] Goal transcribed: '{goal}'")
+    goal = confirm_goal(goal)
     print("\n" + "=" * 50)
 
     # --- MODELS 2 + 3: Cross-encoder + Qwen via Engine ---
