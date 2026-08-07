@@ -5,6 +5,15 @@ import time
 OLLAMA_URL = "http://localhost:11434/api/chat"
 MODEL_NAME = "qwen2.5:1.5b"
 
+# window_tracker.py falls back to these when it can't read the real window.
+# Referencing them literally would make the model invent something instead
+# of describing an actual distraction, so treat them as no distraction at all.
+PLACEHOLDER_DISTRACTIONS = ("Unknown - ", "Timeout - ", "Error - ")
+
+
+def _is_real_distraction(distraction: str) -> bool:
+    return bool(distraction) and not distraction.startswith(PLACEHOLDER_DISTRACTIONS)
+
 class QwenNudgeEngine:
     def __init__(self):
         self.personas = {
@@ -43,7 +52,7 @@ class QwenNudgeEngine:
         user_msg = context["user"]
         if goal:
             user_msg = f"My goal is: '{goal}'. " + user_msg
-        if distraction and level == 2:
+        if level == 2 and _is_real_distraction(distraction):
             user_msg += f" I am currently distracted by: '{distraction}'."
             
         payload = {
