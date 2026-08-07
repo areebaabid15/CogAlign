@@ -58,22 +58,26 @@ class CogAlignStateMachine:
 
         # Step D: Climbing the Escalation Ladder & Waving the White Flag
         elif self.state == "ESCALATING":
-            # Check for Level 2
-            if (
-                self.level_2_threshold <= elapsed < self.level_3_threshold
-                and self.last_nudge_level_fired == 1
-            ):
-                self.last_nudge_level_fired = 2
-                return "NUDGE", 2
+            # Work out which level we should be at given elapsed time alone,
+            # not whether a tick happened to land inside a specific window.
+            # This guarantees we catch up to the correct level on the very next
+            # tick even if earlier ticks were skipped or delayed past a threshold.
+            if elapsed >= self.level_3_threshold:
+                target_level = 3
+            elif elapsed >= self.level_2_threshold:
+                target_level = 2
+            else:
+                target_level = 1
 
-            # Check for the Initial Level 3 Nudge
-            if elapsed >= self.level_3_threshold and self.last_nudge_level_fired == 2:
-                self.last_nudge_level_fired = 3
-                self.level_3_nudge_count = 1
-                self.last_l3_time = now
-                return "NUDGE", 3
+            # Climb straight to the target level if we're behind it.
+            if target_level > self.last_nudge_level_fired:
+                self.last_nudge_level_fired = target_level
+                if target_level == 3:
+                    self.level_3_nudge_count = 1
+                    self.last_l3_time = now
+                return "NUDGE", target_level
 
-            # Check for Repeated Level 3 Nudges (Every 1 minute / 60 seconds)
+            # Check for Repeated Level 3 Nudges (Every level_3_interval seconds)
             if self.last_nudge_level_fired == 3:
                 # Have we hit the maximum limit of 3 nudges?
                 if self.level_3_nudge_count >= 3:
