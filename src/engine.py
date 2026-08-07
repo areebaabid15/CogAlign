@@ -9,6 +9,9 @@ from classifier import WorkspaceClassifier
 from state_machine import CogAlignStateMachine
 from window_tracker import WindowTracker
 from nudge_engine import QwenNudgeEngine
+from notifier import send_notification
+
+PERSONA_NAMES = ['', 'Empathetic Coach', 'Sarcastic Friend', 'Deadline Supervisor']
 
 
 class CogAlignEngine:
@@ -51,7 +54,9 @@ class CogAlignEngine:
         if action == "NUDGE":
             print(f"\n🚨 Distraction detected — generating Level {level} nudge...")
             nudge = self.nudge_engine.generate_nudge(level=level, goal=self.core_goal,distraction=window_text)
-            print(f"\n💬 [{['', 'Empathetic Coach', 'Sarcastic Friend', 'Deadline Supervisor'][level]}]: {nudge}\n")
+            persona_name = PERSONA_NAMES[level]
+            print(f"\n💬 [{persona_name}]: {nudge}\n")
+            send_notification(persona_name, nudge)
 
         elif self.state_machine.state == "PASSIVE_LOG":
             wasted = time.time() - self.state_machine.distraction_start_time
