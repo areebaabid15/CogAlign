@@ -50,10 +50,13 @@
     {% if tracking %}
       <div class="card elev-md tracking-card">
         <div class="tracking-dot"></div>
-        <div>
+        <div style="flex:1">
           <div class="card-title" style="margin-bottom:2px">Tracking silently in the background</div>
           <p class="card-body" style="opacity:1;margin:0">Goal: "{{ goal }}". Check the server console for live activity.</p>
         </div>
+        <form method="post" action="{{ url_for('stop') }}">
+          <button type="submit" class="btn btn-secondary">Stop session</button>
+        </form>
       </div>
     {% else %}
       <div class="kicker">New session</div>

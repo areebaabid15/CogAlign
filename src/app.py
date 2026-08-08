@@ -14,21 +14,27 @@ app = Flask(__name__)
 state = {
     "tracking": False,
     "goal": None,
+    "thread": None,
 }
+
+# Shared between this module and the engine loop running in a background
+# thread. engine.start()'s KeyboardInterrupt handling only ever catches
+# Ctrl+C on the main thread, so it does nothing for a background thread,
+# this Event is the actual way a running session gets stopped.
+stop_event = threading.Event()
 
 
 def _run_engine(goal):
     """
-    Runs CogAlignEngine's monitoring loop for the lifetime of the process.
+    Runs CogAlignEngine's monitoring loop for the lifetime of the session.
     This is a daemon thread: it prints to the server console and fires
     notifications exactly as running engine.py directly would, but it is
     not woven into Flask's own request/response cycle at all, so it can't
-    block the web server. Note that engine.start()'s KeyboardInterrupt
-    handling only ever catches Ctrl+C on the main thread, so stopping the
-    Flask process is currently the only way to stop a running session.
+    block the web server. Passing stop_event lets /stop end the loop
+    cleanly instead of leaving it running until the whole process is killed.
     """
     engine = CogAlignEngine(goal=goal)
-    engine.start(interval=3)
+    engine.start(interval=3, stop_event=stop_event)
 
 
 @app.route("/")
@@ -57,12 +63,22 @@ def start():
     if not goal:
         return redirect(url_for("index"))
 
+    stop_event.clear()
     state["tracking"] = True
     state["goal"] = goal
 
     thread = threading.Thread(target=_run_engine, args=(goal,), daemon=True)
     thread.start()
+    state["thread"] = thread
 
+    return redirect(url_for("index"))
+
+
+@app.route("/stop", methods=["POST"])
+def stop():
+    stop_event.set()
+    state["tracking"] = False
+    state["goal"] = None
     return redirect(url_for("index"))
 
 

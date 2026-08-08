@@ -74,12 +74,21 @@ class CogAlignEngine:
             elif self.state_machine.state == "ESCALATING":
                 print("⚠️ Escalating — nudge incoming soon...")
 
-    def start(self, interval=3):
+    def start(self, interval=3, stop_event=None):
+        """
+        stop_event is optional (defaults to None) so existing direct callers,
+        like pipeline.py, are unaffected: when it's None the loop only ever
+        exits via KeyboardInterrupt, exactly as before. Pass a threading.Event
+        to allow a caller running this in a background thread to request a
+        clean exit, since KeyboardInterrupt is only ever delivered to the
+        main thread and does not work there.
+        """
         print(f"⏱️ Checking every {interval}s. Press Ctrl+C to stop.\n")
         try:
-            while True:
+            while stop_event is None or not stop_event.is_set():
                 self.run_tick()
                 time.sleep(interval)
+            print("\nMonitoring stopped (stop requested).")
         except KeyboardInterrupt:
             print("\nMonitoring stopped.")
 
