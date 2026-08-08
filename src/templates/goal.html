@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CogAlign</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <style>
+    /* Page-level layout only: centers the single Goal card. Every color,
+       font, radius and spacing value below still comes from styles.css's
+       tokens, nothing new is introduced here. */
+    body {
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-8);
+    }
+    .goal-shell { width: min(560px, 100%); }
+    .brand { display: flex; align-items: center; gap: 10px; margin-bottom: var(--space-8); }
+    .brand-mark { position: relative; width: 24px; height: 24px; flex: none; }
+    .brand-mark span { position: absolute; width: 14px; height: 14px; border-radius: 50%; }
+    .brand-mark span:nth-child(1) { background: var(--color-accent-2-700); top: 0; left: 5px; }
+    .brand-mark span:nth-child(2) { background: var(--color-accent-2-600); top: 10px; left: 0; }
+    .brand-mark span:nth-child(3) { background: var(--color-accent-2-600); top: 10px; left: 10px; }
+    .brand-word { font-family: var(--font-heading); font-size: 26px; }
+    .kicker {
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--color-accent-2-700); margin-bottom: var(--space-2);
+    }
+    .goal-row { display: flex; gap: var(--space-2); margin-bottom: var(--space-2); }
+    .goal-row .input { flex: 1; }
+    .mic-status { font-size: 12px; min-height: 16px; margin-bottom: var(--space-3); }
+    .tracking-card { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4); }
+    .tracking-dot {
+      width: 10px; height: 10px; border-radius: 50%; flex: none;
+      background: var(--color-accent-2-600);
+      animation: tracking-pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes tracking-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+  </style>
+</head>
+<body>
+  <div class="goal-shell">
+    <div class="brand">
+      <div class="brand-mark"><span></span><span></span><span></span></div>
+      <div class="brand-word">CogAlign</div>
+    </div>
+
+    {% if tracking %}
+      <div class="card elev-md tracking-card">
+        <div class="tracking-dot"></div>
+        <div>
+          <div class="card-title" style="margin-bottom:2px">Tracking silently in the background</div>
+          <p class="card-body" style="opacity:1;margin:0">Goal: "{{ goal }}". Check the server console for live activity.</p>
+        </div>
+      </div>
+    {% else %}
+      <div class="kicker">New session</div>
+      <h1>What are you working on?</h1>
+      <p class="text-muted" style="max-width:48ch;margin-bottom:var(--space-6)">
+        Say your goal aloud or type it below. CogAlign listens to your active window and
+        nudges you back, gently at first, if you drift.
+      </p>
+
+      <form id="goal-form" method="post" action="{{ url_for('start') }}">
+        <div class="goal-row">
+          <input
+            class="input"
+            type="text"
+            name="goal"
+            id="goal-input"
+            placeholder="e.g. Writing my dissertation literature review"
+            required
+          >
+          <button type="button" class="btn btn-secondary btn-icon" id="mic-btn" aria-label="Speak goal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" x2="12" y1="19" y2="22"/>
+            </svg>
+          </button>
+        </div>
+        <p id="mic-status" class="text-muted mic-status"></p>
+        <button type="submit" class="btn btn-primary" style="background:var(--color-accent-2-700);color:var(--color-bg)">
+          Start session
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </button>
+      </form>
+
+      <script>
+        const micBtn = document.getElementById('mic-btn');
+        const goalInput = document.getElementById('goal-input');
+        const micStatus = document.getElementById('mic-status');
+
+        micBtn.addEventListener('click', async () => {
+          micBtn.disabled = true;
+          micStatus.textContent = 'Listening, speak your goal now (5s)...';
+          try {
+            const res = await fetch('{{ url_for("record") }}', { method: 'POST' });
+            const data = await res.json();
+            if (data.goal) {
+              goalInput.value = data.goal;
+              micStatus.textContent = 'Heard: "' + data.goal + '". Edit if needed, then start.';
+            } else {
+              micStatus.textContent = data.error || 'Could not transcribe audio. Please try again.';
+            }
+          } catch (err) {
+            micStatus.textContent = 'Recording failed: ' + err;
+          } finally {
+            micBtn.disabled = false;
+          }
+        });
+      </script>
+    {% endif %}
+  </div>
+</body>
+</html>

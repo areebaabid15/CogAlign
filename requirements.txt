@@ -4,3 +4,4 @@ scipy
 sentence-transformers
 requests
 numpy
+flask
