@@ -1,15 +1,20 @@
 # tests/diagnose_goal_sensitivity.py
 """
-Diagnostic tool, not a pytest test: does WorkspaceClassifier's threshold (0.01,
-picked in results/classifier_evaluation.json) generalize to goals it was never
-calibrated against, or does it only work reliably for the one goal
-("Writing my dissertation literature review") that sweep actually used?
+Diagnostic tool, not a pytest test: does WorkspaceClassifier's fixed threshold
+(0.01, picked in results/classifier_evaluation.json) generalize to goals it was
+never calibrated against, or does it only work reliably for the one goal
+("Writing my dissertation literature review") that sweep actually used? And does
+the per-goal calibrate_threshold() in engine.py actually fix that?
 
 Tests three goals spanning different domains against clear, substantive window
 text on both sides (on-task examples tailored per goal, the same off-task
 examples reused across all three so any variation is attributable to the goal
 text, not the window text). Deliberately avoids empty/near-empty window titles,
 that is the separate, already-documented window_tracker.py issue, not this one.
+
+For each goal, runs the same 6 on-task/off-task combinations twice: once against
+the fixed 0.01 threshold, once against calibrate_threshold()'s per-goal result,
+and prints a before/after accuracy table.
 
 Usage: python3 tests/diagnose_goal_sensitivity.py
 """
@@ -19,8 +24,9 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from classifier import WorkspaceClassifier
+from engine import calibrate_threshold
 
-THRESHOLD = 0.01
+FIXED_THRESHOLD = 0.01
 
 # Held constant across all three goals so a change in whether these get
 # correctly rejected is attributable to the goal text, not the window text.
@@ -32,7 +38,7 @@ OFF_TASK = [
 
 GOALS = {
     # Control: the one goal results/classifier_evaluation.json was actually
-    # calibrated against. Expected to behave correctly.
+    # calibrated against. Expected to behave correctly under both thresholds.
     "Writing my dissertation literature review": [
         "Microsoft Word - Literature Review Chapter 2.docx",
         "Google Scholar - search results for NLP papers",
@@ -52,78 +58,110 @@ GOALS = {
 }
 
 
+def evaluate(classifier, goal, on_task_examples, threshold):
+    """Runs the same 6 on-task/off-task combinations for one goal against one
+    threshold. Returns a list of (window, label, score, predicted, correct)."""
+    rows = []
+
+    for window in on_task_examples:
+        predicted, score = classifier.is_related(window, goal, threshold=threshold)
+        rows.append((window, "on-task", score, predicted, predicted is True))
+
+    for window in OFF_TASK:
+        predicted, score = classifier.is_related(window, goal, threshold=threshold)
+        rows.append((window, "off-task", score, predicted, predicted is False))
+
+    return rows
+
+
+def print_rows(rows):
+    for window, label, score, predicted, correct in rows:
+        status = "correct  " if correct else "WRONG    "
+        print(f"  [{status}] {label:<8} score={score:.4f} predicted={str(predicted):5} -> '{window}'")
+
+
+def accuracy(rows):
+    correct = sum(1 for r in rows if r[-1])
+    return correct, len(rows)
+
+
 def run():
-    print("=" * 72)
+    print("=" * 78)
     print("  COGALIGN — GOAL SENSITIVITY DIAGNOSTIC")
-    print("  Does threshold=0.01 generalize beyond the one goal it was")
-    print("  calibrated against?")
-    print("=" * 72)
+    print("  Fixed threshold=0.01 vs calibrate_threshold()'s per-goal result")
+    print("=" * 78)
 
     classifier = WorkspaceClassifier()
-    results = []  # (goal, window, label, score, predicted, correct)
+
+    fixed_results = {}      # goal -> rows
+    calibrated_results = {}  # goal -> rows
+    calibrated_thresholds = {}  # goal -> threshold value
 
     for goal, on_task_examples in GOALS.items():
+        calibrated = calibrate_threshold(classifier, goal)
+        calibrated_thresholds[goal] = calibrated
+
         print(f"\n--- Goal: '{goal}' ---")
+        print(f"Calibrated threshold: {calibrated:.4f}  (fixed threshold: {FIXED_THRESHOLD})")
 
-        for window in on_task_examples:
-            predicted, score = classifier.is_related(window, goal, threshold=THRESHOLD)
-            correct = predicted is True
-            results.append((goal, window, "on-task", score, predicted, correct))
-            status = "correct  " if correct else "WRONG    "
-            print(f"  [{status}] on-task  score={score:.4f} predicted={str(predicted):5} -> '{window}'")
+        print("\n  Fixed 0.01:")
+        fixed_rows = evaluate(classifier, goal, on_task_examples, FIXED_THRESHOLD)
+        print_rows(fixed_rows)
+        fixed_results[goal] = fixed_rows
 
-        for window in OFF_TASK:
-            predicted, score = classifier.is_related(window, goal, threshold=THRESHOLD)
-            correct = predicted is False
-            results.append((goal, window, "off-task", score, predicted, correct))
-            status = "correct  " if correct else "WRONG    "
-            print(f"  [{status}] off-task score={score:.4f} predicted={str(predicted):5} -> '{window}'")
+        print("\n  Calibrated:")
+        calibrated_rows = evaluate(classifier, goal, on_task_examples, calibrated)
+        print_rows(calibrated_rows)
+        calibrated_results[goal] = calibrated_rows
 
-    print("\n" + "=" * 72)
-    print("  SUMMARY — accuracy per goal at threshold=0.01")
-    print("=" * 72)
-    print(f"{'Goal':<45} {'Correct':>9} {'Total':>7} {'Accuracy':>10}")
-    print("-" * 72)
+    print("\n" + "=" * 78)
+    print("  BEFORE / AFTER — accuracy per goal, fixed 0.01 vs per-goal calibration")
+    print("=" * 78)
+    print(f"{'Goal':<45} {'Fixed 0.01':>12} {'Calibrated':>12}")
+    print("-" * 78)
 
-    per_goal_correct, per_goal_total = {}, {}
-    for goal, _, _, _, _, correct in results:
-        per_goal_total[goal] = per_goal_total.get(goal, 0) + 1
-        per_goal_correct[goal] = per_goal_correct.get(goal, 0) + (1 if correct else 0)
+    total_fixed_correct = total_fixed_total = 0
+    total_cal_correct = total_cal_total = 0
 
     for goal in GOALS:
-        correct, total = per_goal_correct[goal], per_goal_total[goal]
-        print(f"{goal:<45} {correct:>9} {total:>7} {correct / total:>9.1%}")
+        fc, ft = accuracy(fixed_results[goal])
+        cc, ct = accuracy(calibrated_results[goal])
+        total_fixed_correct += fc
+        total_fixed_total += ft
+        total_cal_correct += cc
+        total_cal_total += ct
+        print(f"{goal:<45} {fc}/{ft:<9} {fc/ft:>6.1%}  {cc}/{ct:<9} {cc/ct:>6.1%}")
 
-    total_correct = sum(per_goal_correct.values())
-    total_total = sum(per_goal_total.values())
-    print("-" * 72)
-    print(f"{'OVERALL':<45} {total_correct:>9} {total_total:>7} {total_correct / total_total:>9.1%}")
+    print("-" * 78)
+    print(
+        f"{'OVERALL':<45} "
+        f"{total_fixed_correct}/{total_fixed_total:<9} {total_fixed_correct/total_fixed_total:>6.1%}  "
+        f"{total_cal_correct}/{total_cal_total:<9} {total_cal_correct/total_cal_total:>6.1%}"
+    )
 
-    print("\n" + "=" * 72)
+    print("\n" + "=" * 78)
+    print("  CALIBRATED THRESHOLDS USED")
+    print("=" * 78)
+    for goal, t in calibrated_thresholds.items():
+        print(f"  {goal:<45} -> {t:.4f}")
+
+    print("\n" + "=" * 78)
     print("  CONCLUSION")
-    print("=" * 72)
+    print("=" * 78)
     control_goal = "Writing my dissertation literature review"
-    control_acc = per_goal_correct[control_goal] / per_goal_total[control_goal]
-    other_goals = [g for g in GOALS if g != control_goal]
-    other_correct = sum(per_goal_correct[g] for g in other_goals)
-    other_total = sum(per_goal_total[g] for g in other_goals)
-    other_acc = other_correct / other_total
+    control_fixed_acc = accuracy(fixed_results[control_goal])
+    control_cal_acc = accuracy(calibrated_results[control_goal])
+    control_fixed_pct = control_fixed_acc[0] / control_fixed_acc[1]
+    control_cal_pct = control_cal_acc[0] / control_cal_acc[1]
 
-    if control_acc == 1.0 and other_acc < control_acc:
-        print(
-            f"Threshold=0.01 is fully accurate on the control goal ({control_acc:.0%}) but "
-            f"drops to {other_acc:.0%} across the two goals it was never calibrated against. "
-            f"This threshold does not generalize, it is overfit to the single goal used in "
-            f"results/classifier_evaluation.json."
-        )
-    elif control_acc == other_acc == 1.0:
-        print("Threshold=0.01 was fully accurate across all three goals in this sample.")
-    else:
-        print(
-            f"Control goal accuracy: {control_acc:.0%}. Other two goals combined accuracy: "
-            f"{other_acc:.0%}. See the per-example results above for exactly which examples "
-            f"were misclassified."
-        )
+    print(
+        f"Control goal ('{control_goal}'): fixed 0.01 = {control_fixed_pct:.0%}, "
+        f"calibrated = {control_cal_pct:.0%}."
+    )
+    print(
+        f"Overall across all three goals: fixed 0.01 = {total_fixed_correct/total_fixed_total:.0%}, "
+        f"calibrated = {total_cal_correct/total_cal_total:.0%}."
+    )
 
 
 if __name__ == "__main__":

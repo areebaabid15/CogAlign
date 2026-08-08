@@ -1,7 +1,10 @@
 # src/engine.py
+import json
 import os
 import sys
 import time
+
+import numpy as np
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -12,6 +15,55 @@ from nudge_engine import QwenNudgeEngine
 from notifier import send_notification
 
 PERSONA_NAMES = ['', 'Empathetic Coach', 'Sarcastic Friend', 'Deadline Supervisor']
+
+DEFAULT_THRESHOLD = 0.01
+CALIBRATION_PERCENTILE = 90
+CALIBRATION_MARGIN = 0.005
+DISTRACTION_SAMPLES_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "..", "data", "workspace_dumps", "workspace_samples.json"
+)
+
+
+def calibrate_threshold(
+    classifier,
+    goal,
+    samples_path=DISTRACTION_SAMPLES_PATH,
+    percentile=CALIBRATION_PERCENTILE,
+    margin=CALIBRATION_MARGIN,
+    default=DEFAULT_THRESHOLD,
+):
+    """
+    Calibrates a per-goal threshold instead of using the fixed 0.01 default, which
+    was only ever validated against one goal (see results/classifier_evaluation.json)
+    and does not generalize, raw score scale varies wildly by goal (see
+    tests/diagnose_goal_sensitivity.py).
+
+    Reuses the existing goal-agnostic bank of generic distraction examples in
+    workspace_samples.json, scores the session's goal against every one of them,
+    and takes a high percentile (90th by default, not the max, so one outlier
+    sample doesn't distort it) as this goal's "distraction ceiling". The live
+    threshold is set just above that ceiling.
+
+    Runs once per session at startup, not per tick. Falls back to the fixed
+    default threshold if calibration fails for any reason (file missing, empty
+    scores, etc.) so the system stays functional either way.
+    """
+    try:
+        with open(samples_path, "r") as f:
+            data = json.load(f)
+
+        distractions = data.get("distraction", [])
+        if not distractions:
+            return default
+
+        scores = classifier.score_batch(goal, distractions)
+        if not scores:
+            return default
+
+        ceiling = float(np.percentile(scores, percentile))
+        return ceiling + margin
+    except Exception:
+        return default
 
 
 class CogAlignEngine:
@@ -30,8 +82,11 @@ class CogAlignEngine:
         self.state_machine.level_3_interval = 10
         self.max_wasted_allowed = 120
 
+        self.classifier_threshold = calibrate_threshold(self.classifier, self.core_goal)
+
         print(f"\n✅ CogAlign Engine Ready")
-        print(f"🎯 Goal: '{self.core_goal}'\n")
+        print(f"🎯 Goal: '{self.core_goal}'")
+        print(f"📏 Calibrated distraction threshold: {self.classifier_threshold:.4f}\n")
 
     def run_tick(self):
         window_info = self.tracker.get_active_window()
@@ -42,7 +97,7 @@ class CogAlignEngine:
         window_text = f"{app_name} - {window_title}"
 
         is_goal_oriented, score = self.classifier.is_related(
-            window_text, self.core_goal, threshold=0.01
+            window_text, self.core_goal, threshold=self.classifier_threshold
         )
 
         action, level = self.state_machine.evaluate_state(is_goal_oriented)
