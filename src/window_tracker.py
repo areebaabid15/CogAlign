@@ -11,18 +11,32 @@ class WindowTracker:
         The deque automatically ejects older states as new ones arrive.
         """
         self.history = deque(maxlen=window_size)
-        # Flat single-line script verified to clear macOS permission checks
+        # Gets the frontmost app name via System Events first, then branches.
+        # Chrome and Safari's generic "name of window 1" reliably comes back
+        # empty for the frontmost browser tab, so those two are routed
+        # through their own AppleScript dictionaries to get the real active
+        # tab title instead. Every other app keeps using the original
+        # generic System Events method, unchanged.
         self.applescript_cmd = (
             'tell application "System Events" to tell (first application process whose frontmost is true) '
-            "to set currentWindow to name of window 1\n"
-            'tell application "System Events" to tell (first application process whose frontmost is true) '
             "to set currentApp to name\n"
+            'if currentApp is "Google Chrome" then\n'
+            '    tell application "Google Chrome" to set currentWindow to title of active tab of front window\n'
+            'else if currentApp is "Safari" then\n'
+            '    tell application "Safari" to set currentWindow to name of front document\n'
+            "else\n"
+            '    tell application "System Events" to tell (first application process whose frontmost is true) '
+            "to set currentWindow to name of window 1\n"
+            "end if\n"
             'return currentApp & "|||" & currentWindow'
         )
 
     def get_active_window(self):
         """
         Fetches the active application and window title via AppleScript.
+        Chrome and Safari are routed through their own AppleScript
+        dictionaries to get the real active tab title, since generic System
+        Events UI scripting reliably returns an empty window name for them.
         """
         try:
             proc = subprocess.run(
