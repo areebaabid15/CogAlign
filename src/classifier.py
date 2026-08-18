@@ -27,7 +27,7 @@ class WorkspaceClassifier:
         Returns True if the score is above the threshold, False otherwise.
         """
         if not window_text.strip():
-            return False
+            return False, 0.0
 
         # Combine pairs for the Cross-Encoder to rank
         pairs = [[core_goal, window_text]]
