@@ -30,6 +30,7 @@ def record_goal_audio():
         dtype="int16"
     )
     sd.wait()
+    os.makedirs(os.path.dirname(AUDIO_FILE), exist_ok=True)
     wav.write(AUDIO_FILE, SAMPLE_RATE, audio)
     print("✅ Recording captured.\n")
 

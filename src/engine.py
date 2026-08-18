@@ -108,7 +108,7 @@ class CogAlignEngine:
 
         if action == "NUDGE":
             print(f"\n🚨 Distraction detected — generating Level {level} nudge...")
-            nudge = self.nudge_engine.generate_nudge(level=level, goal=self.core_goal,distraction=window_text)
+            nudge = self.nudge_engine.generate_nudge(level=level, goal=self.core_goal, distraction=window_text)
             persona_name = PERSONA_NAMES[level]
             print(f"\n💬 [{persona_name}]: {nudge}\n")
             send_notification(persona_name, nudge)

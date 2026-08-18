@@ -54,7 +54,7 @@ class QwenNudgeEngine:
             user_msg = f"My goal is: '{goal}'. " + user_msg
         if level == 2 and _is_real_distraction(distraction):
             user_msg += f" I am currently distracted by: '{distraction}'."
-            
+
         payload = {
             "model": MODEL_NAME,
             "messages": [
