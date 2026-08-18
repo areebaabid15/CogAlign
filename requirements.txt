@@ -1,7 +1,36 @@
+# Pinned: 0.66.0 (latest, unpinned default) has no macOS Intel wheel, only
+# arm64, forcing a source build that fails here without cmake and an
+# unreachable OpenMP lib. 0.61.2 has confirmed prebuilt wheels for macOS
+# Intel and Apple Silicon, cp310 through cp313.
+numba==0.61.2
 openai-whisper
 sounddevice
 scipy
-sentence-transformers
+# Pinned: sentence-transformers' own resolution otherwise pulls the latest
+# transformers, which requires torch>=2.4. torch has no macOS Intel wheel
+# past 2.2.2 (see the torch pin below), so that combination cannot work on
+# this machine. 5.7.0 is confirmed to work with transformers==4.41.0.
+sentence-transformers==5.7.0
 requests
-numpy
+# Pinned: torch==2.2.2 needs numpy<2, confirmed by a runtime crash
+# ("Numpy is not available") when numpy resolved to the latest 2.x.
+# 1.26.4 is the last numpy 1.x release, with a Python 3.12 / Intel wheel.
+numpy==1.26.4
 flask
+pytest
+# Pinned: 2.2.2 is the last version of torch to ship a macOS Intel (x86_64)
+# wheel at all, confirmed against PyPI's file listing, every version from
+# 2.3.0 onward is arm64-only. Upgrading is not viable on this machine
+# without a from-source PyTorch build.
+torch==2.2.2
+# Pinned: the latest transformers (5.14.1) refuses torch<2.4 at runtime
+# ("Disabling PyTorch because PyTorch >= 2.4 is required"). 4.41.0 is
+# sentence-transformers' own stated minimum (transformers>=4.41.0,<6.0.0)
+# and predates torch 2.4's existence, confirmed working with torch==2.2.2
+# with no such runtime rejection.
+transformers==4.41.0
+# Needed for AutoModelForCausalLM's low_cpu_mem_usage=True, used by
+# test_qwen.py and test_qwen_all_nudges.py. Plain, no pin needed: a pure
+# Python universal wheel whose only real requirements, torch>=2.0.0 and
+# numpy>=1.17, are already satisfied by the pins above.
+accelerate
