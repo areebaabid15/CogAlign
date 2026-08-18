@@ -31,12 +31,16 @@ class WindowTracker:
             'return currentApp & "|||" & currentWindow'
         )
 
-    def get_active_window(self):
+    # App names that mean "the query itself didn't reach a real app", as
+    # opposed to a real app whose title happened to come back empty. Retrying
+    # after one of these wouldn't help, the call already failed or timed out.
+    FALLBACK_APP_LABELS = ("Unknown", "Timeout", "Error")
+
+    def _query_window_once(self):
         """
-        Fetches the active application and window title via AppleScript.
-        Chrome and Safari are routed through their own AppleScript
-        dictionaries to get the real active tab title, since generic System
-        Events UI scripting reliably returns an empty window name for them.
+        A single AppleScript query attempt. Unchanged from the original
+        get_active_window() logic, just factored out so get_active_window()
+        can call it more than once.
         """
         try:
             proc = subprocess.run(
@@ -56,6 +60,34 @@ class WindowTracker:
             return "Timeout", "AppleScript timed out"
         except Exception as e:
             return "Error", str(e)
+
+    def get_active_window(self, max_retries=2, retry_delay=0.15):
+        """
+        Fetches the active application and window title via AppleScript.
+        Chrome and Safari are routed through their own AppleScript
+        dictionaries to get the real active tab title, since generic System
+        Events UI scripting reliably returns an empty window name for them.
+
+        Confirmed live against Microsoft Word: a non-empty app name paired
+        with an empty window title is very likely a timing race in when the
+        accessibility tree is queried relative to window state, not a real
+        "no window" case, and not specific to any one app. If that happens,
+        retry the same call up to max_retries more times with a short delay
+        before accepting the empty result.
+        """
+        app_name, window_title = self._query_window_once()
+
+        attempts = 0
+        while (
+            window_title == ""
+            and app_name not in self.FALLBACK_APP_LABELS
+            and attempts < max_retries
+        ):
+            time.sleep(retry_delay)
+            app_name, window_title = self._query_window_once()
+            attempts += 1
+
+        return app_name, window_title
 
     def update_history(self):
         """

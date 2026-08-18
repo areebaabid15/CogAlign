@@ -94,6 +94,20 @@ class CogAlignEngine:
             return
 
         app_name, window_title = window_info[0], window_info[1]
+
+        # window_tracker.py already retries an empty title a couple of times
+        # internally before returning. If it's still empty here, or the app
+        # name is one of its own failure labels, there's no reliable signal
+        # for this tick, confirmed live against Microsoft Word returning an
+        # empty title mid-session while genuinely still frontmost. Don't
+        # score it and don't touch the state machine at all this tick, a
+        # real distraction will still be caught on the next good read, and a
+        # false empty read must not fire a nudge or reset genuine progress.
+        if not window_title.strip() or app_name in WindowTracker.FALLBACK_APP_LABELS:
+            print(f"\n[App]: {app_name}")
+            print("⚠️ No reliable window signal, holding state")
+            return
+
         window_text = f"{app_name} - {window_title}"
 
         is_goal_oriented, score = self.classifier.is_related(
