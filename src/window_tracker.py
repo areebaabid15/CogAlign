@@ -98,6 +98,81 @@ class WindowTracker:
 
         return app_name, window_title
 
+    @staticmethod
+    def _escape_for_applescript(text):
+        """Escapes backslashes and double quotes so text is safe to embed
+        inside an AppleScript double-quoted string literal."""
+        return text.replace("\\", "\\\\").replace('"', '\\"')
+
+    def get_visible_text(self, app_name, max_elements=75, timeout=1.5):
+        """
+        Reads a bounded snippet of visible on-screen text from app_name's
+        frontmost window's accessibility tree, via System Events (not
+        `tell application <app> to ...`), the same Accessibility permission
+        the title read in get_active_window() also uses, so nothing in this
+        file needs the separate Automation permission prompt anymore.
+
+        app_name is the value get_active_window() already resolved for
+        this tick, not looked up again independently here, so a focus
+        change between the two separate osascript calls can't point this
+        read at a different app than the title it's paired with.
+
+        Confirmed live: Chrome (Chromium) does not expose real page text
+        this way unless it detects an assistive technology client active,
+        so it will realistically almost always return "" and the caller
+        falls back to app name and title alone. Safari (WebKit) and native
+        Mac apps do expose real content.
+
+        Bounded on two axes, both required, not optional. `entire contents
+        of window 1` itself is fast even on a large tree (confirmed live,
+        under a second for 600+ elements), what's slow is querying role
+        and value on each element one at a time, confirmed live to hang
+        for 25+ seconds on a real, complex page even with recursion depth
+        capped at 6. So only the first max_elements of the tree are ever
+        attribute queried, regardless of how large the real tree is, and
+        the whole read additionally sits behind a hard subprocess timeout
+        as a backstop. Any failure, timeout, or a genuinely empty result
+        returns "" quietly. This never raises and never blocks a tick.
+        """
+        safe_app_name = self._escape_for_applescript(app_name)
+        script = f'''
+tell application "System Events"
+    tell process "{safe_app_name}"
+        set allElems to entire contents of window 1
+    end tell
+end tell
+set elemCount to count of allElems
+if elemCount > {max_elements} then set elemCount to {max_elements}
+set collectedText to {{}}
+repeat with i from 1 to elemCount
+    set elem to item i of allElems
+    tell application "System Events"
+        try
+            if role of elem is "AXStaticText" then
+                set v to (value of elem as string)
+                if v is not "" then set end of collectedText to v
+            end if
+        end try
+    end tell
+end repeat
+set AppleScript's text item delimiters to " "
+return collectedText as string
+'''
+        try:
+            proc = subprocess.run(
+                ["osascript", "-e", script],
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+            )
+            if proc.returncode != 0:
+                return ""
+            return proc.stdout.strip()
+        except subprocess.TimeoutExpired:
+            return ""
+        except Exception:
+            return ""
+
     def update_history(self):
         """
         Gathers the current active window state and slides it into our rolling window.

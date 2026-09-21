@@ -1,13 +1,14 @@
 # tests/test_window_tracker.py
 """
 Real pytest unit tests for WindowTracker's own logic: output parsing, the
-empty-title retry added alongside the Word bug fix, and the rolling
-history deque. Not macOS or AppleScript itself, subprocess.run is mocked
-entirely for _query_window_once()'s own tests, and _query_window_once is
-mocked directly for get_active_window()'s retry-logic tests so retry
-behavior is tested in isolation from AppleScript output parsing.
-time.sleep is also mocked so retry-delay tests don't actually wait in real
-time. Runs in well under a second.
+empty-title retry added alongside the Word bug fix, the rolling history
+deque, and the bounded accessibility based visible text read added
+alongside it. Not macOS or AppleScript itself, subprocess.run is mocked
+entirely for _query_window_once()'s and get_visible_text()'s own tests,
+and _query_window_once is mocked directly for get_active_window()'s
+retry-logic tests so retry behavior is tested in isolation from
+AppleScript output parsing. time.sleep is also mocked so retry-delay
+tests don't actually wait in real time. Runs in well under a second.
 """
 import os
 import subprocess
@@ -21,9 +22,10 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 from window_tracker import WindowTracker
 
 
-def make_proc(stdout=""):
+def make_proc(stdout="", returncode=0):
     proc = MagicMock()
     proc.stdout = stdout
+    proc.returncode = returncode
     return proc
 
 
@@ -123,6 +125,88 @@ def test_max_retries_zero_disables_retry_even_on_empty_real_app_title():
     assert (app, title) == ("Microsoft Word", "")
     assert tracker._query_window_once.call_count == 1
     mock_sleep.assert_not_called()
+
+
+# --- _escape_for_applescript() ---
+
+def test_escape_for_applescript_plain_text_unchanged():
+    assert WindowTracker._escape_for_applescript("Google Chrome") == "Google Chrome"
+
+
+def test_escape_for_applescript_escapes_quotes_and_backslashes():
+    raw = 'App "Name" with a \\ backslash'
+    escaped = WindowTracker._escape_for_applescript(raw)
+    assert escaped == 'App \\"Name\\" with a \\\\ backslash'
+
+
+# --- get_visible_text(): subprocess.run mocked ---
+
+def test_get_visible_text_returns_stripped_stdout_on_success():
+    tracker = WindowTracker()
+    with patch("window_tracker.subprocess.run", return_value=make_proc("  some page text  \n")) as mock_run:
+        text = tracker.get_visible_text("Safari")
+    assert text == "some page text"
+    mock_run.assert_called_once()
+
+
+def test_get_visible_text_embeds_app_name_and_cap_in_the_script():
+    tracker = WindowTracker()
+    with patch("window_tracker.subprocess.run", return_value=make_proc("")) as mock_run:
+        tracker.get_visible_text("Safari", max_elements=42)
+    script = mock_run.call_args.args[0][2]  # ["osascript", "-e", script]
+    assert 'tell process "Safari"' in script
+    assert "if elemCount > 42 then set elemCount to 42" in script
+
+
+def test_get_visible_text_escapes_app_name_with_quotes():
+    tracker = WindowTracker()
+    with patch("window_tracker.subprocess.run", return_value=make_proc("")) as mock_run:
+        tracker.get_visible_text('Weird "App" Name')
+    script = mock_run.call_args.args[0][2]
+    assert 'tell process "Weird \\"App\\" Name"' in script
+
+
+def test_get_visible_text_passes_timeout_through_to_subprocess():
+    tracker = WindowTracker()
+    with patch("window_tracker.subprocess.run", return_value=make_proc("")) as mock_run:
+        tracker.get_visible_text("Safari", timeout=0.8)
+    assert mock_run.call_args.kwargs["timeout"] == 0.8
+
+
+def test_get_visible_text_uses_documented_defaults():
+    tracker = WindowTracker()
+    with patch("window_tracker.subprocess.run", return_value=make_proc("")) as mock_run:
+        tracker.get_visible_text("Safari")
+    script = mock_run.call_args.args[0][2]
+    assert "if elemCount > 75 then set elemCount to 75" in script
+    assert mock_run.call_args.kwargs["timeout"] == 1.5
+
+
+def test_get_visible_text_non_zero_returncode_returns_empty_string():
+    tracker = WindowTracker()
+    proc = make_proc("some text that should be ignored")
+    proc.returncode = 1
+    with patch("window_tracker.subprocess.run", return_value=proc):
+        text = tracker.get_visible_text("Safari")
+    assert text == ""
+
+
+def test_get_visible_text_timeout_returns_empty_string_not_raise():
+    # This is the cap/timeout fallback path: confirmed live to matter on a
+    # real complex page, the hard timeout must degrade to "" quietly, never
+    # raise and never block the caller.
+    tracker = WindowTracker()
+    timeout_err = subprocess.TimeoutExpired(cmd="osascript", timeout=1.5)
+    with patch("window_tracker.subprocess.run", side_effect=timeout_err):
+        text = tracker.get_visible_text("Safari")
+    assert text == ""
+
+
+def test_get_visible_text_generic_exception_returns_empty_string_not_raise():
+    tracker = WindowTracker()
+    with patch("window_tracker.subprocess.run", side_effect=RuntimeError("boom")):
+        text = tracker.get_visible_text("Safari")
+    assert text == ""
 
 
 # --- update_history() ---

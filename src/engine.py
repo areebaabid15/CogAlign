@@ -110,8 +110,21 @@ class CogAlignEngine:
 
         window_text = f"{app_name} - {window_title}"
 
+        # Richer visible-text read, alongside the existing app name and
+        # title, not replacing them. window_text (app + title alone) still
+        # drives the console print and the nudge's "distracted by" context
+        # below. Only the scoring call gets the enriched text, since that's
+        # the one thing that benefits from more content to compare against
+        # the goal. Empty if the read times out, is capped out, or finds
+        # nothing, Chrome almost always (confirmed live, Chromium does not
+        # expose page text this way without an assistive technology client
+        # active). Which is fine, scoring_text then just falls back to
+        # window_text alone.
+        visible_text = self.tracker.get_visible_text(app_name)
+        scoring_text = f"{window_text} {visible_text}".strip()
+
         is_goal_oriented, score = self.classifier.is_related(
-            window_text, self.core_goal, threshold=self.classifier_threshold
+            scoring_text, self.core_goal, threshold=self.classifier_threshold
         )
 
         action, level = self.state_machine.evaluate_state(is_goal_oriented)
