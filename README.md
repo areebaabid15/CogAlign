@@ -31,8 +31,6 @@ the first time you use them. These are one-time prompts, click Allow:
 
 - Microphone access, for speaking your goal
 - Accessibility access, for reading the active window's title
-- Automation access, separately, the first time it reads a Chrome or Safari
-  window specifically
 - Notifications, so the nudges actually appear as banners
 
 If a prompt is dismissed or denied by accident, it can be re-enabled under
