@@ -13,6 +13,7 @@ tests don't actually wait in real time. Runs in well under a second.
 import os
 import subprocess
 import sys
+import time
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -207,6 +208,125 @@ def test_get_visible_text_generic_exception_returns_empty_string_not_raise():
     with patch("window_tracker.subprocess.run", side_effect=RuntimeError("boom")):
         text = tracker.get_visible_text("Safari")
     assert text == ""
+
+
+# --- get_cached_visible_text(): pure cache read logic, no threads, no sleeps ---
+
+def test_get_cached_visible_text_empty_when_nothing_cached_yet():
+    tracker = WindowTracker()
+    assert tracker.get_cached_visible_text("Safari") == ""
+
+
+def test_get_cached_visible_text_returns_value_for_matching_fresh_app():
+    tracker = WindowTracker()
+    tracker._visible_text_cache = {"app_name": "Safari", "text": "some real page text", "timestamp": time.time()}
+    assert tracker.get_cached_visible_text("Safari") == "some real page text"
+
+
+def test_get_cached_visible_text_empty_when_app_name_does_not_match():
+    # The user switched apps faster than the background updater refreshed,
+    # a stale app's content must never leak into a different app's tick.
+    tracker = WindowTracker()
+    tracker._visible_text_cache = {"app_name": "Safari", "text": "some real page text", "timestamp": time.time()}
+    assert tracker.get_cached_visible_text("Google Chrome") == ""
+
+
+def test_get_cached_visible_text_empty_when_older_than_default_max_age():
+    tracker = WindowTracker()
+    tracker._visible_text_cache = {
+        "app_name": "Safari", "text": "some real page text", "timestamp": time.time() - 31,
+    }
+    assert tracker.get_cached_visible_text("Safari") == ""
+
+
+def test_get_cached_visible_text_still_fresh_just_under_default_max_age():
+    tracker = WindowTracker()
+    tracker._visible_text_cache = {
+        "app_name": "Safari", "text": "some real page text", "timestamp": time.time() - 29,
+    }
+    assert tracker.get_cached_visible_text("Safari") == "some real page text"
+
+
+def test_get_cached_visible_text_respects_a_custom_max_age():
+    tracker = WindowTracker()
+    tracker._visible_text_cache = {"app_name": "Safari", "text": "text", "timestamp": time.time() - 5}
+    assert tracker.get_cached_visible_text("Safari", max_age=2) == ""
+    assert tracker.get_cached_visible_text("Safari", max_age=10) == "text"
+
+
+# --- _run_one_background_update(): one cycle, _query_window_once and
+# get_visible_text mocked directly, a fake background updater rather than
+# a real thread, real sleep, or timing race ---
+
+def test_background_update_caches_successful_read_and_returns_poll_interval():
+    tracker = WindowTracker()
+    tracker._query_window_once = MagicMock(return_value=("Safari", "Some Title"))
+    tracker.get_visible_text = MagicMock(return_value="real page text")
+
+    delay = tracker._run_one_background_update(poll_interval=3, backoff_interval=8)
+
+    assert delay == 3
+    cache = tracker._visible_text_cache
+    assert cache["app_name"] == "Safari"
+    assert cache["text"] == "real page text"
+    assert isinstance(cache["timestamp"], float)
+
+
+def test_background_update_uses_background_timeout_not_tick_timeout():
+    tracker = WindowTracker()
+    tracker._query_window_once = MagicMock(return_value=("Safari", "Some Title"))
+    tracker.get_visible_text = MagicMock(return_value="")
+
+    tracker._run_one_background_update()
+
+    tracker.get_visible_text.assert_called_once_with("Safari", timeout=WindowTracker.BACKGROUND_READ_TIMEOUT)
+
+
+def test_background_update_empty_read_does_not_touch_cache_and_backs_off():
+    tracker = WindowTracker()
+    tracker._query_window_once = MagicMock(return_value=("Google Chrome", "New Tab"))
+    tracker.get_visible_text = MagicMock(return_value="")  # Chrome, almost always, confirmed live
+
+    before = dict(tracker._visible_text_cache)
+    delay = tracker._run_one_background_update(poll_interval=3, backoff_interval=8)
+
+    assert delay == 8
+    assert tracker._visible_text_cache == before
+
+
+def test_background_update_unreliable_app_read_backs_off_without_calling_get_visible_text():
+    tracker = WindowTracker()
+    tracker._query_window_once = MagicMock(return_value=("Unknown", "No Active Window"))
+    tracker.get_visible_text = MagicMock(return_value="should not be called")
+
+    delay = tracker._run_one_background_update(poll_interval=3, backoff_interval=8)
+
+    assert delay == 8
+    tracker.get_visible_text.assert_not_called()
+
+
+def test_background_update_empty_title_backs_off_without_calling_get_visible_text():
+    tracker = WindowTracker()
+    tracker._query_window_once = MagicMock(return_value=("Microsoft Word", ""))
+    tracker.get_visible_text = MagicMock(return_value="should not be called")
+
+    delay = tracker._run_one_background_update()
+
+    assert delay == 8
+    tracker.get_visible_text.assert_not_called()
+
+
+def test_background_update_overwrites_a_stale_cache_from_a_different_app():
+    tracker = WindowTracker()
+    tracker._visible_text_cache = {"app_name": "Safari", "text": "old text", "timestamp": time.time() - 100}
+    tracker._query_window_once = MagicMock(return_value=("Notes", "Notes"))
+    tracker.get_visible_text = MagicMock(return_value="new note content")
+
+    tracker._run_one_background_update()
+
+    cache = tracker._visible_text_cache
+    assert cache["app_name"] == "Notes"
+    assert cache["text"] == "new note content"
 
 
 # --- update_history() ---
