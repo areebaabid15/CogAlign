@@ -8,10 +8,10 @@
 # What this script CANNOT do, on purpose: click through macOS's permission
 # dialogs. The first time you run the app, macOS will ask you to allow
 # Terminal (or your IDE) to access the microphone, and separately to allow
-# it to control other apps via Accessibility/Automation, for window
-# tracking. Those are one-time prompts you have to click Allow on yourself,
-# no script can do that for you. This script tells you what to expect at
-# the end.
+# it to read other apps' windows via Accessibility, for window tracking,
+# plus notifications. Those are one-time prompts you have to click Allow
+# on yourself, no script can do that for you. This script tells you what
+# to expect at the end.
 #
 # macOS only. CogAlign's window tracking uses native AppleScript, there is
 # no Windows or Linux equivalent in this codebase.
@@ -114,8 +114,6 @@ echo "First-run heads-up, macOS will ask you to approve a few things the"
 echo "first time you use them. These are one-time prompts, click Allow:"
 echo "  - Microphone access, for speaking your goal"
 echo "  - Accessibility access, for reading the active window's title"
-echo "  - Automation access, separately, the first time it reads a Chrome"
-echo "    or Safari window specifically"
 echo "  - Notifications, so the nudges actually appear as banners"
 echo "If a prompt is dismissed or denied by accident, it can be re-enabled"
 echo "under System Settings > Privacy & Security."
