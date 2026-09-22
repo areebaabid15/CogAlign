@@ -16,20 +16,28 @@
       justify-content: center;
       padding: var(--space-8);
     }
-    .goal-shell { width: min(560px, 100%); }
-    .brand { display: flex; align-items: center; gap: 10px; margin-bottom: var(--space-8); }
+    .goal-shell { width: min(700px, 100%); }
+    .brand { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: var(--space-3); }
+    .brand-left { display: flex; align-items: center; gap: 10px; }
     .brand-mark { position: relative; width: 24px; height: 24px; flex: none; }
     .brand-mark span { position: absolute; width: 14px; height: 14px; border-radius: 50%; }
     .brand-mark span:nth-child(1) { background: var(--color-accent-2-700); top: 0; left: 5px; }
     .brand-mark span:nth-child(2) { background: var(--color-accent-2-600); top: 10px; left: 0; }
     .brand-mark span:nth-child(3) { background: var(--color-accent-2-600); top: 10px; left: 10px; }
     .brand-word { font-family: var(--font-heading); font-size: 26px; }
+
+    .info-line { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; opacity: 0.6; line-height: 1.5; }
+    .info-line + .info-line { margin-top: 4px; }
+    .info-line svg { flex: none; margin-top: 2px; }
+    .info-block { margin-bottom: var(--space-6); }
+
     .kicker {
       font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
       color: var(--color-accent-2-700); margin-bottom: var(--space-2);
     }
     .goal-row { display: flex; gap: var(--space-2); margin-bottom: var(--space-2); }
     .goal-row .input { flex: 1; }
+    .example-line { font-size: 12.5px; opacity: 0.55; margin: 0 0 var(--space-4); }
     .mic-status { font-size: 12px; min-height: 16px; margin-bottom: var(--space-3); }
     .tracking-card { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4); }
     .tracking-dot {
@@ -38,13 +46,63 @@
       animation: tracking-pulse 1.6s ease-in-out infinite;
     }
     @keyframes tracking-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+    /* "How it works" manual: three stacked slide-style panels */
+    .manual { margin-top: var(--space-8); }
+    .manual-label {
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--color-accent-2-700); margin-bottom: var(--space-3); text-align: center;
+    }
+    .slide {
+      border-radius: calc(var(--radius-lg) * 1.15); background: var(--color-surface);
+      padding: var(--space-8) var(--space-6); margin-bottom: var(--space-3);
+      display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-3);
+    }
+    .slide-step { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; }
+    .slide-icon {
+      width: 64px; height: 64px; border-radius: 50%; background: var(--color-accent-2-700); color: var(--color-bg);
+      display: grid; place-items: center; margin: var(--space-1) 0;
+    }
+    .slide-title { font-family: var(--font-heading); font-size: 22px; margin: 0; }
+    .slide-body { font-size: 14px; opacity: 0.75; max-width: 40ch; margin: 0; line-height: 1.5; }
+    .slide-body.emphasis { font-weight: 600; opacity: 0.9; margin-top: -6px; }
+    .dots { display: flex; gap: 6px; justify-content: center; margin-top: 2px; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-divider); }
+    .dot.active { background: var(--color-accent-2-700); width: 16px; border-radius: 4px; }
+
+    .slide-personas { padding: var(--space-6); }
+    .personas { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); width: 100%; margin-top: var(--space-3); }
+    .persona-card { border-radius: var(--radius-md); padding: var(--space-3); display: flex; flex-direction: column; gap: 6px; text-align: left; }
+    .persona-icon { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; color: var(--color-bg); }
+
+    @media (max-width: 640px) {
+      .personas { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
   <div class="goal-shell">
     <div class="brand">
-      <div class="brand-mark"><span></span><span></span><span></span></div>
-      <div class="brand-word">CogAlign</div>
+      <div class="brand-left">
+        <div class="brand-mark"><span></span><span></span><span></span></div>
+        <div class="brand-word">CogAlign</div>
+      </div>
+      {% if tracking %}
+        <span class="tag tag-accent-2" style="font-size:11px">Tracking: {{ goal }}</span>
+      {% else %}
+        <span class="tag tag-neutral" style="font-size:11px">No session running</span>
+      {% endif %}
+    </div>
+
+    <div class="info-block">
+      <div class="info-line">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>Everything happens on your own device. Nothing is watched or shared beyond it.</span>
+      </div>
+      <div class="info-line">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span>Before your first session, macOS will check with you three times, for microphone, accessibility, and notification access. Each one is needed for CogAlign to listen, watch, and nudge.</span>
+      </div>
     </div>
 
     {% if tracking %}
@@ -60,10 +118,10 @@
       </div>
     {% else %}
       <div class="kicker">New session</div>
-      <h1>What are you working on?</h1>
-      <p class="text-muted" style="max-width:48ch;margin-bottom:var(--space-6)">
-        Say your goal aloud or type it below. CogAlign listens to your active window and
-        nudges you back, gently at first, if you drift.
+      <h1>What would you like to focus on?</h1>
+      <p class="text-muted" style="max-width:52ch;margin-bottom:var(--space-5)">
+        Speak or write your intention. CogAlign will quietly watch over your session, and
+        offer a gentle reminder if your attention wanders.
       </p>
 
       <form id="goal-form" method="post" action="{{ url_for('start') }}">
@@ -84,6 +142,7 @@
             </svg>
           </button>
         </div>
+        <p class="example-line">For example: "Writing my dissertation literature review"</p>
         <p id="mic-status" class="text-muted mic-status"></p>
         <button type="submit" class="btn btn-primary" style="background:var(--color-accent-2-700);color:var(--color-bg)">
           Start session
@@ -92,6 +151,64 @@
           </svg>
         </button>
       </form>
+
+      <div class="manual">
+        <div class="manual-label">How it works</div>
+
+        <div class="slide">
+          <div class="slide-step">Step 1 of 3</div>
+          <div class="slide-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+          </div>
+          <div class="slide-title">Speak your goal</div>
+          <p class="slide-body">Tell CogAlign what you're working on, out loud or typed. It'll hold onto it for the whole session.</p>
+          <div class="dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-step">Step 2 of 3</div>
+          <div class="slide-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="slide-title">It quietly keeps watch</div>
+          <p class="slide-body">While you work, CogAlign keeps half an eye on your screen in the background, no popups, no interruptions.</p>
+          <div class="dots"><span class="dot"></span><span class="dot active"></span><span class="dot"></span></div>
+        </div>
+
+        <div class="slide slide-personas">
+          <div class="slide-step">Step 3 of 3</div>
+          <div class="slide-title">If you drift, CogAlign steps in</div>
+          <p class="slide-body">The longer you're off track, the more it speaks up, always a message, never a block.</p>
+          <p class="slide-body emphasis">Three ways CogAlign nudges you back on track</p>
+          <div class="personas">
+            <div class="persona-card" style="background:var(--color-accent-2-100)">
+              <div class="persona-icon" style="background:var(--color-accent-2-500)">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+              </div>
+              <div class="card-kicker" style="color:var(--color-accent-2-700)">First, after 5s</div>
+              <div class="card-title" style="font-size:14px">Empathetic Coach</div>
+              <p class="card-body" style="margin:2px 0 0">Warm and supportive, speaks to your goal directly.</p>
+            </div>
+            <div class="persona-card" style="background:var(--color-accent-2-200)">
+              <div class="persona-icon" style="background:var(--color-accent-2-600)">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+              </div>
+              <div class="card-kicker" style="color:var(--color-accent-2-800)">Then, after 10s</div>
+              <div class="card-title" style="font-size:14px">Sarcastic Friend</div>
+              <p class="card-body" style="margin:2px 0 0">Witty and direct, calls out the exact distraction.</p>
+            </div>
+            <div class="persona-card" style="background:var(--color-accent-2-300)">
+              <div class="persona-icon" style="background:var(--color-accent-2-900)">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L14.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
+              </div>
+              <div class="card-kicker" style="color:var(--color-accent-2-900)">Finally, after 15s</div>
+              <div class="card-title" style="font-size:14px">Deadline Supervisor</div>
+              <p class="card-body" style="margin:2px 0 0">Formal and urgent, one direct order to return.</p>
+            </div>
+          </div>
+          <div class="dots" style="margin-top:var(--space-3)"><span class="dot"></span><span class="dot"></span><span class="dot active"></span></div>
+        </div>
+      </div>
 
       <script>
         const micBtn = document.getElementById('mic-btn');
