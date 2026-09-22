@@ -1,0 +1,19 @@
+{
+  "_about": {
+    "purpose": "Generic off-task window-title patterns used by engine.calibrate_threshold() to synthesise per-goal hard negatives at session start. A content word from the spoken goal is substituted into {word}, the resulting strings are scored alongside the generic distraction bank in workspace_samples.json, and the calibrated threshold is drawn above that combined ceiling.",
+    "why": "The distraction bank contains only obvious off-task windows (Netflix, Instagram, food delivery) that share no vocabulary with any goal, so the threshold lands just above 'Netflix level' and every vocabulary-sharing trap clears it. These templates put traps that DO share the goal's vocabulary into the calibration input, so the line gets drawn above them instead.",
+    "format": "{word} is replaced with one extracted content word from the goal. Strings follow the live 'AppName - Window Title' format engine.py builds at line 111.",
+    "selection_rule": "A template must be off task for ANY goal that could produce the word. Patterns that might be legitimate work for some goal were deliberately excluded, notably '{word} - Wikipedia' and 'How to {word} - wikiHow', because both are plausible genuine research and including them would raise the threshold over real focused work and cause false alarms.",
+    "editing": "Hand editable. Add, remove or reword freely. engine.py reads whatever is here and falls back to the fixed default threshold if this file is missing or malformed, so an edit can never stop a session starting."
+  },
+  "templates": [
+    "Safari - {word} - Google Search",
+    "Google Chrome - {word}: what the latest figures reveal - BBC News",
+    "Safari - How I {word} in 10 minutes, my full workflow - YouTube",
+    "Google Chrome - Best {word} of 2026, tested and ranked - Which?",
+    "Safari - Nobody talks about {word} and it is ruining everything - r/AskReddit",
+    "Instagram - {word} memes",
+    "Google Chrome - {word} - Amazon.co.uk, today's deals",
+    "Safari - {word} star reveals all in first interview - Daily Mail"
+  ]
+}

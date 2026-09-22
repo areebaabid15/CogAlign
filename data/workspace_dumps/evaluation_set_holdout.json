@@ -1,0 +1,117 @@
+{
+  "_about": {
+    "purpose": "Held-out validation set for the calibration fix, in the same format and structure as evaluation_set.json. Three goals in domains evaluation_set.json does not cover: health and fitness, language learning, and event planning.",
+    "why_separate": "The hard negatives in evaluation_set.json and the trap templates in hard_negative_templates.json were written by the same author. Measuring the calibration fix only against evaluation_set.json would be teaching to the test: any improvement could be an artifact of the templates mirroring the patterns they are scored against. The hard negatives here were written fresh, from what a real person would plausibly have open in each domain, deliberately NOT by paraphrasing the trap templates. None of the eight template patterns (bare Google search, BBC News figures piece, 'how I X in 10 minutes' YouTube tutorial, Which? best-of, r/AskReddit complaint, Instagram memes, Amazon deals, Daily Mail celebrity interview) is reproduced here.",
+    "format": "Window strings use the live format engine.py builds at line 111: 'AppName - Window Title'.",
+    "categories": {
+      "focused": "Windows that genuinely serve the goal. Expected ON TASK.",
+      "distraction": "Clearly unrelated windows, no shared vocabulary. Expected OFF TASK.",
+      "hard_negative": "Genuinely off task, but sharing vocabulary with the goal. Expected OFF TASK."
+    },
+    "limitation": "Title only, like evaluation_set.json. Says nothing about the accessibility-API enrichment path."
+  },
+  "goals": [
+    {
+      "goal": "Planning my marathon training schedule",
+      "domain": "health and fitness",
+      "focused": [
+        "Safari - Hal Higdon Novice 1 marathon training plan, week 8",
+        "Google Chrome - Strava - My Activities - Long run 18km",
+        "Calendar - Training schedule - April 2026",
+        "Safari - London Marathon 2026 - Entry confirmation",
+        "Numbers - weekly_mileage.numbers",
+        "Google Chrome - Garmin Connect - Training Status: Productive",
+        "Safari - How to avoid shin splints during a marathon build - Runner's World",
+        "Notes - race day kit list and fuelling plan"
+      ],
+      "distraction": [
+        "Netflix - Bridgerton S3:E1",
+        "Instagram - Explore Page",
+        "Spotify - Discover Weekly",
+        "WhatsApp - Dad (1 unread)",
+        "Safari - Uber Eats - checkout",
+        "Google Chrome - Wordle - The New York Times",
+        "TikTok - For You",
+        "Safari - Zara - New In: Winter Coats"
+      ],
+      "hard_negative": [
+        "Safari - Netflix marathon: every Marvel film in order - Digital Spy",
+        "Google Chrome - Train times London to Manchester - Trainline",
+        "Safari - Nike Air Zoom Pegasus 41, 30% off - Sports Direct",
+        "Google Chrome - Schedule a dentist appointment - NHS",
+        "Safari - Formula 1: Miami Grand Prix race highlights - Sky Sports",
+        "Google Chrome - Running out of storage on iPhone - Apple Support",
+        "Safari - The Marathon Continues: Nipsey Hussle documentary - YouTube",
+        "Google Chrome - Planning permission for a loft conversion - GOV.UK"
+      ]
+    },
+    {
+      "goal": "Practising Spanish for my B2 exam",
+      "domain": "language learning",
+      "focused": [
+        "Duolingo - Spanish - Unit 14, subjunctive",
+        "Anki - Spanish B2 vocab - 42 cards due",
+        "Safari - DELE B2 past papers - Instituto Cervantes",
+        "Preview - DELE_B2_modelo_2024.pdf",
+        "Google Chrome - Spanish subjunctive practice exercises - SpanishDict",
+        "Notes - Spanish irregular verbs to review",
+        "Safari - B2 exam speaking task examples - Instituto Cervantes",
+        "Microsoft Word - spanish_essay_draft.docx"
+      ],
+      "distraction": [
+        "Netflix - Browse TV Shows",
+        "Spotify - Today's Top Hits",
+        "Instagram - Direct Messages",
+        "Safari - Domino's Pizza - checkout",
+        "WhatsApp - Flat Group (12 unread)",
+        "Google Chrome - BBC Sport - Live scores",
+        "TikTok - For You",
+        "Discord - #general - 47 new messages"
+      ],
+      "hard_negative": [
+        "Safari - Spanish holidays: best beaches in Costa Brava - TripAdvisor",
+        "Google Chrome - Spanish omelette recipe - BBC Good Food",
+        "Safari - La Liga: Real Madrid vs Barcelona live - ESPN",
+        "Google Chrome - Driving theory test practice questions - GOV.UK",
+        "Netflix - Money Heist (La Casa de Papel) S5:E4",
+        "Google Chrome - Exam stress: how to cope - Student Minds",
+        "Safari - Spanish Grand Prix qualifying results - Formula 1",
+        "Google Chrome - Vitamin B12 deficiency symptoms - NHS"
+      ]
+    },
+    {
+      "goal": "Organising my sister's wedding",
+      "domain": "event planning",
+      "focused": [
+        "Google Chrome - Hitched - venue availability, September 2026",
+        "Microsoft Excel - wedding_budget.xlsx",
+        "Notes - guest list, 94 confirmed",
+        "Safari - Bridesmaid dresses - Coast - shortlist",
+        "Google Chrome - Wedding invitations - Papier - proof review",
+        "Mail - Re: Catering quote for 94 guests",
+        "Calendar - Venue viewing, Saturday 11am",
+        "Safari - Wedding photographer portfolio - Sarah Jones Photography"
+      ],
+      "distraction": [
+        "Netflix - The Office S3:E12",
+        "Spotify - Liked Songs",
+        "Instagram - Reels",
+        "Google Chrome - Ryanair - flights to Lisbon in March",
+        "WhatsApp - Mum (3 unread)",
+        "Safari - Amazon.co.uk - Your Orders",
+        "TikTok - For You",
+        "Google Chrome - BBC News - Home"
+      ],
+      "hard_negative": [
+        "Netflix - Four Weddings and a Funeral (1994)",
+        "Safari - Say Yes to the Dress, Season 12 - TLC",
+        "Google Chrome - Wedding Crashers - watch on Prime Video",
+        "Safari - My sister ruined my wedding - r/AmITheAsshole - Reddit",
+        "Google Chrome - Royal wedding: what Kate wore - Hello! Magazine",
+        "Safari - Marriage visa application requirements - GOV.UK",
+        "Google Chrome - Wedding dress fails compilation - YouTube",
+        "Safari - Guest WiFi setup - BT Help"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "_about": {
+    "purpose": "Held-out evaluation set for the cross-encoder relevance classifier. Separate from workspace_samples.json on purpose: engine.py's calibrate_threshold() calibrates the live per-goal threshold against workspace_samples.json, so evaluating on that same file would be calibrating and testing on identical data. This file is never read by runtime code.",
+    "format": "Window strings use the live format engine.py builds at line 111: 'AppName - Window Title'.",
+    "categories": {
+      "focused": "Windows that genuinely serve the goal. Expected ON TASK.",
+      "distraction": "Clearly unrelated windows, no shared vocabulary with the goal. Expected OFF TASK.",
+      "hard_negative": "Genuinely off task, but deliberately sharing vocabulary with the goal. Probes the word-overlap false positive failure mode. Expected OFF TASK."
+    },
+    "editing": "Hand editable. Add or correct samples freely; the runner derives all counts from this file and assumes nothing about list lengths.",
+    "limitation": "Title-only. These are window strings, not captured on-screen text, so this set cannot measure whether accessibility-API enrichment helps or hurts. See notes/CogAlign_Model_Testing_Log.md."
+  },
+  "goals": [
+    {
+      "goal": "I have to write a report.",
+      "domain": "professional writing",
+      "note": "The live A/B comparison goal. 'Safari - news report - Google Search' and 'Safari - spotify - Google Search' below are the exact strings observed failing live, included verbatim.",
+      "focused": [
+        "Microsoft Word - Q3 Report Draft.docx",
+        "Microsoft Word - report_final_v4.docx",
+        "Pages - Project Report - Section 2 Findings",
+        "Google Chrome - Report outline, introduction and conclusion - Google Docs",
+        "Google Chrome - How to structure a formal report - Purdue OWL",
+        "Microsoft Excel - report figures and charts.xlsx",
+        "Notes - report notes: key points to cover",
+        "Microsoft Word - Report Draft.docx - 14 Grammarly suggestions"
+      ],
+      "distraction": [
+        "Safari - spotify - Google Search",
+        "Spotify - Lo-Fi Beats to Study To",
+        "Safari - Top 10 Funniest Cat Videos 2024 - YouTube",
+        "Instagram - Explore Page",
+        "Netflix - Stranger Things S4:E5",
+        "WhatsApp - Mum (3 unread)",
+        "Safari - Uber Eats - checkout",
+        "Messages - Flat Group (12 unread)"
+      ],
+      "hard_negative": [
+        "Safari - news report - Google Search",
+        "Google Chrome - Match report: Arsenal 2-1 Chelsea - BBC Sport",
+        "Safari - Check your credit report free - Experian",
+        "Weather - Weather report for London, hourly forecast",
+        "Google Chrome - Report a bug - Issue #4412 - microsoft/vscode - GitHub",
+        "Safari - How to report someone on Instagram - Help Centre",
+        "Google Chrome - Consumer Reports: best washing machines 2026",
+        "Safari - Report: Man City agree deal for striker - Sky Sports"
+      ]
+    },
+    {
+      "goal": "Writing my dissertation literature review",
+      "domain": "academic writing",
+      "note": "Deliberately the same goal string as the single-goal sweep in tests/evaluate_classifier.py, but with entirely new, unseen samples, so the held-out numbers are directly comparable to the published Table 6 figures.",
+      "focused": [
+        "Microsoft Word - Literature Review Chapter 2.docx",
+        "Zotero - My Library - dissertation references",
+        "Preview - Reimers & Gurevych 2019 Sentence-BERT.pdf",
+        "Google Chrome - cross encoder semantic similarity - Google Scholar",
+        "Safari - Overleaf - dissertation.tex - Chapter 2 Related Work",
+        "Notes - lit review argument structure and themes",
+        "Google Chrome - Scopus - advanced search results, 214 documents",
+        "Microsoft Word - Bibliography and References.docx"
+      ],
+      "distraction": [
+        "Spotify - Discover Weekly",
+        "Instagram - Reels",
+        "Safari - I Survived 100 Days in Hardcore Minecraft - YouTube",
+        "Google Chrome - ASOS - Women's Sale Up to 70% off",
+        "WhatsApp - Flat Group (12 unread)",
+        "Safari - Deliveroo - Order tracking, 25 min",
+        "Netflix - Browse TV Shows",
+        "Google Chrome - Ryanair - flights to Lisbon in March"
+      ],
+      "hard_negative": [
+        "Google Chrome - Amazon.co.uk - Write a customer review for Sony WH-1000XM5",
+        "Safari - The Fellowship of the Ring - English Literature GCSE revision",
+        "Google Chrome - Trustpilot reviews - is this site legit?",
+        "Safari - Honest review: iPhone 16 Pro after 3 months - YouTube",
+        "Google Chrome - Performance review self assessment template - HR portal",
+        "Safari - Goodreads - Literature that changed my life, listopia",
+        "Google Chrome - Rotten Tomatoes - Dune Part Two reviews",
+        "Safari - dissertation struggles memes - r/PhD - Reddit"
+      ]
+    },
+    {
+      "goal": "Fixing the login bug in the authentication service",
+      "domain": "software engineering",
+      "focused": [
+        "Visual Studio Code - auth_service.py - backend",
+        "Terminal - pytest tests/test_auth.py -k login",
+        "Google Chrome - JWT token expired error - Stack Overflow",
+        "Visual Studio Code - login_handler.py - backend",
+        "Google Chrome - Issue #3120: intermittent 401 on login - GitHub",
+        "Terminal - git diff src/auth/session.py",
+        "Safari - OAuth 2.0 refresh token rotation - Auth0 Docs",
+        "Postman - POST /api/v1/auth/login - 401 Unauthorized"
+      ],
+      "distraction": [
+        "Spotify - Deep Focus",
+        "Safari - Premier League highlights: matchweek 12 - YouTube",
+        "Discord - #general - 47 new messages",
+        "Google Chrome - Wordle - The New York Times",
+        "Instagram - Direct Messages",
+        "Netflix - The Office S3:E12",
+        "Safari - Domino's Pizza - checkout",
+        "TikTok - For You"
+      ],
+      "hard_negative": [
+        "Google Chrome - Log in to your Netflix account",
+        "Safari - Sign in - Online Banking - HSBC UK",
+        "Google Chrome - A Bug's Life (1998) - watch on Disney+",
+        "Safari - Report a bug - Minecraft Bedrock launcher - GitHub",
+        "Google Chrome - Customer Service - Track my Amazon order",
+        "Safari - Rentokil - bed bug treatment prices",
+        "Google Chrome - Two factor authentication setup - Instagram Help",
+        "Steam - Login - your wishlist is on sale"
+      ]
+    },
+    {
+      "goal": "Applying for graduate software engineering jobs",
+      "domain": "job hunting",
+      "focused": [
+        "Google Chrome - LinkedIn Jobs - Graduate Software Engineer, London",
+        "Microsoft Word - Areeba_Abid_CV_2026.docx",
+        "Safari - Indeed - graduate developer roles, 214 results",
+        "Google Chrome - Cover letter, Monzo grad scheme - Google Docs",
+        "Safari - Bright Network - application deadline tracker",
+        "Google Chrome - Application status - Careers at Revolut",
+        "Notes - interview prep: STAR answers",
+        "Safari - LeetCode - Two Sum - Problem"
+      ],
+      "distraction": [
+        "Netflix - Brooklyn Nine-Nine S5:E3",
+        "Spotify - Today's Top Hits",
+        "Instagram - Explore Page",
+        "Safari - Ranking every crisp flavour in the UK - YouTube",
+        "WhatsApp - Sara (2 unread)",
+        "Google Chrome - Zara - New In: Winter Coats",
+        "TikTok - For You",
+        "Safari - BBC Sport - Live scores"
+      ],
+      "hard_negative": [
+        "Google Chrome - Steve Jobs (2015) - IMDb",
+        "Safari - Apply for a provisional driving licence - GOV.UK",
+        "Google Chrome - Graduation gown hire - University of London",
+        "Safari - A day in the life of a software engineer at Google - YouTube",
+        "Google Chrome - Passport application tracking - HM Passport Office",
+        "Safari - Engineering marvels: how the Burj Khalifa was built - Reddit",
+        "Google Chrome - Odd jobs near me - TaskRabbit",
+        "Safari - Application form - Council tax single person discount"
+      ]
+    },
+    {
+      "goal": "Doing my taxes and sorting out my bank statements",
+      "domain": "admin and finance",
+      "focused": [
+        "Safari - HMRC - Self Assessment tax return 2025 to 2026",
+        "Microsoft Excel - expenses_2025.xlsx",
+        "Safari - Online Banking - Download statements PDF - Barclays",
+        "Preview - Statement_Jan2026.pdf",
+        "Google Chrome - Allowable expenses if you're self employed - GOV.UK",
+        "Microsoft Excel - tax_workings.xlsx - Sheet1",
+        "Safari - Government Gateway - sign in",
+        "Notes - receipts still missing for Q3"
+      ],
+      "distraction": [
+        "Spotify - Liked Songs",
+        "Netflix - Bake Off: The Professionals",
+        "Instagram - Reels",
+        "Safari - Minecraft but I can't touch grass - YouTube",
+        "WhatsApp - Mum (3 unread)",
+        "Google Chrome - Ryanair - flights to Lisbon in March",
+        "Discord - #gaming",
+        "TikTok - For You"
+      ],
+      "hard_negative": [
+        "Google Chrome - Food bank donation points near me",
+        "Safari - Tax the rich: why the system is broken - The Guardian",
+        "Google Chrome - Mission statement examples for startups",
+        "Safari - Bank Holiday 2026 dates UK",
+        "Google Chrome - Work life balance tips - r/antiwork",
+        "Safari - How to pay ZERO tax legally (the loophole) - YouTube",
+        "Google Chrome - Statement necklaces - ASOS",
+        "Safari - Ceramic piggy bank, handmade - Etsy"
+      ]
+    },
+    {
+      "goal": "Editing the video for my YouTube channel",
+      "domain": "creative work",
+      "focused": [
+        "Final Cut Pro - channel_ep14.fcpbundle",
+        "Adobe Premiere Pro - ep14_rough_cut.prproj",
+        "Google Chrome - YouTube Studio - Content - Drafts",
+        "Audacity - voiceover_take3.wav",
+        "Safari - Royalty free background music - Epidemic Sound",
+        "Adobe Photoshop - ep14_thumbnail.psd",
+        "Google Chrome - YouTube Studio - Analytics - Last 28 days",
+        "Notes - ep14 edit list: cut intro to 15s"
+      ],
+      "distraction": [
+        "Google Chrome - BBC News - Home",
+        "Spotify - Discover Weekly",
+        "WhatsApp - Flat Group (12 unread)",
+        "Netflix - Browse TV Shows",
+        "Safari - Uber Eats - checkout",
+        "Instagram - Direct Messages",
+        "Google Chrome - Wordle - The New York Times",
+        "Safari - Amazon.co.uk - Your Orders"
+      ],
+      "hard_negative": [
+        "Safari - Watch Later - 62 videos - YouTube",
+        "Google Chrome - How I edit my videos in 10 minutes (full workflow) - YouTube",
+        "Safari - Best video editing laptops 2026 - TechRadar reviews",
+        "Google Chrome - Channel 4 - Gogglebox catch up",
+        "Safari - Music video: Taylor Swift - Fortnight - YouTube",
+        "Instagram - Edit your profile",
+        "Google Chrome - Video doorbell installation - Ring Help",
+        "Discord - #video-clips - 14 new"
+      ]
+    }
+  ]
+}
