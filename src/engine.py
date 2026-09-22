@@ -1,6 +1,7 @@
 # src/engine.py
 import json
 import os
+import re
 import sys
 import time
 
@@ -22,6 +23,176 @@ CALIBRATION_MARGIN = 0.005
 DISTRACTION_SAMPLES_PATH = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "data", "workspace_dumps", "workspace_samples.json"
 )
+HARD_NEGATIVE_TEMPLATES_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "..", "data", "workspace_dumps", "hard_negative_templates.json"
+)
+
+# Generated hard negatives are OFF in the live system. Setting this to
+# HARD_NEGATIVE_TEMPLATES_PATH turns them back on.
+#
+# They were built, measured and deliberately rejected, they are not unfinished
+# work. Adding them to calibration does what it was designed to do: on a
+# held-out set of three goals it never saw, the vocabulary-sharing leak halved,
+# 41.7% down to 20.8%. But raising the line above those traps necessarily
+# raises it above genuine work using the same words, and the false alarm rate
+# nearly tripled with it, 12.5% up to 33.3%, taking held-out F1 down from 76.4%
+# to 71.1%. For a focus tool that trade is backwards: being interrupted while
+# working destroys trust in the system, while missing one distraction costs
+# almost nothing, so the cheaper error is the one to keep making. The damage
+# also falls unevenly, goals whose vocabulary is common off task ("wedding",
+# "report", "video") are hurt worst, and a goal already leaking nothing is
+# charged the cost for a problem it does not have.
+#
+# The code, templates, tests and evaluation runner all stay so the experiment
+# stays reproducible. See notes/CogAlign_Model_Testing_Log.md section 8 and
+# results/classifier_calibration_fix.json for the full per goal numbers.
+GENERATED_HARD_NEGATIVES_DEFAULT = None
+
+# Upper bound on the calibrated threshold, see calibrate_threshold() for the
+# empirical justification. A pathological goal must not be able to push the
+# line so high that genuine work reads as distraction and the user is nudged
+# continuously, which is worse than missing a distraction.
+CALIBRATION_CEILING = 0.15
+
+# Cap on how many content words are pulled from the goal. Every extra word
+# multiplies by the template count, and calibration is startup latency the
+# user waits through. Five covers every goal tested without the scoring call
+# growing enough to be noticeable.
+MAX_CONTENT_WORDS = 5
+
+# Words carrying no topical content, so substituting them into a trap
+# template would produce a string that tells us nothing about this goal.
+# Covers ordinary English function words plus the intention framing people
+# actually speak into the microphone ("I have to...", "I need to finish...").
+# Deliberately a plain hardcoded set, not a model or an external corpus, so
+# extraction stays deterministic, dependency free and unit testable.
+GOAL_STOPWORDS = frozenset({
+    "a", "about", "after", "all", "am", "an", "and", "any", "are", "as", "at",
+    "be", "been", "before", "being", "but", "by",
+    "can", "could",
+    "did", "do", "does", "doing", "done", "down", "due",
+    "each", "every",
+    "few", "finally", "finish", "finished", "finishing", "for", "from",
+    "get", "getting", "go", "going", "gonna", "got",
+    "had", "has", "have", "having", "he", "her", "here", "hers", "him", "his",
+    "how", "however",
+    "i", "if", "in", "into", "is", "it", "its",
+    "just",
+    "keep", "kind",
+    "later", "least", "less", "like", "little", "lot",
+    "make", "makes", "making", "many", "may", "me", "might", "mine", "more",
+    "most", "much", "must", "my", "myself",
+    "need", "needs", "needed", "never", "new", "next", "no", "nor", "not", "now",
+    "of", "off", "on", "once", "only", "or", "other", "ought", "our", "out",
+    "over", "own",
+    "per", "put",
+    "really", "right",
+    "same", "she", "should", "so", "some", "soon", "start", "started",
+    "starting", "still", "such", "sure",
+    "take", "than", "that", "the", "their", "theirs", "them", "then", "there",
+    "these", "they", "thing", "things", "this", "those", "through", "time",
+    "to", "today", "tomorrow", "tonight", "too", "try", "trying",
+    "under", "until", "up", "us", "use", "using",
+    "very",
+    "want", "wanted", "wanna", "was", "way", "we", "week", "well", "were",
+    "what", "when", "where", "which", "while", "who", "whom", "why", "will",
+    "with", "would",
+    "yet", "you", "your", "yours",
+})
+
+# Below this length a token is almost never a usable topic word, and short
+# fragments make noisy traps. Applied after stopword removal.
+MIN_CONTENT_WORD_LENGTH = 3
+
+
+def extract_content_words(goal, max_words=MAX_CONTENT_WORDS):
+    """
+    Pulls the topical words out of a spoken goal, so trap window titles can be
+    built from them. Deterministic string handling only, no model and no new
+    dependency: lowercase, split on anything that is not a letter, digit or
+    internal apostrophe, drop stopwords and very short tokens, de-duplicate
+    while preserving spoken order, and keep at most max_words.
+
+    "I have to write a report." -> ["write", "report"]
+
+    Returns [] for the degenerate cases (empty goal, non-string goal, a goal
+    made entirely of stopwords such as "I need to do this now"). Callers must
+    treat an empty list as "no traps can be generated for this goal" and carry
+    on, never as an error.
+    """
+    if not isinstance(goal, str) or not goal.strip():
+        return []
+
+    tokens = re.findall(r"[a-z0-9']+", goal.lower())
+
+    content_words = []
+    for token in tokens:
+        word = token.strip("'")
+        # Drop the possessive suffix so "sister's" becomes "sister". The
+        # trap templates read as natural window titles with the bare noun
+        # and as nonsense with the possessive still attached.
+        if word.endswith("'s"):
+            word = word[:-2]
+        if len(word) < MIN_CONTENT_WORD_LENGTH:
+            continue
+        if word in GOAL_STOPWORDS:
+            continue
+        if word in content_words:
+            continue
+        content_words.append(word)
+        if len(content_words) >= max_words:
+            break
+
+    return content_words
+
+
+def generate_hard_negatives(goal, templates_path=HARD_NEGATIVE_TEMPLATES_PATH, max_words=MAX_CONTENT_WORDS):
+    """
+    Builds goal-specific trap window titles by substituting each content word
+    from the goal into every generic off-task template in
+    hard_negative_templates.json.
+
+    These are the samples the generic distraction bank has never contained:
+    windows that share the goal's vocabulary but are genuinely off task, which
+    is exactly the population the calibrated threshold was failing to sit above
+    (see notes/CogAlign_Model_Testing_Log.md section 7).
+
+    A falsy templates_path means "generation is switched off", and returns []
+    without touching the filesystem. That is how the live app runs, see
+    GENERATED_HARD_NEGATIVES_DEFAULT above. It is checked explicitly rather
+    than left to open(None) raising into the catch-all below, so that the
+    disabled path stays distinguishable from a genuine failure and does not
+    depend on the breadth of an except clause.
+
+    Returns [] on any failure or degenerate goal, never raises. Calibration
+    then simply proceeds on the generic bank alone, which is the pre-existing
+    behaviour, so this can only ever add signal, never remove a working path.
+    """
+    if not templates_path:
+        return []
+
+    try:
+        content_words = extract_content_words(goal, max_words=max_words)
+        if not content_words:
+            return []
+
+        with open(templates_path, "r") as f:
+            data = json.load(f)
+
+        templates = data.get("templates", [])
+        if not templates:
+            return []
+
+        generated = []
+        for template in templates:
+            if not isinstance(template, str) or "{word}" not in template:
+                continue
+            for word in content_words:
+                generated.append(template.replace("{word}", word))
+
+        return generated
+    except Exception:
+        return []
 
 
 def calibrate_threshold(
@@ -31,6 +202,8 @@ def calibrate_threshold(
     percentile=CALIBRATION_PERCENTILE,
     margin=CALIBRATION_MARGIN,
     default=DEFAULT_THRESHOLD,
+    templates_path=GENERATED_HARD_NEGATIVES_DEFAULT,
+    max_threshold=CALIBRATION_CEILING,
 ):
     """
     Calibrates a per-goal threshold instead of using the fixed 0.01 default, which
@@ -38,15 +211,32 @@ def calibrate_threshold(
     and does not generalize, raw score scale varies wildly by goal (see
     tests/diagnose_goal_sensitivity.py).
 
-    Reuses the existing goal-agnostic bank of generic distraction examples in
-    workspace_samples.json, scores the session's goal against every one of them,
-    and takes a high percentile (90th by default, not the max, so one outlier
-    sample doesn't distort it) as this goal's "distraction ceiling". The live
-    threshold is set just above that ceiling.
+    Scores the session's goal against a population of off-task windows and takes
+    a high percentile (90th by default, not the max, so one outlier sample
+    doesn't distort it) as this goal's "distraction ceiling". The live threshold
+    is set just above that ceiling.
+
+    As shipped, that population is the goal-agnostic bank of generic distraction
+    examples in workspace_samples.json alone: Netflix, Instagram, food delivery,
+    none of which share vocabulary with any goal.
+
+    A second population can be added by passing templates_path explicitly:
+    goal-specific hard negatives synthesised by substituting the goal's own
+    content words into the off-task templates in hard_negative_templates.json.
+    That is the rejected calibration experiment, off on the live path (see
+    GENERATED_HARD_NEGATIVES_DEFAULT above for why) and switched on by
+    tests/test_calibration.py and tests/evaluate_calibration_fix.py so it stays
+    reproducible. It halved the vocabulary-sharing leak and nearly tripled the
+    false alarm rate on genuine work, which is the wrong trade for a focus tool.
+    See notes/CogAlign_Model_Testing_Log.md section 8.
 
     Runs once per session at startup, not per tick. Falls back to the fixed
     default threshold if calibration fails for any reason (file missing, empty
-    scores, etc.) so the system stays functional either way.
+    scores, etc.) so the system stays functional either way. Hard negative
+    generation is additive and independently guarded: if it yields nothing, for
+    any reason including a goal with no extractable content words or a missing
+    template file, calibration proceeds on the generic bank alone, which is
+    exactly the previous behaviour.
     """
     try:
         with open(samples_path, "r") as f:
@@ -56,12 +246,31 @@ def calibrate_threshold(
         if not distractions:
             return default
 
-        scores = classifier.score_batch(goal, distractions)
+        # Two populations, both additive. The generic bank (always) and
+        # generated hard negatives (off on the live path, templates_path
+        # defaults to None). The generator swallows its own failures and
+        # returns [], so a missing or broken template file degrades
+        # calibration back to the generic bank alone rather than failing
+        # startup.
+        calibration_samples = (
+            list(distractions)
+            + generate_hard_negatives(goal, templates_path=templates_path)
+        )
+
+        scores = classifier.score_batch(goal, calibration_samples)
         if not scores:
             return default
 
         ceiling = float(np.percentile(scores, percentile))
-        return ceiling + margin
+        threshold = ceiling + margin
+
+        # Sanity ceiling. A pathological goal, one whose content words appear
+        # in almost any window title, could otherwise push the threshold above
+        # the score its own genuine work earns, so every window reads as
+        # distraction and the user is nudged continuously while working. That
+        # failure is worse than missing a distraction, because it destroys
+        # trust in the system immediately. See the log for how 0.15 was chosen.
+        return min(threshold, max_threshold)
     except Exception:
         return default
 
