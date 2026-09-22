@@ -110,24 +110,8 @@ class CogAlignEngine:
 
         window_text = f"{app_name} - {window_title}"
 
-        # Richer visible-text read, alongside the existing app name and
-        # title, not replacing them. window_text (app + title alone) still
-        # drives the console print and the nudge's "distracted by" context
-        # below. Only the scoring call gets the enriched text, since that's
-        # the one thing that benefits from more content to compare against
-        # the goal. This reads whatever the background updater thread has
-        # cached, instantly, the tick never waits on a live accessibility
-        # read anymore. Empty if nothing is cached yet, the cache belongs
-        # to a different app (a fast task switch), the cache is stale, or
-        # the underlying read found nothing, Chrome almost always (confirmed
-        # live, Chromium does not expose page text this way without an
-        # assistive technology client active). All of which are fine,
-        # scoring_text then just falls back to window_text alone.
-        visible_text = self.tracker.get_cached_visible_text(app_name)
-        scoring_text = f"{window_text} {visible_text}".strip()
-
         is_goal_oriented, score = self.classifier.is_related(
-            scoring_text, self.core_goal, threshold=self.classifier_threshold
+            window_text, self.core_goal, threshold=self.classifier_threshold
         )
 
         action, level = self.state_machine.evaluate_state(is_goal_oriented)
@@ -169,16 +153,6 @@ class CogAlignEngine:
         main thread and does not work there.
         """
         print(f"⏱️ Checking every {interval}s. Press Ctrl+C to stop.\n")
-        # Started here, tied to the actual monitoring session's lifetime,
-        # not to WindowTracker construction, so tests that only call
-        # run_tick() directly never spin up a real background thread, and
-        # a dashboard session that gets started and stopped repeatedly
-        # doesn't leave one more thread running forever each time, the
-        # finally below stops it on every exit path: stop_event, Ctrl+C,
-        # and the PASSIVE_LOG auto shutdown's sys.exit(0), since a finally
-        # runs for SystemExit too as long as the try block is still on the
-        # call stack when it's raised.
-        self.tracker.start_background_visible_text_updates()
         try:
             while stop_event is None or not stop_event.is_set():
                 self.run_tick()
@@ -186,8 +160,6 @@ class CogAlignEngine:
             print("\nMonitoring stopped (stop requested).")
         except KeyboardInterrupt:
             print("\nMonitoring stopped.")
-        finally:
-            self.tracker.stop_background_visible_text_updates()
 
 
 if __name__ == "__main__":
