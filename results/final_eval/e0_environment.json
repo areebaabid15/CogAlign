@@ -1,0 +1,57 @@
+{
+  "timestamp": "2026-09-23T02:30:58",
+  "git_commit": "347a270",
+  "platform": "macOS-15.2-x86_64-i386-64bit",
+  "python": "3.12.2",
+  "macos": "15.2",
+  "cpu": "Intel(R) Core(TM) i9-9880H CPU @ 2.30GHz",
+  "physical_cores": "8",
+  "logical_cores": "16",
+  "ram_gb": 16.0,
+  "machine_model": "MacBookPro15,1",
+  "python_executable": "/Users/mac/Desktop/CogAlign_copy/venv/bin/python",
+  "packages": {
+    "torch": "2.2.2",
+    "sentence-transformers": "5.7.0",
+    "transformers": "4.41.0",
+    "openai-whisper": "20250625",
+    "numpy": "1.26.4",
+    "scipy": "1.17.1",
+    "requests": "2.34.2",
+    "flask": "3.1.3",
+    "pytest": "9.1.1",
+    "sounddevice": "0.5.5",
+    "tokenizers": "0.19.1"
+  },
+  "git_status_short": "M .gitignore\n M src/engine.py\n?? \"report_drafts/\"\n?? data/label_audit/\n?? data/workspace_dumps/work_like_distractions.json\n?? experiments/\n?? results/final_eval/\n?? results/worklike_fix_evaluation.json\n?? tests/evaluate_worklike_fix.py",
+  "ollama_version": "0.34.2",
+  "ollama_models": [
+    {
+      "name": "qwen2.5:0.5b",
+      "size_bytes": 397821319,
+      "digest": "a8b0c51577010a279d933d14c2a8ab4b268079d44c5c8830c0a93900f1827c67",
+      "family": "qwen2",
+      "parameter_size": "494.03M",
+      "quantization_level": "Q4_K_M",
+      "format": "gguf"
+    },
+    {
+      "name": "qwen2.5:1.5b",
+      "size_bytes": 986061892,
+      "digest": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+      "family": "qwen2",
+      "parameter_size": "1.5B",
+      "quantization_level": "Q4_K_M",
+      "format": "gguf"
+    },
+    {
+      "name": "llama3.2:1b",
+      "size_bytes": 1321098329,
+      "digest": "baf6a787fdffd633537aa2eb51cfd54cb93ff08e28040095462bb63daf552878",
+      "family": "llama",
+      "parameter_size": "1.2B",
+      "quantization_level": "Q8_0",
+      "format": "gguf"
+    }
+  ]
+}

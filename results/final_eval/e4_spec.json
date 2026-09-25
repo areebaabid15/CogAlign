@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "timestamp": "2026-09-23T02:31:05",
+    "git_commit": "347a270",
+    "platform": "macOS-15.2-x86_64-i386-64bit",
+    "python": "3.12.2"
+  },
+  "profiles": {
+    "demo": {
+      "buffer": 5,
+      "l2": 10,
+      "l3": 15,
+      "l3_interval": 10
+    },
+    "production": {
+      "buffer": 30,
+      "l2": 90,
+      "l3": 150,
+      "l3_interval": 60
+    }
+  },
+  "seed": 2026,
+  "real_implementation": {
+    "demo": {
+      "traces": 10000,
+      "ticks": 1456996,
+      "violations": {},
+      "transitions": {
+        "DISTRACTED_BUFFER->DISTRACTED_BUFFER": 69574,
+        "DISTRACTED_BUFFER->ESCALATING": 64867,
+        "DISTRACTED_BUFFER->FOCUS": 30036,
+        "ESCALATING->ESCALATING": 318605,
+        "ESCALATING->FOCUS": 41466,
+        "ESCALATING->PASSIVE_LOG": 21173,
+        "FOCUS->DISTRACTED_BUFFER": 95960,
+        "FOCUS->FOCUS": 25369,
+        "PASSIVE_LOG->FOCUS": 15242,
+        "PASSIVE_LOG->PASSIVE_LOG": 774704
+      }
+    },
+    "production": {
+      "traces": 10000,
+      "ticks": 1454233,
+      "violations": {},
+      "transitions": {
+        "DISTRACTED_BUFFER->DISTRACTED_BUFFER": 277311,
+        "DISTRACTED_BUFFER->ESCALATING": 37620,
+        "DISTRACTED_BUFFER->FOCUS": 58401,
+        "ESCALATING->ESCALATING": 521425,
+        "ESCALATING->FOCUS": 28508,
+        "ESCALATING->PASSIVE_LOG": 5951,
+        "FOCUS->DISTRACTED_BUFFER": 98333,
+        "FOCUS->FOCUS": 26203,
+        "PASSIVE_LOG->FOCUS": 2198,
+        "PASSIVE_LOG->PASSIVE_LOG": 398283
+      }
+    }
+  },
+  "example_suite_real": {
+    "pass": true,
+    "summary": "13 passed in 0.03s"
+  },
+  "mutants": {
+    "M1_grace_halved": {
+      "description": "buffer ends at half the threshold",
+      "applicable": true,
+      "killed_by_property_suite": true,
+      "property_violations": {
+        "demo": [
+          "P2_grace"
+        ],
+        "production": [
+          "P2_grace"
+        ]
+      },
+      "killed_by_example_suite": false,
+      "example_suite_summary": "13 passed in 0.03s"
+    },
+    "M2_cap_off_by_one": {
+      "description": "allows a fourth Level 3 nudge",
+      "applicable": true,
+      "killed_by_property_suite": true,
+      "property_violations": {
+        "demo": [
+          "P6_cap"
+        ],
+        "production": [
+          "P6_cap"
+        ]
+      },
+      "killed_by_example_suite": true,
+      "example_suite_summary": "1 failed, 12 passed in 0.05s"
+    },
+    "M3_repeat_too_soon": {
+      "description": "Level 3 repeats at half the interval",
+      "applicable": true,
+      "killed_by_property_suite": true,
+      "property_violations": {
+        "demo": [
+          "P5_spacing"
+        ],
+        "production": [
+          "P5_spacing"
+        ]
+      },
+      "killed_by_example_suite": false,
+      "example_suite_summary": "13 passed in 0.03s"
+    },
+    "M4_skips_levels": {
+      "description": "jumps straight to the target level",
+      "applicable": true,
+      "killed_by_property_suite": true,
+      "property_violations": {
+        "demo": [
+          "P3_order"
+        ],
+        "production": [
+          "P3_order"
+        ]
+      },
+      "killed_by_example_suite": true,
+      "example_suite_summary": "2 failed, 11 passed in 0.05s"
+    },
+    "M5_no_reset": {
+      "description": "an on-task tick no longer resets the episode",
+      "applicable": true,
+      "killed_by_property_suite": true,
+      "property_violations": {
+        "demo": [
+          "P1_reset"
+        ],
+        "production": [
+          "P1_reset"
+        ]
+      },
+      "killed_by_example_suite": true,
+      "example_suite_summary": "2 failed, 11 passed in 0.05s"
+    },
+    "M6_level2_early": {
+      "description": "Level 2 threshold replaced by the buffer threshold",
+      "applicable": true,
+      "killed_by_property_suite": true,
+      "property_violations": {
+        "demo": [
+          "P4_lower_bound"
+        ],
+        "production": [
+          "P4_lower_bound"
+        ]
+      },
+      "killed_by_example_suite": false,
+      "example_suite_summary": "13 passed in 0.03s"
+    },
+    "M7_historical_deadlock": {
+      "description": "pre-5044ff3 logic that could stay at Level 1 forever",
+      "applicable": true,
+      "killed_by_property_suite": true,
+      "property_violations": {
+        "demo": [
+          "P7_progress"
+        ],
+        "production": [
+          "P7_progress"
+        ]
+      },
+      "killed_by_example_suite": true,
+      "example_suite_summary": "3 failed, 10 passed in 0.06s"
+    }
+  }
+}

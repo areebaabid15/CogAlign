@@ -1,0 +1,2315 @@
+{
+  "meta": {
+    "timestamp": "2026-09-24T01:07:21",
+    "git_commit": "347a270",
+    "platform": "macOS-15.2-x86_64-i386-64bit",
+    "python": "3.12.2"
+  },
+  "model": "CrossEncoder",
+  "configs": {
+    "fixed_0.01": "no calibration, fixed 0.01",
+    "generic": {
+      "work_like_path": null,
+      "templates_path": null
+    },
+    "generic_worklike": {
+      "work_like_path": "data/workspace_dumps/work_like_distractions.json",
+      "templates_path": null
+    },
+    "generic_worklike_pruned": {
+      "work_like_path": "/var/folders/tj/2_wnf3f93bs86c2kfc82pm500000gn/T/worklike_pruned_nw371t9_.json",
+      "templates_path": null
+    },
+    "generic_hardneg": {
+      "work_like_path": null,
+      "templates_path": "data/workspace_dumps/hard_negative_templates.json"
+    },
+    "worklike_pruned_hardneg": {
+      "work_like_path": "/var/folders/tj/2_wnf3f93bs86c2kfc82pm500000gn/T/worklike_pruned_nw371t9_.json",
+      "templates_path": "data/workspace_dumps/hard_negative_templates.json"
+    }
+  },
+  "pruning": {
+    "rule": "a calibration example must never be something a user could declare as their goal",
+    "removed": [
+      "Microsoft Excel - household budget.xlsx",
+      "Microsoft Word - CV.docx",
+      "Microsoft Word - Cover letter draft.docx",
+      "Safari - Council tax account login",
+      "Notes - grocery list",
+      "Microsoft Excel - monthly expenses tracker.xlsx",
+      "Mail - Compose - Re flight booking confirmation",
+      "Notes - packing list for trip",
+      "Microsoft Word - Flat viewing notes.docx"
+    ],
+    "kept": [
+      "Mail - Inbox 48 unread",
+      "Microsoft Outlook - Inbox",
+      "Slack - general - 12 new messages",
+      "Calendar - September 2026",
+      "Finder - Downloads",
+      "System Settings - Software Update",
+      "Terminal - brew upgrade",
+      "Google Chrome - Gmail - Promotions",
+      "Calendar - Dentist appointment reminder",
+      "System Settings - Storage management",
+      "Finder - Applications"
+    ]
+  },
+  "sets": [
+    {
+      "set": "in_sample",
+      "path": "data/workspace_dumps/evaluation_set.json",
+      "goals": [
+        {
+          "goal": "I have to write a report.",
+          "domain": "professional writing",
+          "samples": {
+            "focused": [
+              {
+                "window": "Microsoft Word - Q3 Report Draft.docx",
+                "score": 0.1313575804233551
+              },
+              {
+                "window": "Microsoft Word - report_final_v4.docx",
+                "score": 0.1233089491724968
+              },
+              {
+                "window": "Pages - Project Report - Section 2 Findings",
+                "score": 0.10048185288906097
+              },
+              {
+                "window": "Google Chrome - Report outline, introduction and conclusion - Google Docs",
+                "score": 0.20710402727127075
+              },
+              {
+                "window": "Google Chrome - How to structure a formal report - Purdue OWL",
+                "score": 0.07606982439756393
+              },
+              {
+                "window": "Microsoft Excel - report figures and charts.xlsx",
+                "score": 0.06092206761240959
+              },
+              {
+                "window": "Notes - report notes: key points to cover",
+                "score": 0.12043538689613342
+              },
+              {
+                "window": "Microsoft Word - Report Draft.docx - 14 Grammarly suggestions",
+                "score": 0.13122929632663727
+              }
+            ],
+            "distraction": [
+              {
+                "window": "Safari - spotify - Google Search",
+                "score": 0.010966054163873196
+              },
+              {
+                "window": "Spotify - Lo-Fi Beats to Study To",
+                "score": 0.01772223971784115
+              },
+              {
+                "window": "Safari - Top 10 Funniest Cat Videos 2024 - YouTube",
+                "score": 0.01377276610583067
+              },
+              {
+                "window": "Instagram - Explore Page",
+                "score": 0.00728921452537179
+              },
+              {
+                "window": "Netflix - Stranger Things S4:E5",
+                "score": 0.0078840097412467
+              },
+              {
+                "window": "WhatsApp - Mum (3 unread)",
+                "score": 0.011911693960428238
+              },
+              {
+                "window": "Safari - Uber Eats - checkout",
+                "score": 0.010892955586314201
+              },
+              {
+                "window": "Messages - Flat Group (12 unread)",
+                "score": 0.022445065900683403
+              }
+            ],
+            "hard_negative": [
+              {
+                "window": "Safari - news report - Google Search",
+                "score": 0.04126504436135292
+              },
+              {
+                "window": "Google Chrome - Match report: Arsenal 2-1 Chelsea - BBC Sport",
+                "score": 0.028779704123735428
+              },
+              {
+                "window": "Safari - Check your credit report free - Experian",
+                "score": 0.05349499359726906
+              },
+              {
+                "window": "Weather - Weather report for London, hourly forecast",
+                "score": 0.04770800098776817
+              },
+              {
+                "window": "Google Chrome - Report a bug - Issue #4412 - microsoft/vscode - GitHub",
+                "score": 0.0426025427877903
+              },
+              {
+                "window": "Safari - How to report someone on Instagram - Help Centre",
+                "score": 0.08376418799161911
+              },
+              {
+                "window": "Google Chrome - Consumer Reports: best washing machines 2026",
+                "score": 0.031688280403614044
+              },
+              {
+                "window": "Safari - Report: Man City agree deal for striker - Sky Sports",
+                "score": 0.030388370156288147
+              }
+            ]
+          },
+          "by_config": {
+            "fixed_0.01": {
+              "threshold": 0.01,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 8,
+              "hard_negative_leak_rate": 1.0,
+              "distraction_n": 8,
+              "distraction_leaked": 6,
+              "distraction_leak_rate": 0.75,
+              "tp": 8,
+              "fn": 0,
+              "fp": 14,
+              "tn": 2,
+              "accuracy": 0.4166666666666667,
+              "precision": 0.36363636363636365,
+              "recall": 1.0,
+              "f1": 0.5333333333333333
+            },
+            "generic": {
+              "threshold": 0.02281871933490038,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 8,
+              "hard_negative_leak_rate": 1.0,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 8,
+              "tn": 8,
+              "accuracy": 0.6666666666666666,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666
+            },
+            "generic_worklike": {
+              "threshold": 0.032437238395214084,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 5,
+              "hard_negative_leak_rate": 0.625,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 5,
+              "tn": 11,
+              "accuracy": 0.7916666666666666,
+              "precision": 0.6153846153846154,
+              "recall": 1.0,
+              "f1": 0.761904761904762
+            },
+            "generic_worklike_pruned": {
+              "threshold": 0.028608941584825517,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 8,
+              "hard_negative_leak_rate": 1.0,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 8,
+              "tn": 8,
+              "accuracy": 0.6666666666666666,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666
+            },
+            "generic_hardneg": {
+              "threshold": 0.0401840890944004,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 5,
+              "hard_negative_leak_rate": 0.625,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 5,
+              "tn": 11,
+              "accuracy": 0.7916666666666666,
+              "precision": 0.6153846153846154,
+              "recall": 1.0,
+              "f1": 0.761904761904762
+            },
+            "worklike_pruned_hardneg": {
+              "threshold": 0.03842992588877678,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 5,
+              "hard_negative_leak_rate": 0.625,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 5,
+              "tn": 11,
+              "accuracy": 0.7916666666666666,
+              "precision": 0.6153846153846154,
+              "recall": 1.0,
+              "f1": 0.761904761904762
+            }
+          }
+        },
+        {
+          "goal": "Writing my dissertation literature review",
+          "domain": "academic writing",
+          "samples": {
+            "focused": [
+              {
+                "window": "Microsoft Word - Literature Review Chapter 2.docx",
+                "score": 0.055256057530641556
+              },
+              {
+                "window": "Zotero - My Library - dissertation references",
+                "score": 0.0772547647356987
+              },
+              {
+                "window": "Preview - Reimers & Gurevych 2019 Sentence-BERT.pdf",
+                "score": 0.01120008435100317
+              },
+              {
+                "window": "Google Chrome - cross encoder semantic similarity - Google Scholar",
+                "score": 0.008830753155052662
+              },
+              {
+                "window": "Safari - Overleaf - dissertation.tex - Chapter 2 Related Work",
+                "score": 0.0258043073117733
+              },
+              {
+                "window": "Notes - lit review argument structure and themes",
+                "score": 0.01715356670320034
+              },
+              {
+                "window": "Google Chrome - Scopus - advanced search results, 214 documents",
+                "score": 0.010840259492397308
+              },
+              {
+                "window": "Microsoft Word - Bibliography and References.docx",
+                "score": 0.013416534289717674
+              }
+            ],
+            "distraction": [
+              {
+                "window": "Spotify - Discover Weekly",
+                "score": 0.00711962440982461
+              },
+              {
+                "window": "Instagram - Reels",
+                "score": 0.0043439301662147045
+              },
+              {
+                "window": "Safari - I Survived 100 Days in Hardcore Minecraft - YouTube",
+                "score": 0.004668690729886293
+              },
+              {
+                "window": "Google Chrome - ASOS - Women's Sale Up to 70% off",
+                "score": 0.0038043309468775988
+              },
+              {
+                "window": "WhatsApp - Flat Group (12 unread)",
+                "score": 0.005959537345916033
+              },
+              {
+                "window": "Safari - Deliveroo - Order tracking, 25 min",
+                "score": 0.005792433861643076
+              },
+              {
+                "window": "Netflix - Browse TV Shows",
+                "score": 0.0047343941405415535
+              },
+              {
+                "window": "Google Chrome - Ryanair - flights to Lisbon in March",
+                "score": 0.006137361750006676
+              }
+            ],
+            "hard_negative": [
+              {
+                "window": "Google Chrome - Amazon.co.uk - Write a customer review for Sony WH-1000XM5",
+                "score": 0.004968458320945501
+              },
+              {
+                "window": "Safari - The Fellowship of the Ring - English Literature GCSE revision",
+                "score": 0.01548298355191946
+              },
+              {
+                "window": "Google Chrome - Trustpilot reviews - is this site legit?",
+                "score": 0.009147360920906067
+              },
+              {
+                "window": "Safari - Honest review: iPhone 16 Pro after 3 months - YouTube",
+                "score": 0.006411352660506964
+              },
+              {
+                "window": "Google Chrome - Performance review self assessment template - HR portal",
+                "score": 0.02323979139328003
+              },
+              {
+                "window": "Safari - Goodreads - Literature that changed my life, listopia",
+                "score": 0.007806509733200073
+              },
+              {
+                "window": "Google Chrome - Rotten Tomatoes - Dune Part Two reviews",
+                "score": 0.014112383127212524
+              },
+              {
+                "window": "Safari - dissertation struggles memes - r/PhD - Reddit",
+                "score": 0.022375863045454025
+              }
+            ]
+          },
+          "by_config": {
+            "fixed_0.01": {
+              "threshold": 0.01,
+              "focused_n": 8,
+              "false_alarms": 1,
+              "false_alarm_rate": 0.125,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 4,
+              "hard_negative_leak_rate": 0.5,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 7,
+              "fn": 1,
+              "fp": 4,
+              "tn": 12,
+              "accuracy": 0.7916666666666666,
+              "precision": 0.6363636363636364,
+              "recall": 0.875,
+              "f1": 0.7368421052631579
+            },
+            "generic": {
+              "threshold": 0.012273497711867094,
+              "focused_n": 8,
+              "false_alarms": 3,
+              "false_alarm_rate": 0.375,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 4,
+              "hard_negative_leak_rate": 0.5,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 5,
+              "fn": 3,
+              "fp": 4,
+              "tn": 12,
+              "accuracy": 0.7083333333333334,
+              "precision": 0.5555555555555556,
+              "recall": 0.625,
+              "f1": 0.5882352941176471
+            },
+            "generic_worklike": {
+              "threshold": 0.015036040842533113,
+              "focused_n": 8,
+              "false_alarms": 4,
+              "false_alarm_rate": 0.5,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 3,
+              "hard_negative_leak_rate": 0.375,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 4,
+              "fn": 4,
+              "fp": 3,
+              "tn": 13,
+              "accuracy": 0.7083333333333334,
+              "precision": 0.5714285714285714,
+              "recall": 0.5,
+              "f1": 0.5333333333333333
+            },
+            "generic_worklike_pruned": {
+              "threshold": 0.014512384422123433,
+              "focused_n": 8,
+              "false_alarms": 4,
+              "false_alarm_rate": 0.5,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 3,
+              "hard_negative_leak_rate": 0.375,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 4,
+              "fn": 4,
+              "fp": 3,
+              "tn": 13,
+              "accuracy": 0.7083333333333334,
+              "precision": 0.5714285714285714,
+              "recall": 0.5,
+              "f1": 0.5333333333333333
+            },
+            "generic_hardneg": {
+              "threshold": 0.024225918501615526,
+              "focused_n": 8,
+              "false_alarms": 5,
+              "false_alarm_rate": 0.625,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 0,
+              "hard_negative_leak_rate": 0.0,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 3,
+              "fn": 5,
+              "fp": 0,
+              "tn": 16,
+              "accuracy": 0.7916666666666666,
+              "precision": 1.0,
+              "recall": 0.375,
+              "f1": 0.5454545454545454
+            },
+            "worklike_pruned_hardneg": {
+              "threshold": 0.023086185120046124,
+              "focused_n": 8,
+              "false_alarms": 5,
+              "false_alarm_rate": 0.625,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 1,
+              "hard_negative_leak_rate": 0.125,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 3,
+              "fn": 5,
+              "fp": 1,
+              "tn": 15,
+              "accuracy": 0.75,
+              "precision": 0.75,
+              "recall": 0.375,
+              "f1": 0.5
+            }
+          }
+        },
+        {
+          "goal": "Fixing the login bug in the authentication service",
+          "domain": "software engineering",
+          "samples": {
+            "focused": [
+              {
+                "window": "Visual Studio Code - auth_service.py - backend",
+                "score": 0.07999143749475479
+              },
+              {
+                "window": "Terminal - pytest tests/test_auth.py -k login",
+                "score": 0.05918687582015991
+              },
+              {
+                "window": "Google Chrome - JWT token expired error - Stack Overflow",
+                "score": 0.053596023470163345
+              },
+              {
+                "window": "Visual Studio Code - login_handler.py - backend",
+                "score": 0.04902659356594086
+              },
+              {
+                "window": "Google Chrome - Issue #3120: intermittent 401 on login - GitHub",
+                "score": 0.03672075644135475
+              },
+              {
+                "window": "Terminal - git diff src/auth/session.py",
+                "score": 0.04437687620520592
+              },
+              {
+                "window": "Safari - OAuth 2.0 refresh token rotation - Auth0 Docs",
+                "score": 0.04128133878111839
+              },
+              {
+                "window": "Postman - POST /api/v1/auth/login - 401 Unauthorized",
+                "score": 0.06050966680049896
+              }
+            ],
+            "distraction": [
+              {
+                "window": "Spotify - Deep Focus",
+                "score": 0.018270447850227356
+              },
+              {
+                "window": "Safari - Premier League highlights: matchweek 12 - YouTube",
+                "score": 0.014039474539458752
+              },
+              {
+                "window": "Discord - #general - 47 new messages",
+                "score": 0.015503386035561562
+              },
+              {
+                "window": "Google Chrome - Wordle - The New York Times",
+                "score": 0.019171735271811485
+              },
+              {
+                "window": "Instagram - Direct Messages",
+                "score": 0.021318895742297173
+              },
+              {
+                "window": "Netflix - The Office S3:E12",
+                "score": 0.017224261537194252
+              },
+              {
+                "window": "Safari - Domino's Pizza - checkout",
+                "score": 0.01624700240790844
+              },
+              {
+                "window": "TikTok - For You",
+                "score": 0.019652947783470154
+              }
+            ],
+            "hard_negative": [
+              {
+                "window": "Google Chrome - Log in to your Netflix account",
+                "score": 0.0244746170938015
+              },
+              {
+                "window": "Safari - Sign in - Online Banking - HSBC UK",
+                "score": 0.027852855622768402
+              },
+              {
+                "window": "Google Chrome - A Bug's Life (1998) - watch on Disney+",
+                "score": 0.018489044159650803
+              },
+              {
+                "window": "Safari - Report a bug - Minecraft Bedrock launcher - GitHub",
+                "score": 0.01974903605878353
+              },
+              {
+                "window": "Google Chrome - Customer Service - Track my Amazon order",
+                "score": 0.02584889717400074
+              },
+              {
+                "window": "Safari - Rentokil - bed bug treatment prices",
+                "score": 0.016585955396294594
+              },
+              {
+                "window": "Google Chrome - Two factor authentication setup - Instagram Help",
+                "score": 0.031169399619102478
+              },
+              {
+                "window": "Steam - Login - your wishlist is on sale",
+                "score": 0.025011062622070312
+              }
+            ]
+          },
+          "by_config": {
+            "fixed_0.01": {
+              "threshold": 0.01,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 8,
+              "hard_negative_leak_rate": 1.0,
+              "distraction_n": 8,
+              "distraction_leaked": 8,
+              "distraction_leak_rate": 1.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 16,
+              "tn": 0,
+              "accuracy": 0.3333333333333333,
+              "precision": 0.3333333333333333,
+              "recall": 1.0,
+              "f1": 0.5
+            },
+            "generic": {
+              "threshold": 0.025386747643351557,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 3,
+              "hard_negative_leak_rate": 0.375,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 3,
+              "tn": 13,
+              "accuracy": 0.875,
+              "precision": 0.7272727272727273,
+              "recall": 1.0,
+              "f1": 0.8421052631578948
+            },
+            "generic_worklike": {
+              "threshold": 0.031546831987798216,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 0,
+              "hard_negative_leak_rate": 0.0,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 0,
+              "tn": 16,
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "generic_worklike_pruned": {
+              "threshold": 0.030770395994186402,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 1,
+              "hard_negative_leak_rate": 0.125,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 1,
+              "tn": 15,
+              "accuracy": 0.9583333333333334,
+              "precision": 0.8888888888888888,
+              "recall": 1.0,
+              "f1": 0.9411764705882353
+            },
+            "generic_hardneg": {
+              "threshold": 0.03280898660421372,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 0,
+              "hard_negative_leak_rate": 0.0,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 0,
+              "tn": 16,
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "worklike_pruned_hardneg": {
+              "threshold": 0.03468865260481834,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 0,
+              "hard_negative_leak_rate": 0.0,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 0,
+              "tn": 16,
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          }
+        },
+        {
+          "goal": "Applying for graduate software engineering jobs",
+          "domain": "job hunting",
+          "samples": {
+            "focused": [
+              {
+                "window": "Google Chrome - LinkedIn Jobs - Graduate Software Engineer, London",
+                "score": 0.6341170072555542
+              },
+              {
+                "window": "Microsoft Word - Areeba_Abid_CV_2026.docx",
+                "score": 0.050684213638305664
+              },
+              {
+                "window": "Safari - Indeed - graduate developer roles, 214 results",
+                "score": 0.22445596754550934
+              },
+              {
+                "window": "Google Chrome - Cover letter, Monzo grad scheme - Google Docs",
+                "score": 0.10917891561985016
+              },
+              {
+                "window": "Safari - Bright Network - application deadline tracker",
+                "score": 0.05640135705471039
+              },
+              {
+                "window": "Google Chrome - Application status - Careers at Revolut",
+                "score": 0.0989503562450409
+              },
+              {
+                "window": "Notes - interview prep: STAR answers",
+                "score": 0.06267047673463821
+              },
+              {
+                "window": "Safari - LeetCode - Two Sum - Problem",
+                "score": 0.0698070079088211
+              }
+            ],
+            "distraction": [
+              {
+                "window": "Netflix - Brooklyn Nine-Nine S5:E3",
+                "score": 0.02344086579978466
+              },
+              {
+                "window": "Spotify - Today's Top Hits",
+                "score": 0.01984812319278717
+              },
+              {
+                "window": "Instagram - Explore Page",
+                "score": 0.03474397584795952
+              },
+              {
+                "window": "Safari - Ranking every crisp flavour in the UK - YouTube",
+                "score": 0.020183483138680458
+              },
+              {
+                "window": "WhatsApp - Sara (2 unread)",
+                "score": 0.024962762370705605
+              },
+              {
+                "window": "Google Chrome - Zara - New In: Winter Coats",
+                "score": 0.03428028151392937
+              },
+              {
+                "window": "TikTok - For You",
+                "score": 0.043130647391080856
+              },
+              {
+                "window": "Safari - BBC Sport - Live scores",
+                "score": 0.024389227852225304
+              }
+            ],
+            "hard_negative": [
+              {
+                "window": "Google Chrome - Steve Jobs (2015) - IMDb",
+                "score": 0.03880142420530319
+              },
+              {
+                "window": "Safari - Apply for a provisional driving licence - GOV.UK",
+                "score": 0.013764503411948681
+              },
+              {
+                "window": "Google Chrome - Graduation gown hire - University of London",
+                "score": 0.0789070725440979
+              },
+              {
+                "window": "Safari - A day in the life of a software engineer at Google - YouTube",
+                "score": 0.0708085149526596
+              },
+              {
+                "window": "Google Chrome - Passport application tracking - HM Passport Office",
+                "score": 0.05043657496571541
+              },
+              {
+                "window": "Safari - Engineering marvels: how the Burj Khalifa was built - Reddit",
+                "score": 0.011888406239449978
+              },
+              {
+                "window": "Google Chrome - Odd jobs near me - TaskRabbit",
+                "score": 0.04532179981470108
+              },
+              {
+                "window": "Safari - Application form - Council tax single person discount",
+                "score": 0.040190838277339935
+              }
+            ]
+          },
+          "by_config": {
+            "fixed_0.01": {
+              "threshold": 0.01,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 8,
+              "hard_negative_leak_rate": 1.0,
+              "distraction_n": 8,
+              "distraction_leaked": 8,
+              "distraction_leak_rate": 1.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 16,
+              "tn": 0,
+              "accuracy": 0.3333333333333333,
+              "precision": 0.3333333333333333,
+              "recall": 1.0,
+              "f1": 0.5
+            },
+            "generic": {
+              "threshold": 0.04858404688537121,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 3,
+              "hard_negative_leak_rate": 0.375,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 3,
+              "tn": 13,
+              "accuracy": 0.875,
+              "precision": 0.7272727272727273,
+              "recall": 1.0,
+              "f1": 0.8421052631578948
+            },
+            "generic_worklike": {
+              "threshold": 0.06739171177148819,
+              "focused_n": 8,
+              "false_alarms": 3,
+              "false_alarm_rate": 0.375,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 2,
+              "hard_negative_leak_rate": 0.25,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 5,
+              "fn": 3,
+              "fp": 2,
+              "tn": 14,
+              "accuracy": 0.7916666666666666,
+              "precision": 0.7142857142857143,
+              "recall": 0.625,
+              "f1": 0.6666666666666666
+            },
+            "generic_worklike_pruned": {
+              "threshold": 0.06389232084155083,
+              "focused_n": 8,
+              "false_alarms": 3,
+              "false_alarm_rate": 0.375,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 2,
+              "hard_negative_leak_rate": 0.25,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 5,
+              "fn": 3,
+              "fp": 2,
+              "tn": 14,
+              "accuracy": 0.7916666666666666,
+              "precision": 0.7142857142857143,
+              "recall": 0.625,
+              "f1": 0.6666666666666666
+            },
+            "generic_hardneg": {
+              "threshold": 0.06833589926362038,
+              "focused_n": 8,
+              "false_alarms": 3,
+              "false_alarm_rate": 0.375,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 2,
+              "hard_negative_leak_rate": 0.25,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 5,
+              "fn": 3,
+              "fp": 2,
+              "tn": 14,
+              "accuracy": 0.7916666666666666,
+              "precision": 0.7142857142857143,
+              "recall": 0.625,
+              "f1": 0.6666666666666666
+            },
+            "worklike_pruned_hardneg": {
+              "threshold": 0.06961684405803681,
+              "focused_n": 8,
+              "false_alarms": 3,
+              "false_alarm_rate": 0.375,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 2,
+              "hard_negative_leak_rate": 0.25,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 5,
+              "fn": 3,
+              "fp": 2,
+              "tn": 14,
+              "accuracy": 0.7916666666666666,
+              "precision": 0.7142857142857143,
+              "recall": 0.625,
+              "f1": 0.6666666666666666
+            }
+          }
+        },
+        {
+          "goal": "Doing my taxes and sorting out my bank statements",
+          "domain": "admin and finance",
+          "samples": {
+            "focused": [
+              {
+                "window": "Safari - HMRC - Self Assessment tax return 2025 to 2026",
+                "score": 0.03306557238101959
+              },
+              {
+                "window": "Microsoft Excel - expenses_2025.xlsx",
+                "score": 0.046823568642139435
+              },
+              {
+                "window": "Safari - Online Banking - Download statements PDF - Barclays",
+                "score": 0.07951092720031738
+              },
+              {
+                "window": "Preview - Statement_Jan2026.pdf",
+                "score": 0.05758049711585045
+              },
+              {
+                "window": "Google Chrome - Allowable expenses if you're self employed - GOV.UK",
+                "score": 0.02745525725185871
+              },
+              {
+                "window": "Microsoft Excel - tax_workings.xlsx - Sheet1",
+                "score": 0.047967638820409775
+              },
+              {
+                "window": "Safari - Government Gateway - sign in",
+                "score": 0.05143142491579056
+              },
+              {
+                "window": "Notes - receipts still missing for Q3",
+                "score": 0.0839238315820694
+              }
+            ],
+            "distraction": [
+              {
+                "window": "Spotify - Liked Songs",
+                "score": 0.03518353030085564
+              },
+              {
+                "window": "Netflix - Bake Off: The Professionals",
+                "score": 0.025751309469342232
+              },
+              {
+                "window": "Instagram - Reels",
+                "score": 0.02545333281159401
+              },
+              {
+                "window": "Safari - Minecraft but I can't touch grass - YouTube",
+                "score": 0.02120918035507202
+              },
+              {
+                "window": "WhatsApp - Mum (3 unread)",
+                "score": 0.0222794059664011
+              },
+              {
+                "window": "Google Chrome - Ryanair - flights to Lisbon in March",
+                "score": 0.027158915996551514
+              },
+              {
+                "window": "Discord - #gaming",
+                "score": 0.027845777571201324
+              },
+              {
+                "window": "TikTok - For You",
+                "score": 0.03413967415690422
+              }
+            ],
+            "hard_negative": [
+              {
+                "window": "Google Chrome - Food bank donation points near me",
+                "score": 0.032194703817367554
+              },
+              {
+                "window": "Safari - Tax the rich: why the system is broken - The Guardian",
+                "score": 0.021297210827469826
+              },
+              {
+                "window": "Google Chrome - Mission statement examples for startups",
+                "score": 0.021593431010842323
+              },
+              {
+                "window": "Safari - Bank Holiday 2026 dates UK",
+                "score": 0.04472721368074417
+              },
+              {
+                "window": "Google Chrome - Work life balance tips - r/antiwork",
+                "score": 0.03948746249079704
+              },
+              {
+                "window": "Safari - How to pay ZERO tax legally (the loophole) - YouTube",
+                "score": 0.025243515148758888
+              },
+              {
+                "window": "Google Chrome - Statement necklaces - ASOS",
+                "score": 0.021774841472506523
+              },
+              {
+                "window": "Safari - Ceramic piggy bank, handmade - Etsy",
+                "score": 0.027344727888703346
+              }
+            ]
+          },
+          "by_config": {
+            "fixed_0.01": {
+              "threshold": 0.01,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 8,
+              "hard_negative_leak_rate": 1.0,
+              "distraction_n": 8,
+              "distraction_leaked": 8,
+              "distraction_leak_rate": 1.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 16,
+              "tn": 0,
+              "accuracy": 0.3333333333333333,
+              "precision": 0.3333333333333333,
+              "recall": 1.0,
+              "f1": 0.5
+            },
+            "generic": {
+              "threshold": 0.0493516980856657,
+              "focused_n": 8,
+              "false_alarms": 4,
+              "false_alarm_rate": 0.5,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 0,
+              "hard_negative_leak_rate": 0.0,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 4,
+              "fn": 4,
+              "fp": 0,
+              "tn": 16,
+              "accuracy": 0.8333333333333334,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666
+            },
+            "generic_worklike": {
+              "threshold": 0.05871393375098705,
+              "focused_n": 8,
+              "false_alarms": 6,
+              "false_alarm_rate": 0.75,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 0,
+              "hard_negative_leak_rate": 0.0,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 2,
+              "fn": 6,
+              "fp": 0,
+              "tn": 16,
+              "accuracy": 0.75,
+              "precision": 1.0,
+              "recall": 0.25,
+              "f1": 0.4
+            },
+            "generic_worklike_pruned": {
+              "threshold": 0.05695225402712822,
+              "focused_n": 8,
+              "false_alarms": 5,
+              "false_alarm_rate": 0.625,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 0,
+              "hard_negative_leak_rate": 0.0,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 3,
+              "fn": 5,
+              "fp": 0,
+              "tn": 16,
+              "accuracy": 0.7916666666666666,
+              "precision": 1.0,
+              "recall": 0.375,
+              "f1": 0.5454545454545454
+            },
+            "generic_hardneg": {
+              "threshold": 0.055984048843383795,
+              "focused_n": 8,
+              "false_alarms": 5,
+              "false_alarm_rate": 0.625,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 0,
+              "hard_negative_leak_rate": 0.0,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 3,
+              "fn": 5,
+              "fp": 0,
+              "tn": 16,
+              "accuracy": 0.7916666666666666,
+              "precision": 1.0,
+              "recall": 0.375,
+              "f1": 0.5454545454545454
+            },
+            "worklike_pruned_hardneg": {
+              "threshold": 0.05961603701114654,
+              "focused_n": 8,
+              "false_alarms": 6,
+              "false_alarm_rate": 0.75,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 0,
+              "hard_negative_leak_rate": 0.0,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 2,
+              "fn": 6,
+              "fp": 0,
+              "tn": 16,
+              "accuracy": 0.75,
+              "precision": 1.0,
+              "recall": 0.25,
+              "f1": 0.4
+            }
+          }
+        },
+        {
+          "goal": "Editing the video for my YouTube channel",
+          "domain": "creative work",
+          "samples": {
+            "focused": [
+              {
+                "window": "Final Cut Pro - channel_ep14.fcpbundle",
+                "score": 0.049184657633304596
+              },
+              {
+                "window": "Adobe Premiere Pro - ep14_rough_cut.prproj",
+                "score": 0.048852864652872086
+              },
+              {
+                "window": "Google Chrome - YouTube Studio - Content - Drafts",
+                "score": 0.4783596098423004
+              },
+              {
+                "window": "Audacity - voiceover_take3.wav",
+                "score": 0.01823161542415619
+              },
+              {
+                "window": "Safari - Royalty free background music - Epidemic Sound",
+                "score": 0.027164680883288383
+              },
+              {
+                "window": "Adobe Photoshop - ep14_thumbnail.psd",
+                "score": 0.015035890974104404
+              },
+              {
+                "window": "Google Chrome - YouTube Studio - Analytics - Last 28 days",
+                "score": 0.14818374812602997
+              },
+              {
+                "window": "Notes - ep14 edit list: cut intro to 15s",
+                "score": 0.09857234358787537
+              }
+            ],
+            "distraction": [
+              {
+                "window": "Google Chrome - BBC News - Home",
+                "score": 0.017717532813549042
+              },
+              {
+                "window": "Spotify - Discover Weekly",
+                "score": 0.02054743841290474
+              },
+              {
+                "window": "WhatsApp - Flat Group (12 unread)",
+                "score": 0.014675736427307129
+              },
+              {
+                "window": "Netflix - Browse TV Shows",
+                "score": 0.021419914439320564
+              },
+              {
+                "window": "Safari - Uber Eats - checkout",
+                "score": 0.015527517534792423
+              },
+              {
+                "window": "Instagram - Direct Messages",
+                "score": 0.028809743002057076
+              },
+              {
+                "window": "Google Chrome - Wordle - The New York Times",
+                "score": 0.017528444528579712
+              },
+              {
+                "window": "Safari - Amazon.co.uk - Your Orders",
+                "score": 0.01467322837561369
+              }
+            ],
+            "hard_negative": [
+              {
+                "window": "Safari - Watch Later - 62 videos - YouTube",
+                "score": 0.05092690512537956
+              },
+              {
+                "window": "Google Chrome - How I edit my videos in 10 minutes (full workflow) - YouTube",
+                "score": 0.7112076878547668
+              },
+              {
+                "window": "Safari - Best video editing laptops 2026 - TechRadar reviews",
+                "score": 0.10532167553901672
+              },
+              {
+                "window": "Google Chrome - Channel 4 - Gogglebox catch up",
+                "score": 0.04275873675942421
+              },
+              {
+                "window": "Safari - Music video: Taylor Swift - Fortnight - YouTube",
+                "score": 0.040370408445596695
+              },
+              {
+                "window": "Instagram - Edit your profile",
+                "score": 0.05232063680887222
+              },
+              {
+                "window": "Google Chrome - Video doorbell installation - Ring Help",
+                "score": 0.019434647634625435
+              },
+              {
+                "window": "Discord - #video-clips - 14 new",
+                "score": 0.02292143926024437
+              }
+            ]
+          },
+          "by_config": {
+            "fixed_0.01": {
+              "threshold": 0.01,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 8,
+              "hard_negative_leak_rate": 1.0,
+              "distraction_n": 8,
+              "distraction_leaked": 8,
+              "distraction_leak_rate": 1.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 16,
+              "tn": 0,
+              "accuracy": 0.3333333333333333,
+              "precision": 0.3333333333333333,
+              "recall": 1.0,
+              "f1": 0.5
+            },
+            "generic": {
+              "threshold": 0.038340001478791234,
+              "focused_n": 8,
+              "false_alarms": 3,
+              "false_alarm_rate": 0.375,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 6,
+              "hard_negative_leak_rate": 0.75,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 5,
+              "fn": 3,
+              "fp": 6,
+              "tn": 10,
+              "accuracy": 0.625,
+              "precision": 0.45454545454545453,
+              "recall": 0.625,
+              "f1": 0.5263157894736842
+            },
+            "generic_worklike": {
+              "threshold": 0.03721861198544502,
+              "focused_n": 8,
+              "false_alarms": 3,
+              "false_alarm_rate": 0.375,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 6,
+              "hard_negative_leak_rate": 0.75,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 5,
+              "fn": 3,
+              "fp": 6,
+              "tn": 10,
+              "accuracy": 0.625,
+              "precision": 0.45454545454545453,
+              "recall": 0.625,
+              "f1": 0.5263157894736842
+            },
+            "generic_worklike_pruned": {
+              "threshold": 0.03785502642393112,
+              "focused_n": 8,
+              "false_alarms": 3,
+              "false_alarm_rate": 0.375,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 6,
+              "hard_negative_leak_rate": 0.75,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 5,
+              "fn": 3,
+              "fp": 6,
+              "tn": 10,
+              "accuracy": 0.625,
+              "precision": 0.45454545454545453,
+              "recall": 0.625,
+              "f1": 0.5263157894736842
+            },
+            "generic_hardneg": {
+              "threshold": 0.05686533220112326,
+              "focused_n": 8,
+              "false_alarms": 5,
+              "false_alarm_rate": 0.625,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 2,
+              "hard_negative_leak_rate": 0.25,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 3,
+              "fn": 5,
+              "fp": 2,
+              "tn": 14,
+              "accuracy": 0.7083333333333334,
+              "precision": 0.6,
+              "recall": 0.375,
+              "f1": 0.4615384615384615
+            },
+            "worklike_pruned_hardneg": {
+              "threshold": 0.052116059064865106,
+              "focused_n": 8,
+              "false_alarms": 5,
+              "false_alarm_rate": 0.625,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 3,
+              "hard_negative_leak_rate": 0.375,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 3,
+              "fn": 5,
+              "fp": 3,
+              "tn": 13,
+              "accuracy": 0.6666666666666666,
+              "precision": 0.5,
+              "recall": 0.375,
+              "f1": 0.42857142857142855
+            }
+          }
+        }
+      ],
+      "pooled": {
+        "fixed_0.01": {
+          "hard_negative_leak_rate": 0.9166666666666666,
+          "distraction_leak_rate": 0.7916666666666666,
+          "false_alarm_rate": 0.020833333333333332,
+          "mean_goal_f1": 0.5450292397660819,
+          "counts": {
+            "h": 48,
+            "hl": 44,
+            "d": 48,
+            "dl": 38,
+            "f": 48,
+            "fa": 1
+          }
+        },
+        "generic": {
+          "hard_negative_leak_rate": 0.5,
+          "distraction_leak_rate": 0.0,
+          "false_alarm_rate": 0.20833333333333334,
+          "mean_goal_f1": 0.6886824905400757,
+          "counts": {
+            "h": 48,
+            "hl": 24,
+            "d": 48,
+            "dl": 0,
+            "f": 48,
+            "fa": 10
+          }
+        },
+        "generic_worklike": {
+          "hard_negative_leak_rate": 0.3333333333333333,
+          "distraction_leak_rate": 0.0,
+          "false_alarm_rate": 0.3333333333333333,
+          "mean_goal_f1": 0.6480367585630743,
+          "counts": {
+            "h": 48,
+            "hl": 16,
+            "d": 48,
+            "dl": 0,
+            "f": 48,
+            "fa": 16
+          }
+        },
+        "generic_worklike_pruned": {
+          "hard_negative_leak_rate": 0.4166666666666667,
+          "distraction_leak_rate": 0.0,
+          "false_alarm_rate": 0.3125,
+          "mean_goal_f1": 0.6466022453638552,
+          "counts": {
+            "h": 48,
+            "hl": 20,
+            "d": 48,
+            "dl": 0,
+            "f": 48,
+            "fa": 15
+          }
+        },
+        "generic_hardneg": {
+          "hard_negative_leak_rate": 0.1875,
+          "distraction_leak_rate": 0.0,
+          "false_alarm_rate": 0.375,
+          "mean_goal_f1": 0.6635031635031635,
+          "counts": {
+            "h": 48,
+            "hl": 9,
+            "d": 48,
+            "dl": 0,
+            "f": 48,
+            "fa": 18
+          }
+        },
+        "worklike_pruned_hardneg": {
+          "hard_negative_leak_rate": 0.22916666666666666,
+          "distraction_leak_rate": 0.0,
+          "false_alarm_rate": 0.3958333333333333,
+          "mean_goal_f1": 0.6261904761904762,
+          "counts": {
+            "h": 48,
+            "hl": 11,
+            "d": 48,
+            "dl": 0,
+            "f": 48,
+            "fa": 19
+          }
+        }
+      }
+    },
+    {
+      "set": "held_out",
+      "path": "data/workspace_dumps/evaluation_set_holdout.json",
+      "goals": [
+        {
+          "goal": "Planning my marathon training schedule",
+          "domain": "health and fitness",
+          "samples": {
+            "focused": [
+              {
+                "window": "Safari - Hal Higdon Novice 1 marathon training plan, week 8",
+                "score": 0.35325637459754944
+              },
+              {
+                "window": "Google Chrome - Strava - My Activities - Long run 18km",
+                "score": 0.1449623554944992
+              },
+              {
+                "window": "Calendar - Training schedule - April 2026",
+                "score": 0.14903953671455383
+              },
+              {
+                "window": "Safari - London Marathon 2026 - Entry confirmation",
+                "score": 0.039877261966466904
+              },
+              {
+                "window": "Numbers - weekly_mileage.numbers",
+                "score": 0.02342916466295719
+              },
+              {
+                "window": "Google Chrome - Garmin Connect - Training Status: Productive",
+                "score": 0.0810953676700592
+              },
+              {
+                "window": "Safari - How to avoid shin splints during a marathon build - Runner's World",
+                "score": 0.06074955686926842
+              },
+              {
+                "window": "Notes - race day kit list and fuelling plan",
+                "score": 0.2737543284893036
+              }
+            ],
+            "distraction": [
+              {
+                "window": "Netflix - Bridgerton S3:E1",
+                "score": 0.006428610999137163
+              },
+              {
+                "window": "Instagram - Explore Page",
+                "score": 0.021278858184814453
+              },
+              {
+                "window": "Spotify - Discover Weekly",
+                "score": 0.014451795257627964
+              },
+              {
+                "window": "WhatsApp - Dad (1 unread)",
+                "score": 0.01081289816647768
+              },
+              {
+                "window": "Safari - Uber Eats - checkout",
+                "score": 0.01289952639490366
+              },
+              {
+                "window": "Google Chrome - Wordle - The New York Times",
+                "score": 0.01419740915298462
+              },
+              {
+                "window": "TikTok - For You",
+                "score": 0.023548483848571777
+              },
+              {
+                "window": "Safari - Zara - New In: Winter Coats",
+                "score": 0.01808146759867668
+              }
+            ],
+            "hard_negative": [
+              {
+                "window": "Safari - Netflix marathon: every Marvel film in order - Digital Spy",
+                "score": 0.011610723100602627
+              },
+              {
+                "window": "Google Chrome - Train times London to Manchester - Trainline",
+                "score": 0.043107178062200546
+              },
+              {
+                "window": "Safari - Nike Air Zoom Pegasus 41, 30% off - Sports Direct",
+                "score": 0.01611720770597458
+              },
+              {
+                "window": "Google Chrome - Schedule a dentist appointment - NHS",
+                "score": 0.010738830082118511
+              },
+              {
+                "window": "Safari - Formula 1: Miami Grand Prix race highlights - Sky Sports",
+                "score": 0.010466563515365124
+              },
+              {
+                "window": "Google Chrome - Running out of storage on iPhone - Apple Support",
+                "score": 0.013653953559696674
+              },
+              {
+                "window": "Safari - The Marathon Continues: Nipsey Hussle documentary - YouTube",
+                "score": 0.02882358245551586
+              },
+              {
+                "window": "Google Chrome - Planning permission for a loft conversion - GOV.UK",
+                "score": 0.007980454713106155
+              }
+            ]
+          },
+          "by_config": {
+            "fixed_0.01": {
+              "threshold": 0.01,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 7,
+              "hard_negative_leak_rate": 0.875,
+              "distraction_n": 8,
+              "distraction_leaked": 7,
+              "distraction_leak_rate": 0.875,
+              "tp": 8,
+              "fn": 0,
+              "fp": 14,
+              "tn": 2,
+              "accuracy": 0.4166666666666667,
+              "precision": 0.36363636363636365,
+              "recall": 1.0,
+              "f1": 0.5333333333333333
+            },
+            "generic": {
+              "threshold": 0.024691802933812144,
+              "focused_n": 8,
+              "false_alarms": 1,
+              "false_alarm_rate": 0.125,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 2,
+              "hard_negative_leak_rate": 0.25,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 7,
+              "fn": 1,
+              "fp": 2,
+              "tn": 14,
+              "accuracy": 0.875,
+              "precision": 0.7777777777777778,
+              "recall": 0.875,
+              "f1": 0.823529411764706
+            },
+            "generic_worklike": {
+              "threshold": 0.026422155387699608,
+              "focused_n": 8,
+              "false_alarms": 1,
+              "false_alarm_rate": 0.125,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 2,
+              "hard_negative_leak_rate": 0.25,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 7,
+              "fn": 1,
+              "fp": 2,
+              "tn": 14,
+              "accuracy": 0.875,
+              "precision": 0.7777777777777778,
+              "recall": 0.875,
+              "f1": 0.823529411764706
+            },
+            "generic_worklike_pruned": {
+              "threshold": 0.025929025486111642,
+              "focused_n": 8,
+              "false_alarms": 1,
+              "false_alarm_rate": 0.125,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 2,
+              "hard_negative_leak_rate": 0.25,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 7,
+              "fn": 1,
+              "fp": 2,
+              "tn": 14,
+              "accuracy": 0.875,
+              "precision": 0.7777777777777778,
+              "recall": 0.875,
+              "f1": 0.823529411764706
+            },
+            "generic_hardneg": {
+              "threshold": 0.03361797045916319,
+              "focused_n": 8,
+              "false_alarms": 1,
+              "false_alarm_rate": 0.125,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 1,
+              "hard_negative_leak_rate": 0.125,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 7,
+              "fn": 1,
+              "fp": 1,
+              "tn": 15,
+              "accuracy": 0.9166666666666666,
+              "precision": 0.875,
+              "recall": 0.875,
+              "f1": 0.875
+            },
+            "worklike_pruned_hardneg": {
+              "threshold": 0.03359954871237278,
+              "focused_n": 8,
+              "false_alarms": 1,
+              "false_alarm_rate": 0.125,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 1,
+              "hard_negative_leak_rate": 0.125,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 7,
+              "fn": 1,
+              "fp": 1,
+              "tn": 15,
+              "accuracy": 0.9166666666666666,
+              "precision": 0.875,
+              "recall": 0.875,
+              "f1": 0.875
+            }
+          }
+        },
+        {
+          "goal": "Practising Spanish for my B2 exam",
+          "domain": "language learning",
+          "samples": {
+            "focused": [
+              {
+                "window": "Duolingo - Spanish - Unit 14, subjunctive",
+                "score": 0.05072864890098572
+              },
+              {
+                "window": "Anki - Spanish B2 vocab - 42 cards due",
+                "score": 0.1254820078611374
+              },
+              {
+                "window": "Safari - DELE B2 past papers - Instituto Cervantes",
+                "score": 0.04037582874298096
+              },
+              {
+                "window": "Preview - DELE_B2_modelo_2024.pdf",
+                "score": 0.017981376498937607
+              },
+              {
+                "window": "Google Chrome - Spanish subjunctive practice exercises - SpanishDict",
+                "score": 0.0468304269015789
+              },
+              {
+                "window": "Notes - Spanish irregular verbs to review",
+                "score": 0.010761406272649765
+              },
+              {
+                "window": "Safari - B2 exam speaking task examples - Instituto Cervantes",
+                "score": 0.18688154220581055
+              },
+              {
+                "window": "Microsoft Word - spanish_essay_draft.docx",
+                "score": 0.02305936999619007
+              }
+            ],
+            "distraction": [
+              {
+                "window": "Netflix - Browse TV Shows",
+                "score": 0.005075613968074322
+              },
+              {
+                "window": "Spotify - Today's Top Hits",
+                "score": 0.006734341848641634
+              },
+              {
+                "window": "Instagram - Direct Messages",
+                "score": 0.005549184512346983
+              },
+              {
+                "window": "Safari - Domino's Pizza - checkout",
+                "score": 0.007200893480330706
+              },
+              {
+                "window": "WhatsApp - Flat Group (12 unread)",
+                "score": 0.00883287750184536
+              },
+              {
+                "window": "Google Chrome - BBC Sport - Live scores",
+                "score": 0.007785170339047909
+              },
+              {
+                "window": "TikTok - For You",
+                "score": 0.0068659125827252865
+              },
+              {
+                "window": "Discord - #general - 47 new messages",
+                "score": 0.006210514809936285
+              }
+            ],
+            "hard_negative": [
+              {
+                "window": "Safari - Spanish holidays: best beaches in Costa Brava - TripAdvisor",
+                "score": 0.00820514839142561
+              },
+              {
+                "window": "Google Chrome - Spanish omelette recipe - BBC Good Food",
+                "score": 0.006786569487303495
+              },
+              {
+                "window": "Safari - La Liga: Real Madrid vs Barcelona live - ESPN",
+                "score": 0.005802202504128218
+              },
+              {
+                "window": "Google Chrome - Driving theory test practice questions - GOV.UK",
+                "score": 0.014062383212149143
+              },
+              {
+                "window": "Netflix - Money Heist (La Casa de Papel) S5:E4",
+                "score": 0.007138208486139774
+              },
+              {
+                "window": "Google Chrome - Exam stress: how to cope - Student Minds",
+                "score": 0.02492910996079445
+              },
+              {
+                "window": "Safari - Spanish Grand Prix qualifying results - Formula 1",
+                "score": 0.015944307669997215
+              },
+              {
+                "window": "Google Chrome - Vitamin B12 deficiency symptoms - NHS",
+                "score": 0.008261749520897865
+              }
+            ]
+          },
+          "by_config": {
+            "fixed_0.01": {
+              "threshold": 0.01,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 3,
+              "hard_negative_leak_rate": 0.375,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 3,
+              "tn": 13,
+              "accuracy": 0.875,
+              "precision": 0.7272727272727273,
+              "recall": 1.0,
+              "f1": 0.8421052631578948
+            },
+            "generic": {
+              "threshold": 0.012008139556273818,
+              "focused_n": 8,
+              "false_alarms": 1,
+              "false_alarm_rate": 0.125,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 3,
+              "hard_negative_leak_rate": 0.375,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 7,
+              "fn": 1,
+              "fp": 3,
+              "tn": 13,
+              "accuracy": 0.8333333333333334,
+              "precision": 0.7,
+              "recall": 0.875,
+              "f1": 0.7777777777777777
+            },
+            "generic_worklike": {
+              "threshold": 0.014021423477679491,
+              "focused_n": 8,
+              "false_alarms": 1,
+              "false_alarm_rate": 0.125,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 3,
+              "hard_negative_leak_rate": 0.375,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 7,
+              "fn": 1,
+              "fp": 3,
+              "tn": 13,
+              "accuracy": 0.8333333333333334,
+              "precision": 0.7,
+              "recall": 0.875,
+              "f1": 0.7777777777777777
+            },
+            "generic_worklike_pruned": {
+              "threshold": 0.014039467200636865,
+              "focused_n": 8,
+              "false_alarms": 1,
+              "false_alarm_rate": 0.125,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 3,
+              "hard_negative_leak_rate": 0.375,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 7,
+              "fn": 1,
+              "fp": 3,
+              "tn": 13,
+              "accuracy": 0.8333333333333334,
+              "precision": 0.7,
+              "recall": 0.875,
+              "f1": 0.7777777777777777
+            },
+            "generic_hardneg": {
+              "threshold": 0.018601819984614854,
+              "focused_n": 8,
+              "false_alarms": 2,
+              "false_alarm_rate": 0.25,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 1,
+              "hard_negative_leak_rate": 0.125,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 6,
+              "fn": 2,
+              "fp": 1,
+              "tn": 15,
+              "accuracy": 0.875,
+              "precision": 0.8571428571428571,
+              "recall": 0.75,
+              "f1": 0.7999999999999999
+            },
+            "worklike_pruned_hardneg": {
+              "threshold": 0.01871116098016501,
+              "focused_n": 8,
+              "false_alarms": 2,
+              "false_alarm_rate": 0.25,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 1,
+              "hard_negative_leak_rate": 0.125,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 6,
+              "fn": 2,
+              "fp": 1,
+              "tn": 15,
+              "accuracy": 0.875,
+              "precision": 0.8571428571428571,
+              "recall": 0.75,
+              "f1": 0.7999999999999999
+            }
+          }
+        },
+        {
+          "goal": "Organising my sister's wedding",
+          "domain": "event planning",
+          "samples": {
+            "focused": [
+              {
+                "window": "Google Chrome - Hitched - venue availability, September 2026",
+                "score": 0.03832980617880821
+              },
+              {
+                "window": "Microsoft Excel - wedding_budget.xlsx",
+                "score": 0.060299426317214966
+              },
+              {
+                "window": "Notes - guest list, 94 confirmed",
+                "score": 0.02271319553256035
+              },
+              {
+                "window": "Safari - Bridesmaid dresses - Coast - shortlist",
+                "score": 0.046000994741916656
+              },
+              {
+                "window": "Google Chrome - Wedding invitations - Papier - proof review",
+                "score": 0.05275111272931099
+              },
+              {
+                "window": "Mail - Re: Catering quote for 94 guests",
+                "score": 0.0314624048769474
+              },
+              {
+                "window": "Calendar - Venue viewing, Saturday 11am",
+                "score": 0.03992578014731407
+              },
+              {
+                "window": "Safari - Wedding photographer portfolio - Sarah Jones Photography",
+                "score": 0.03793841972947121
+              }
+            ],
+            "distraction": [
+              {
+                "window": "Netflix - The Office S3:E12",
+                "score": 0.015705686062574387
+              },
+              {
+                "window": "Spotify - Liked Songs",
+                "score": 0.012539579533040524
+              },
+              {
+                "window": "Instagram - Reels",
+                "score": 0.015060982666909695
+              },
+              {
+                "window": "Google Chrome - Ryanair - flights to Lisbon in March",
+                "score": 0.017296509817242622
+              },
+              {
+                "window": "WhatsApp - Mum (3 unread)",
+                "score": 0.021982654929161072
+              },
+              {
+                "window": "Safari - Amazon.co.uk - Your Orders",
+                "score": 0.013364407233893871
+              },
+              {
+                "window": "TikTok - For You",
+                "score": 0.01724390871822834
+              },
+              {
+                "window": "Google Chrome - BBC News - Home",
+                "score": 0.020404554903507233
+              }
+            ],
+            "hard_negative": [
+              {
+                "window": "Netflix - Four Weddings and a Funeral (1994)",
+                "score": 0.01882416196167469
+              },
+              {
+                "window": "Safari - Say Yes to the Dress, Season 12 - TLC",
+                "score": 0.025762241333723068
+              },
+              {
+                "window": "Google Chrome - Wedding Crashers - watch on Prime Video",
+                "score": 0.05026252940297127
+              },
+              {
+                "window": "Safari - My sister ruined my wedding - r/AmITheAsshole - Reddit",
+                "score": 0.09525776654481888
+              },
+              {
+                "window": "Google Chrome - Royal wedding: what Kate wore - Hello! Magazine",
+                "score": 0.04308108985424042
+              },
+              {
+                "window": "Safari - Marriage visa application requirements - GOV.UK",
+                "score": 0.03866519406437874
+              },
+              {
+                "window": "Google Chrome - Wedding dress fails compilation - YouTube",
+                "score": 0.02882964350283146
+              },
+              {
+                "window": "Safari - Guest WiFi setup - BT Help",
+                "score": 0.02616495080292225
+              }
+            ]
+          },
+          "by_config": {
+            "fixed_0.01": {
+              "threshold": 0.01,
+              "focused_n": 8,
+              "false_alarms": 0,
+              "false_alarm_rate": 0.0,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 8,
+              "hard_negative_leak_rate": 1.0,
+              "distraction_n": 8,
+              "distraction_leaked": 8,
+              "distraction_leak_rate": 1.0,
+              "tp": 8,
+              "fn": 0,
+              "fp": 16,
+              "tn": 0,
+              "accuracy": 0.3333333333333333,
+              "precision": 0.3333333333333333,
+              "recall": 1.0,
+              "f1": 0.5
+            },
+            "generic": {
+              "threshold": 0.026815288439393046,
+              "focused_n": 8,
+              "false_alarms": 1,
+              "false_alarm_rate": 0.125,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 5,
+              "hard_negative_leak_rate": 0.625,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 7,
+              "fn": 1,
+              "fp": 5,
+              "tn": 11,
+              "accuracy": 0.75,
+              "precision": 0.5833333333333334,
+              "recall": 0.875,
+              "f1": 0.7000000000000001
+            },
+            "generic_worklike": {
+              "threshold": 0.027108887135982515,
+              "focused_n": 8,
+              "false_alarms": 1,
+              "false_alarm_rate": 0.125,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 5,
+              "hard_negative_leak_rate": 0.625,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 7,
+              "fn": 1,
+              "fp": 5,
+              "tn": 11,
+              "accuracy": 0.75,
+              "precision": 0.5833333333333334,
+              "recall": 0.875,
+              "f1": 0.7000000000000001
+            },
+            "generic_worklike_pruned": {
+              "threshold": 0.02707317389547825,
+              "focused_n": 8,
+              "false_alarms": 1,
+              "false_alarm_rate": 0.125,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 5,
+              "hard_negative_leak_rate": 0.625,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 7,
+              "fn": 1,
+              "fp": 5,
+              "tn": 11,
+              "accuracy": 0.75,
+              "precision": 0.5833333333333334,
+              "recall": 0.875,
+              "f1": 0.7000000000000001
+            },
+            "generic_hardneg": {
+              "threshold": 0.04062198840081692,
+              "focused_n": 8,
+              "false_alarms": 5,
+              "false_alarm_rate": 0.625,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 3,
+              "hard_negative_leak_rate": 0.375,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 3,
+              "fn": 5,
+              "fp": 3,
+              "tn": 13,
+              "accuracy": 0.6666666666666666,
+              "precision": 0.5,
+              "recall": 0.375,
+              "f1": 0.42857142857142855
+            },
+            "worklike_pruned_hardneg": {
+              "threshold": 0.040501936823129664,
+              "focused_n": 8,
+              "false_alarms": 5,
+              "false_alarm_rate": 0.625,
+              "hard_negative_n": 8,
+              "hard_negative_leaked": 3,
+              "hard_negative_leak_rate": 0.375,
+              "distraction_n": 8,
+              "distraction_leaked": 0,
+              "distraction_leak_rate": 0.0,
+              "tp": 3,
+              "fn": 5,
+              "fp": 3,
+              "tn": 13,
+              "accuracy": 0.6666666666666666,
+              "precision": 0.5,
+              "recall": 0.375,
+              "f1": 0.42857142857142855
+            }
+          }
+        }
+      ],
+      "pooled": {
+        "fixed_0.01": {
+          "hard_negative_leak_rate": 0.75,
+          "distraction_leak_rate": 0.625,
+          "false_alarm_rate": 0.0,
+          "mean_goal_f1": 0.6251461988304093,
+          "counts": {
+            "h": 24,
+            "hl": 18,
+            "d": 24,
+            "dl": 15,
+            "f": 24,
+            "fa": 0
+          }
+        },
+        "generic": {
+          "hard_negative_leak_rate": 0.4166666666666667,
+          "distraction_leak_rate": 0.0,
+          "false_alarm_rate": 0.125,
+          "mean_goal_f1": 0.7671023965141611,
+          "counts": {
+            "h": 24,
+            "hl": 10,
+            "d": 24,
+            "dl": 0,
+            "f": 24,
+            "fa": 3
+          }
+        },
+        "generic_worklike": {
+          "hard_negative_leak_rate": 0.4166666666666667,
+          "distraction_leak_rate": 0.0,
+          "false_alarm_rate": 0.125,
+          "mean_goal_f1": 0.7671023965141611,
+          "counts": {
+            "h": 24,
+            "hl": 10,
+            "d": 24,
+            "dl": 0,
+            "f": 24,
+            "fa": 3
+          }
+        },
+        "generic_worklike_pruned": {
+          "hard_negative_leak_rate": 0.4166666666666667,
+          "distraction_leak_rate": 0.0,
+          "false_alarm_rate": 0.125,
+          "mean_goal_f1": 0.7671023965141611,
+          "counts": {
+            "h": 24,
+            "hl": 10,
+            "d": 24,
+            "dl": 0,
+            "f": 24,
+            "fa": 3
+          }
+        },
+        "generic_hardneg": {
+          "hard_negative_leak_rate": 0.20833333333333334,
+          "distraction_leak_rate": 0.0,
+          "false_alarm_rate": 0.3333333333333333,
+          "mean_goal_f1": 0.7011904761904763,
+          "counts": {
+            "h": 24,
+            "hl": 5,
+            "d": 24,
+            "dl": 0,
+            "f": 24,
+            "fa": 8
+          }
+        },
+        "worklike_pruned_hardneg": {
+          "hard_negative_leak_rate": 0.20833333333333334,
+          "distraction_leak_rate": 0.0,
+          "false_alarm_rate": 0.3333333333333333,
+          "mean_goal_f1": 0.7011904761904763,
+          "counts": {
+            "h": 24,
+            "hl": 5,
+            "d": 24,
+            "dl": 0,
+            "f": 24,
+            "fa": 8
+          }
+        }
+      }
+    }
+  ]
+}

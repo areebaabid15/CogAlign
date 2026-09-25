@@ -1,0 +1,779 @@
+{
+  "model_key": "msmarco",
+  "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+  "kind": "cross",
+  "goal": "Writing my dissertation literature review",
+  "meta": {
+    "timestamp": "2026-09-23T02:32:36",
+    "git_commit": "347a270",
+    "platform": "macOS-15.2-x86_64-i386-64bit",
+    "python": "3.12.2"
+  },
+  "load_seconds": 8.208374576999631,
+  "parameters": 22713601,
+  "max_length": 512,
+  "default_activation": "Identity",
+  "default_outputs_inside_unit_interval": 0,
+  "normalize_mixes_identity_and_sigmoid": false,
+  "samples": [
+    {
+      "text": "Microsoft Word - Literature Review Chapter 2.docx",
+      "label": "focused",
+      "default": -4.129358768463135,
+      "raw": -4.129358768463135,
+      "production": 0.01583830603175798
+    },
+    {
+      "text": "Zotero - My Library - dissertation references",
+      "label": "focused",
+      "default": -3.8048288822174072,
+      "raw": -3.8048288822174072,
+      "production": 0.021778159139333716
+    },
+    {
+      "text": "VS Code - classifier.py - CogAlign",
+      "label": "focused",
+      "default": -11.413708686828613,
+      "raw": -11.413708686828613,
+      "production": 1.104293468167653e-05
+    },
+    {
+      "text": "Terminal - running python pipeline.py",
+      "label": "focused",
+      "default": -11.415956497192383,
+      "raw": -11.415956497192383,
+      "production": 1.1018140409000846e-05
+    },
+    {
+      "text": "Notes - thesis outline and argument structure",
+      "label": "focused",
+      "default": -10.513504028320312,
+      "raw": -10.513504028320312,
+      "production": 2.7166357819782732e-05
+    },
+    {
+      "text": "Google Scholar - search results for NLP papers",
+      "label": "focused",
+      "default": -11.17696475982666,
+      "raw": -11.17696475982666,
+      "production": 1.3992644593809421e-05
+    },
+    {
+      "text": "PDF Viewer - Reimers & Gurevych 2019.pdf",
+      "label": "focused",
+      "default": -11.385725021362305,
+      "raw": -11.385725021362305,
+      "production": 1.1356317309349981e-05
+    },
+    {
+      "text": "Microsoft Word - Methodology Section Draft.docx",
+      "label": "focused",
+      "default": -11.374601364135742,
+      "raw": -11.374601364135742,
+      "production": 1.1483344835346677e-05
+    },
+    {
+      "text": "Terminal - git commit prototype complete",
+      "label": "focused",
+      "default": -11.422964096069336,
+      "raw": -11.422964096069336,
+      "production": 1.0941200442487665e-05
+    },
+    {
+      "text": "Overleaf - dissertation.tex - Chapter 3",
+      "label": "focused",
+      "default": -8.037398338317871,
+      "raw": -8.037398338317871,
+      "production": 0.00032304418943679696
+    },
+    {
+      "text": "VS Code - state_machine.py - CogAlign",
+      "label": "focused",
+      "default": -11.396913528442383,
+      "raw": -11.396913528442383,
+      "production": 1.1229966655280229e-05
+    },
+    {
+      "text": "Microsoft Word - Introduction Chapter.docx",
+      "label": "focused",
+      "default": -11.392646789550781,
+      "raw": -11.392646789550781,
+      "production": 1.1277983815868341e-05
+    },
+    {
+      "text": "PDF Viewer - Steel 2007 Procrastination Meta-Analysis.pdf",
+      "label": "focused",
+      "default": -11.422225952148438,
+      "raw": -11.422225952148438,
+      "production": 1.0949279516045947e-05
+    },
+    {
+      "text": "Zotero - Add Citation - literature review",
+      "label": "focused",
+      "default": -3.1274478435516357,
+      "raw": -3.1274478435516357,
+      "production": 0.04198915034020609
+    },
+    {
+      "text": "Terminal - pytest tests/test_crossencoder.py",
+      "label": "focused",
+      "default": -11.458935737609863,
+      "raw": -11.458935737609863,
+      "production": 1.055462619466822e-05
+    },
+    {
+      "text": "Notes - viva preparation questions",
+      "label": "focused",
+      "default": -11.355191230773926,
+      "raw": -11.355191230773926,
+      "production": 1.170841271286262e-05
+    },
+    {
+      "text": "Microsoft Word - Abstract Draft v3.docx",
+      "label": "focused",
+      "default": -11.368998527526855,
+      "raw": -11.368998527526855,
+      "production": 1.1547863973514955e-05
+    },
+    {
+      "text": "VS Code - nudge_engine.py - CogAlign",
+      "label": "focused",
+      "default": -11.403556823730469,
+      "raw": -11.403556823730469,
+      "production": 1.1155610760514027e-05
+    },
+    {
+      "text": "Google Scholar - cross encoder sentence transformers",
+      "label": "focused",
+      "default": -11.411334991455078,
+      "raw": -11.411334991455078,
+      "production": 1.1069178089094319e-05
+    },
+    {
+      "text": "PDF Viewer - Adamczyk Bailey 2004 CHI.pdf",
+      "label": "focused",
+      "default": -11.340483665466309,
+      "raw": -11.340483665466309,
+      "production": 1.1881885465300561e-05
+    },
+    {
+      "text": "Microsoft Word - References and Bibliography.docx",
+      "label": "focused",
+      "default": -11.27458381652832,
+      "raw": -11.27458381652832,
+      "production": 1.269126612368495e-05
+    },
+    {
+      "text": "Terminal - python src/engine.py",
+      "label": "focused",
+      "default": -11.428726196289062,
+      "raw": -11.428726196289062,
+      "production": 1.0878338118265604e-05
+    },
+    {
+      "text": "Notion - Research Planning Board",
+      "label": "focused",
+      "default": -11.242456436157227,
+      "raw": -11.242456436157227,
+      "production": 1.3105618299672238e-05
+    },
+    {
+      "text": "VS Code - pipeline.py - CogAlign",
+      "label": "focused",
+      "default": -11.381250381469727,
+      "raw": -11.381250381469727,
+      "production": 1.140724601899275e-05
+    },
+    {
+      "text": "PDF Viewer - Whisper Radford 2022.pdf",
+      "label": "focused",
+      "default": -11.390777587890625,
+      "raw": -11.390777587890625,
+      "production": 1.1299084117962448e-05
+    },
+    {
+      "text": "Microsoft Word - Evaluation Section Draft.docx",
+      "label": "focused",
+      "default": -11.372264862060547,
+      "raw": -11.372264862060547,
+      "production": 1.1510206754800712e-05
+    },
+    {
+      "text": "Terminal - pip install sentence-transformers",
+      "label": "focused",
+      "default": -11.39057731628418,
+      "raw": -11.39057731628418,
+      "production": 1.1301347204724902e-05
+    },
+    {
+      "text": "Google Scholar - temporal motivation theory Steel",
+      "label": "focused",
+      "default": -11.364476203918457,
+      "raw": -11.364476203918457,
+      "production": 1.160020480748033e-05
+    },
+    {
+      "text": "Overleaf - dissertation.tex - References",
+      "label": "focused",
+      "default": -7.811747074127197,
+      "raw": -7.811747074127197,
+      "production": 0.0004047860337835896
+    },
+    {
+      "text": "Notes - supervisor meeting action points",
+      "label": "focused",
+      "default": -11.301274299621582,
+      "raw": -11.301274299621582,
+      "production": 1.235701479293805e-05
+    },
+    {
+      "text": "Microsoft Word - Design Section v2.docx",
+      "label": "focused",
+      "default": -11.391432762145996,
+      "raw": -11.391432762145996,
+      "production": 1.1291683757057634e-05
+    },
+    {
+      "text": "VS Code - window_tracker.py - CogAlign",
+      "label": "focused",
+      "default": -11.392593383789062,
+      "raw": -11.392593383789062,
+      "production": 1.127858613447498e-05
+    },
+    {
+      "text": "PDF Viewer - Thaler Sunstein Nudge 2008.pdf",
+      "label": "focused",
+      "default": -11.408759117126465,
+      "raw": -11.408759117126465,
+      "production": 1.109772733819873e-05
+    },
+    {
+      "text": "Zotero - Edit Reference - Mark Gonzalez 2004",
+      "label": "focused",
+      "default": -11.332574844360352,
+      "raw": -11.332574844360352,
+      "production": 1.1976228626252824e-05
+    },
+    {
+      "text": "Terminal - whisper transcription test output",
+      "label": "focused",
+      "default": -11.391712188720703,
+      "raw": -11.391712188720703,
+      "production": 1.1288529036937097e-05
+    },
+    {
+      "text": "Microsoft Word - Limitations and Future Work.docx",
+      "label": "focused",
+      "default": -11.40103816986084,
+      "raw": -11.40103816986084,
+      "production": 1.118374298128476e-05
+    },
+    {
+      "text": "Google Scholar - procrastination self efficacy",
+      "label": "focused",
+      "default": -11.410923957824707,
+      "raw": -11.410923957824707,
+      "production": 1.1073728778345294e-05
+    },
+    {
+      "text": "Notes - chapter outline literature review",
+      "label": "focused",
+      "default": -2.0779378414154053,
+      "raw": -2.0779378414154053,
+      "production": 0.11125971158692016
+    },
+    {
+      "text": "VS Code - requirements.txt - CogAlign",
+      "label": "focused",
+      "default": -11.37746810913086,
+      "raw": -11.37746810913086,
+      "production": 1.1450472531728856e-05
+    },
+    {
+      "text": "PDF Viewer - Qwen Technical Report 2023.pdf",
+      "label": "focused",
+      "default": -11.3866605758667,
+      "raw": -11.3866605758667,
+      "production": 1.1345697944351668e-05
+    },
+    {
+      "text": "Microsoft Word - Dissertation Final v4.docx",
+      "label": "focused",
+      "default": -8.35840129852295,
+      "raw": -8.35840129852295,
+      "production": 0.00023436386074637543
+    },
+    {
+      "text": "Terminal - python tests/test_crossencoder.py",
+      "label": "focused",
+      "default": -11.455321311950684,
+      "raw": -11.455321311950684,
+      "production": 1.0592843727913837e-05
+    },
+    {
+      "text": "Overleaf - dissertation.tex - Methodology",
+      "label": "focused",
+      "default": -8.716054916381836,
+      "raw": -8.716054916381836,
+      "production": 0.00016390577538430266
+    },
+    {
+      "text": "Zotero - My Library - 47 sources",
+      "label": "focused",
+      "default": -11.242626190185547,
+      "raw": -11.242626190185547,
+      "production": 1.3103393786139184e-05
+    },
+    {
+      "text": "Notes - evaluation metrics precision recall",
+      "label": "focused",
+      "default": -11.403341293334961,
+      "raw": -11.403341293334961,
+      "production": 1.1158015366008817e-05
+    },
+    {
+      "text": "Google Scholar - nudge theory behaviour change",
+      "label": "focused",
+      "default": -11.408016204833984,
+      "raw": -11.408016204833984,
+      "production": 1.1105974947938126e-05
+    },
+    {
+      "text": "VS Code - classifier.py - threshold tuning",
+      "label": "focused",
+      "default": -11.415525436401367,
+      "raw": -11.415525436401367,
+      "production": 1.1022890868762893e-05
+    },
+    {
+      "text": "Microsoft Word - User Study Results.docx",
+      "label": "focused",
+      "default": -11.40544605255127,
+      "raw": -11.40544605255127,
+      "production": 1.1134555389287585e-05
+    },
+    {
+      "text": "Terminal - ollama pull qwen2.5:1.5b",
+      "label": "focused",
+      "default": -11.394201278686523,
+      "raw": -11.394201278686523,
+      "production": 1.1260466129020872e-05
+    },
+    {
+      "text": "PDF Viewer - Czerwinski 2004 CHI task resumption.pdf",
+      "label": "focused",
+      "default": -11.412318229675293,
+      "raw": -11.412318229675293,
+      "production": 1.1058299919277845e-05
+    },
+    {
+      "text": "YouTube - Top 10 Funniest Cat Videos 2024",
+      "label": "distraction",
+      "default": -11.428447723388672,
+      "raw": -11.428447723388672,
+      "production": 1.0881367829496316e-05
+    },
+    {
+      "text": "Instagram - Explore Page",
+      "label": "distraction",
+      "default": -11.152982711791992,
+      "raw": -11.152982711791992,
+      "production": 1.4332268216697914e-05
+    },
+    {
+      "text": "ASOS - Women's Sale Up to 70% off",
+      "label": "distraction",
+      "default": -11.397448539733887,
+      "raw": -11.397448539733887,
+      "production": 1.1223960170663598e-05
+    },
+    {
+      "text": "WhatsApp Web - Group Chat",
+      "label": "distraction",
+      "default": -11.258703231811523,
+      "raw": -11.258703231811523,
+      "production": 1.2894417060133491e-05
+    },
+    {
+      "text": "Netflix - Browse TV Shows",
+      "label": "distraction",
+      "default": -11.305901527404785,
+      "raw": -11.305901527404785,
+      "production": 1.2299968858119773e-05
+    },
+    {
+      "text": "Twitter - Home Timeline",
+      "label": "distraction",
+      "default": -11.194103240966797,
+      "raw": -11.194103240966797,
+      "production": 1.3754878511532398e-05
+    },
+    {
+      "text": "BBC News - Entertainment Section",
+      "label": "distraction",
+      "default": -11.249881744384766,
+      "raw": -11.249881744384766,
+      "production": 1.3008666703396564e-05
+    },
+    {
+      "text": "Amazon - Best Sellers in Electronics",
+      "label": "distraction",
+      "default": -11.396023750305176,
+      "raw": -11.396023750305176,
+      "production": 1.1239963168459852e-05
+    },
+    {
+      "text": "TikTok - For You Page",
+      "label": "distraction",
+      "default": -11.130535125732422,
+      "raw": -11.130535125732422,
+      "production": 1.4657626416232019e-05
+    },
+    {
+      "text": "Spotify - New Music Friday Playlist",
+      "label": "distraction",
+      "default": -11.349966049194336,
+      "raw": -11.349966049194336,
+      "production": 1.1769750686708257e-05
+    },
+    {
+      "text": "Reddit - r/memes - Hot Posts",
+      "label": "distraction",
+      "default": -11.321210861206055,
+      "raw": -11.321210861206055,
+      "production": 1.2113100872024898e-05
+    },
+    {
+      "text": "YouTube - Drake New Music Video",
+      "label": "distraction",
+      "default": -11.337553024291992,
+      "raw": -11.337553024291992,
+      "production": 1.1916757667110247e-05
+    },
+    {
+      "text": "ASOS - New In Dresses",
+      "label": "distraction",
+      "default": -11.37346363067627,
+      "raw": -11.37346363067627,
+      "production": 1.1496417105761607e-05
+    },
+    {
+      "text": "Facebook - News Feed",
+      "label": "distraction",
+      "default": -11.09158992767334,
+      "raw": -11.09158992767334,
+      "production": 1.5239723247055152e-05
+    },
+    {
+      "text": "Netflix - Stranger Things Season 5",
+      "label": "distraction",
+      "default": -11.358745574951172,
+      "raw": -11.358745574951172,
+      "production": 1.1666871339739978e-05
+    },
+    {
+      "text": "BBC Sport - Premier League Results",
+      "label": "distraction",
+      "default": -11.297441482543945,
+      "raw": -11.297441482543945,
+      "production": 1.2404467262989608e-05
+    },
+    {
+      "text": "Depop - Vintage Clothing Browse",
+      "label": "distraction",
+      "default": -11.376302719116211,
+      "raw": -11.376302719116211,
+      "production": 1.1463824423673648e-05
+    },
+    {
+      "text": "Pinterest - Home Decor Ideas",
+      "label": "distraction",
+      "default": -11.360702514648438,
+      "raw": -11.360702514648438,
+      "production": 1.164406256689775e-05
+    },
+    {
+      "text": "YouTube - Celebrity Interview 2024",
+      "label": "distraction",
+      "default": -11.32061767578125,
+      "raw": -11.32061767578125,
+      "production": 1.2120288231330924e-05
+    },
+    {
+      "text": "Amazon - Flash Deal of the Day",
+      "label": "distraction",
+      "default": -11.325143814086914,
+      "raw": -11.325143814086914,
+      "production": 1.2065554751473532e-05
+    },
+    {
+      "text": "Twitter - Trending Topics UK",
+      "label": "distraction",
+      "default": -11.317986488342285,
+      "raw": -11.317986488342285,
+      "production": 1.2152220585520329e-05
+    },
+    {
+      "text": "Instagram - Stories",
+      "label": "distraction",
+      "default": -11.273055076599121,
+      "raw": -11.273055076599121,
+      "production": 1.2710682359758465e-05
+    },
+    {
+      "text": "Reddit - r/funny Top Posts This Week",
+      "label": "distraction",
+      "default": -11.280877113342285,
+      "raw": -11.280877113342285,
+      "production": 1.261164801927275e-05
+    },
+    {
+      "text": "YouTube - Mukbang Videos Compilation",
+      "label": "distraction",
+      "default": -11.333839416503906,
+      "raw": -11.333839416503906,
+      "production": 1.1961093573995316e-05
+    },
+    {
+      "text": "Deliveroo - Order Food Near Me",
+      "label": "distraction",
+      "default": -11.344464302062988,
+      "raw": -11.344464302062988,
+      "production": 1.1834682568049798e-05
+    },
+    {
+      "text": "eBay - Bid on Item Ending Soon",
+      "label": "distraction",
+      "default": -11.325604438781738,
+      "raw": -11.325604438781738,
+      "production": 1.2059998405817267e-05
+    },
+    {
+      "text": "Snapchat - My Friends Stories",
+      "label": "distraction",
+      "default": -11.34830093383789,
+      "raw": -11.34830093383789,
+      "production": 1.1789364773597135e-05
+    },
+    {
+      "text": "YouTube - Reality TV Show Highlights",
+      "label": "distraction",
+      "default": -11.302995681762695,
+      "raw": -11.302995681762695,
+      "production": 1.2335762207909852e-05
+    },
+    {
+      "text": "ASOS - Checkout Basket 3 Items",
+      "label": "distraction",
+      "default": -11.308392524719238,
+      "raw": -11.308392524719238,
+      "production": 1.2269368173584607e-05
+    },
+    {
+      "text": "Netflix - Continue Watching",
+      "label": "distraction",
+      "default": -11.292627334594727,
+      "raw": -11.292627334594727,
+      "production": 1.2464327431537209e-05
+    },
+    {
+      "text": "BuzzFeed - Which Disney Character Are You Quiz",
+      "label": "distraction",
+      "default": -11.438572883605957,
+      "raw": -11.438572883605957,
+      "production": 1.0771749312641887e-05
+    },
+    {
+      "text": "Reddit - r/relationship_advice",
+      "label": "distraction",
+      "default": -11.336974143981934,
+      "raw": -11.336974143981934,
+      "production": 1.1923657958258243e-05
+    },
+    {
+      "text": "YouTube - Funny Animals Compilation 2024",
+      "label": "distraction",
+      "default": -11.402851104736328,
+      "raw": -11.402851104736328,
+      "production": 1.1163486177620752e-05
+    },
+    {
+      "text": "BBC News - Celebrity Gossip",
+      "label": "distraction",
+      "default": -11.251440048217773,
+      "raw": -11.251440048217773,
+      "production": 1.2988411297641419e-05
+    },
+    {
+      "text": "Booking.com - Holiday Deals Summer 2025",
+      "label": "distraction",
+      "default": -11.365118026733398,
+      "raw": -11.365118026733398,
+      "production": 1.159276200642347e-05
+    },
+    {
+      "text": "Twitter - Football Transfer Rumours",
+      "label": "distraction",
+      "default": -11.345579147338867,
+      "raw": -11.345579147338867,
+      "production": 1.1821496235794075e-05
+    },
+    {
+      "text": "Instagram - Reels",
+      "label": "distraction",
+      "default": -11.243931770324707,
+      "raw": -11.243931770324707,
+      "production": 1.3086297641952217e-05
+    },
+    {
+      "text": "YouTube - Satisfying Videos 1 Hour",
+      "label": "distraction",
+      "default": -11.329922676086426,
+      "raw": -11.329922676086426,
+      "production": 1.2008033375576492e-05
+    },
+    {
+      "text": "Amazon - Today's Lightning Deals",
+      "label": "distraction",
+      "default": -11.37885856628418,
+      "raw": -11.37885856628418,
+      "production": 1.1434562386093616e-05
+    },
+    {
+      "text": "Reddit - r/worldnews",
+      "label": "distraction",
+      "default": -11.130460739135742,
+      "raw": -11.130460739135742,
+      "production": 1.4658716771747088e-05
+    },
+    {
+      "text": "TikTok - Trending Sounds",
+      "label": "distraction",
+      "default": -11.374650001525879,
+      "raw": -11.374650001525879,
+      "production": 1.1482786335419309e-05
+    },
+    {
+      "text": "Netflix - Action Movies Browse",
+      "label": "distraction",
+      "default": -11.357414245605469,
+      "raw": -11.357414245605469,
+      "production": 1.1682413950341735e-05
+    },
+    {
+      "text": "YouTube - True Crime Documentary",
+      "label": "distraction",
+      "default": -11.371232986450195,
+      "raw": -11.371232986450195,
+      "production": 1.1522089849455444e-05
+    },
+    {
+      "text": "ASOS - Wishlist 12 Items",
+      "label": "distraction",
+      "default": -11.312287330627441,
+      "raw": -11.312287330627441,
+      "production": 1.2221674888302e-05
+    },
+    {
+      "text": "WhatsApp Web - Family Group",
+      "label": "distraction",
+      "default": -11.326069831848145,
+      "raw": -11.326069831848145,
+      "production": 1.2054387139658722e-05
+    },
+    {
+      "text": "Pinterest - Wedding Inspiration Board",
+      "label": "distraction",
+      "default": -11.398836135864258,
+      "raw": -11.398836135864258,
+      "production": 1.1208396821845013e-05
+    },
+    {
+      "text": "YouTube - Gaming Livestream",
+      "label": "distraction",
+      "default": -11.334962844848633,
+      "raw": -11.334962844848633,
+      "production": 1.1947663848066127e-05
+    },
+    {
+      "text": "Reddit - r/AskReddit Hot",
+      "label": "distraction",
+      "default": -11.234766006469727,
+      "raw": -11.234766006469727,
+      "production": 1.3206793345775352e-05
+    },
+    {
+      "text": "Airbnb - Weekend Getaway Ideas",
+      "label": "distraction",
+      "default": -11.359428405761719,
+      "raw": -11.359428405761719,
+      "production": 1.165890765264208e-05
+    },
+    {
+      "text": "BuzzFeed - 25 Things Only 90s Kids Remember",
+      "label": "distraction",
+      "default": -11.349587440490723,
+      "raw": -11.349587440490723,
+      "production": 1.1774207607951551e-05
+    }
+  ],
+  "latency_single_call": {
+    "0": {
+      "appended_words": 0,
+      "input_tokens": 19,
+      "n": 30,
+      "mean": 0.11067324186587939,
+      "sd": 0.000998640120614906,
+      "median": 0.11069193099683616,
+      "p95": 0.11184409684647108,
+      "min": 0.10802979599975515,
+      "max": 0.1132520570026827
+    },
+    "60": {
+      "appended_words": 60,
+      "input_tokens": 95,
+      "n": 30,
+      "mean": 0.18994137390084992,
+      "sd": 0.001695878749023775,
+      "median": 0.19048376900173025,
+      "p95": 0.19226878824883897,
+      "min": 0.1864795450019301,
+      "max": 0.19264643899805378
+    },
+    "120": {
+      "appended_words": 120,
+      "input_tokens": 172,
+      "n": 30,
+      "mean": 0.15475456463318552,
+      "sd": 0.0012995888923909708,
+      "median": 0.15514574000189896,
+      "p95": 0.1560669586968288,
+      "min": 0.15181383500021184,
+      "max": 0.15620014200248988
+    },
+    "240": {
+      "appended_words": 240,
+      "input_tokens": 333,
+      "n": 30,
+      "mean": 0.33848273789990346,
+      "sd": 0.0008983402509746284,
+      "median": 0.338628522495128,
+      "p95": 0.3395975855517463,
+      "min": 0.3357323529999121,
+      "max": 0.3400045369999134
+    },
+    "480": {
+      "appended_words": 480,
+      "input_tokens": 512,
+      "n": 30,
+      "mean": 0.2389464640332638,
+      "sd": 0.001138413368563887,
+      "median": 0.23921997949582874,
+      "p95": 0.24049969625157247,
+      "min": 0.235975571005838,
+      "max": 0.24109806200431194
+    }
+  },
+  "peak_rss_mb": 428.171875,
+  "peak_rss_mb_before_import": 11.51171875
+}

@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "timestamp": "2026-09-23T02:33:57",
+    "git_commit": "347a270",
+    "platform": "macOS-15.2-x86_64-i386-64bit",
+    "python": "3.12.2"
+  },
+  "goal": "Writing my dissertation literature review",
+  "window_read_with_retries": {
+    "n": 40,
+    "mean": 0.32900306454994277,
+    "sd": 0.24595324436082622,
+    "median": 0.25035416150058154,
+    "p95": 1.0872977515005913,
+    "min": 0.2352545860048849,
+    "max": 1.1923592659950373,
+    "unreliable_app_label": 0,
+    "empty_titles": 0,
+    "apps_seen": [
+      "Microsoft Excel"
+    ]
+  },
+  "window_read_single_query": {
+    "n": 40,
+    "mean": 0.25272413482507544,
+    "sd": 0.005808844839196461,
+    "median": 0.2538223685041885,
+    "p95": 0.26293405475007603,
+    "min": 0.236743405002926,
+    "max": 0.26777779500116594,
+    "unreliable_app_label": 0,
+    "empty_titles": 0,
+    "apps_seen": [
+      "Microsoft Excel"
+    ]
+  },
+  "session_startup_seconds": 10.339471635001246,
+  "calibrated_threshold": 0.015036040842533113,
+  "tick": {
+    "n": 30,
+    "mean": 0.7318508891003148,
+    "sd": 0.26052746386885745,
+    "median": 0.6309597970030154,
+    "p95": 1.3796080940493984,
+    "min": 0.6029231760039693,
+    "max": 1.530861895000271
+  },
+  "calibration_seconds": 4.32370337699831,
+  "notification": {
+    "n": 3,
+    "mean": 0.2964952470016821,
+    "sd": 0.0008519314576644867,
+    "median": 0.29615954200562555,
+    "p95": 0.2973334543014062,
+    "min": 0.2958623099984834,
+    "max": 0.29746388900093734,
+    "succeeded": [
+      true,
+      true,
+      true
+    ]
+  }
+}
