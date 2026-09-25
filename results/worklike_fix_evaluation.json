@@ -1,0 +1,4043 @@
+{
+  "fix": "calibrate_threshold() adds a goal-agnostic work-like distraction bank as a third calibration population",
+  "work_like_bank": "data/workspace_dumps/work_like_distractions.json",
+  "work_like_bank_n": 20,
+  "before_arm": "calibrate_threshold(..., work_like_path=None), generic bank alone, the previously shipped behaviour",
+  "after_arm": "calibrate_threshold(...) at current default, generic bank plus work-like bank",
+  "both_arms": "templates_path left at its shipped default of None, so generated hard negatives are off in both arms",
+  "in_sample": {
+    "dataset": "IN SAMPLE, evaluation_set.json",
+    "path": "data/workspace_dumps/evaluation_set.json",
+    "n_goals": 6,
+    "n_samples": 144,
+    "per_goal": [
+      {
+        "goal": "I have to write a report.",
+        "domain": "professional writing",
+        "threshold_before": 0.0228,
+        "threshold_after": 0.0324,
+        "threshold_delta": 0.0096,
+        "before": {
+          "accuracy": 0.6667,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667,
+          "tp": 8,
+          "tn": 8,
+          "fp": 8,
+          "fn": 0,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 8,
+          "leak_rate": 1.0,
+          "focused_n": 8,
+          "focused_false_alarms": 0,
+          "false_alarm_rate": 0.0,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Microsoft Word - Q3 Report Draft.docx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.1313575804233551,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Microsoft Word - report_final_v4.docx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.1233089342713356,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Pages - Project Report - Section 2 Findings",
+              "label": "focused",
+              "expected": true,
+              "score": 0.10048185288906097,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Report outline, introduction and conclusion - Google Docs",
+              "label": "focused",
+              "expected": true,
+              "score": 0.20710399746894836,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - How to structure a formal report - Purdue OWL",
+              "label": "focused",
+              "expected": true,
+              "score": 0.07606982439756393,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Microsoft Excel - report figures and charts.xlsx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.06092206761240959,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - report notes: key points to cover",
+              "label": "focused",
+              "expected": true,
+              "score": 0.12043538689613342,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Microsoft Word - Report Draft.docx - 14 Grammarly suggestions",
+              "label": "focused",
+              "expected": true,
+              "score": 0.13122929632663727,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - spotify - Google Search",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.010966054163873196,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Lo-Fi Beats to Study To",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01772223971784115,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Top 10 Funniest Cat Videos 2024 - YouTube",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01377276610583067,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Explore Page",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.00728921452537179,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Stranger Things S4:E5",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.0078840097412467,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Mum (3 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.011911693960428238,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Uber Eats - checkout",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.010892955586314201,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Messages - Flat Group (12 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.022445065900683403,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - news report - Google Search",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.04126504436135292,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Match report: Arsenal 2-1 Chelsea - BBC Sport",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02877969481050968,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Check your credit report free - Experian",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.05349499359726906,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Weather - Weather report for London, hourly forecast",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.04770800098776817,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Report a bug - Issue #4412 - microsoft/vscode - GitHub",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.0426025427877903,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - How to report someone on Instagram - Help Centre",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.08376418799161911,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Consumer Reports: best washing machines 2026",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.031688280403614044,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Report: Man City agree deal for striker - Sky Sports",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.030388370156288147,
+              "predicted": true,
+              "correct": false
+            }
+          ]
+        },
+        "after": {
+          "accuracy": 0.7917,
+          "precision": 0.6154,
+          "recall": 1.0,
+          "f1": 0.7619,
+          "tp": 8,
+          "tn": 11,
+          "fp": 5,
+          "fn": 0,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 5,
+          "leak_rate": 0.625,
+          "focused_n": 8,
+          "focused_false_alarms": 0,
+          "false_alarm_rate": 0.0,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Microsoft Word - Q3 Report Draft.docx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.1313575804233551,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Microsoft Word - report_final_v4.docx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.1233089342713356,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Pages - Project Report - Section 2 Findings",
+              "label": "focused",
+              "expected": true,
+              "score": 0.10048185288906097,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Report outline, introduction and conclusion - Google Docs",
+              "label": "focused",
+              "expected": true,
+              "score": 0.20710399746894836,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - How to structure a formal report - Purdue OWL",
+              "label": "focused",
+              "expected": true,
+              "score": 0.07606982439756393,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Microsoft Excel - report figures and charts.xlsx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.06092206761240959,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - report notes: key points to cover",
+              "label": "focused",
+              "expected": true,
+              "score": 0.12043538689613342,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Microsoft Word - Report Draft.docx - 14 Grammarly suggestions",
+              "label": "focused",
+              "expected": true,
+              "score": 0.13122929632663727,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - spotify - Google Search",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.010966054163873196,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Lo-Fi Beats to Study To",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01772223971784115,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Top 10 Funniest Cat Videos 2024 - YouTube",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01377276610583067,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Explore Page",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.00728921452537179,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Stranger Things S4:E5",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.0078840097412467,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Mum (3 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.011911693960428238,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Uber Eats - checkout",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.010892955586314201,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Messages - Flat Group (12 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.022445065900683403,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - news report - Google Search",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.04126504436135292,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Match report: Arsenal 2-1 Chelsea - BBC Sport",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02877969481050968,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Check your credit report free - Experian",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.05349499359726906,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Weather - Weather report for London, hourly forecast",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.04770800098776817,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Report a bug - Issue #4412 - microsoft/vscode - GitHub",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.0426025427877903,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - How to report someone on Instagram - Help Centre",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.08376418799161911,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Consumer Reports: best washing machines 2026",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.031688280403614044,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Report: Man City agree deal for striker - Sky Sports",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.030388370156288147,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        }
+      },
+      {
+        "goal": "Writing my dissertation literature review",
+        "domain": "academic writing",
+        "threshold_before": 0.0123,
+        "threshold_after": 0.015,
+        "threshold_delta": 0.0028,
+        "before": {
+          "accuracy": 0.7083,
+          "precision": 0.5556,
+          "recall": 0.625,
+          "f1": 0.5882,
+          "tp": 5,
+          "tn": 12,
+          "fp": 4,
+          "fn": 3,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 4,
+          "leak_rate": 0.5,
+          "focused_n": 8,
+          "focused_false_alarms": 3,
+          "false_alarm_rate": 0.375,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Microsoft Word - Literature Review Chapter 2.docx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.05525607615709305,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Zotero - My Library - dissertation references",
+              "label": "focused",
+              "expected": true,
+              "score": 0.0772547796368599,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Preview - Reimers & Gurevych 2019 Sentence-BERT.pdf",
+              "label": "focused",
+              "expected": true,
+              "score": 0.011200088076293468,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - cross encoder semantic similarity - Google Scholar",
+              "label": "focused",
+              "expected": true,
+              "score": 0.008830753155052662,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Overleaf - dissertation.tex - Chapter 2 Related Work",
+              "label": "focused",
+              "expected": true,
+              "score": 0.025804299861192703,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - lit review argument structure and themes",
+              "label": "focused",
+              "expected": true,
+              "score": 0.01715356670320034,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Scopus - advanced search results, 214 documents",
+              "label": "focused",
+              "expected": true,
+              "score": 0.010840259492397308,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Microsoft Word - Bibliography and References.docx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.013416534289717674,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Discover Weekly",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.00711962440982461,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Reels",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.0043439301662147045,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - I Survived 100 Days in Hardcore Minecraft - YouTube",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.004668690729886293,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - ASOS - Women's Sale Up to 70% off",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.0038043309468775988,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Flat Group (12 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.005959537345916033,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Deliveroo - Order tracking, 25 min",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.005792433861643076,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Browse TV Shows",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.0047343941405415535,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Ryanair - flights to Lisbon in March",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.006137361750006676,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Amazon.co.uk - Write a customer review for Sony WH-1000XM5",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.004968458320945501,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - The Fellowship of the Ring - English Literature GCSE revision",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.01548298355191946,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Trustpilot reviews - is this site legit?",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.009147360920906067,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Honest review: iPhone 16 Pro after 3 months - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.006411352660506964,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Performance review self assessment template - HR portal",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02323979139328003,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Goodreads - Literature that changed my life, listopia",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.007806509733200073,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Rotten Tomatoes - Dune Part Two reviews",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.014112383127212524,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - dissertation struggles memes - r/PhD - Reddit",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.022375863045454025,
+              "predicted": true,
+              "correct": false
+            }
+          ]
+        },
+        "after": {
+          "accuracy": 0.7083,
+          "precision": 0.5714,
+          "recall": 0.5,
+          "f1": 0.5333,
+          "tp": 4,
+          "tn": 13,
+          "fp": 3,
+          "fn": 4,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 3,
+          "leak_rate": 0.375,
+          "focused_n": 8,
+          "focused_false_alarms": 4,
+          "false_alarm_rate": 0.5,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Microsoft Word - Literature Review Chapter 2.docx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.05525607615709305,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Zotero - My Library - dissertation references",
+              "label": "focused",
+              "expected": true,
+              "score": 0.0772547796368599,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Preview - Reimers & Gurevych 2019 Sentence-BERT.pdf",
+              "label": "focused",
+              "expected": true,
+              "score": 0.011200088076293468,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - cross encoder semantic similarity - Google Scholar",
+              "label": "focused",
+              "expected": true,
+              "score": 0.008830753155052662,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Overleaf - dissertation.tex - Chapter 2 Related Work",
+              "label": "focused",
+              "expected": true,
+              "score": 0.025804299861192703,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - lit review argument structure and themes",
+              "label": "focused",
+              "expected": true,
+              "score": 0.01715356670320034,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Scopus - advanced search results, 214 documents",
+              "label": "focused",
+              "expected": true,
+              "score": 0.010840259492397308,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Microsoft Word - Bibliography and References.docx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.013416534289717674,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Spotify - Discover Weekly",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.00711962440982461,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Reels",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.0043439301662147045,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - I Survived 100 Days in Hardcore Minecraft - YouTube",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.004668690729886293,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - ASOS - Women's Sale Up to 70% off",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.0038043309468775988,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Flat Group (12 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.005959537345916033,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Deliveroo - Order tracking, 25 min",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.005792433861643076,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Browse TV Shows",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.0047343941405415535,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Ryanair - flights to Lisbon in March",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.006137361750006676,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Amazon.co.uk - Write a customer review for Sony WH-1000XM5",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.004968458320945501,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - The Fellowship of the Ring - English Literature GCSE revision",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.01548298355191946,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Trustpilot reviews - is this site legit?",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.009147360920906067,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Honest review: iPhone 16 Pro after 3 months - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.006411352660506964,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Performance review self assessment template - HR portal",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02323979139328003,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Goodreads - Literature that changed my life, listopia",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.007806509733200073,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Rotten Tomatoes - Dune Part Two reviews",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.014112383127212524,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - dissertation struggles memes - r/PhD - Reddit",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.022375863045454025,
+              "predicted": true,
+              "correct": false
+            }
+          ]
+        }
+      },
+      {
+        "goal": "Fixing the login bug in the authentication service",
+        "domain": "software engineering",
+        "threshold_before": 0.0254,
+        "threshold_after": 0.0315,
+        "threshold_delta": 0.0062,
+        "before": {
+          "accuracy": 0.875,
+          "precision": 0.7273,
+          "recall": 1.0,
+          "f1": 0.8421,
+          "tp": 8,
+          "tn": 13,
+          "fp": 3,
+          "fn": 0,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 3,
+          "leak_rate": 0.375,
+          "focused_n": 8,
+          "focused_false_alarms": 0,
+          "false_alarm_rate": 0.0,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Visual Studio Code - auth_service.py - backend",
+              "label": "focused",
+              "expected": true,
+              "score": 0.07999143749475479,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Terminal - pytest tests/test_auth.py -k login",
+              "label": "focused",
+              "expected": true,
+              "score": 0.059186868369579315,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - JWT token expired error - Stack Overflow",
+              "label": "focused",
+              "expected": true,
+              "score": 0.05359604209661484,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Visual Studio Code - login_handler.py - backend",
+              "label": "focused",
+              "expected": true,
+              "score": 0.04902659356594086,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Issue #3120: intermittent 401 on login - GitHub",
+              "label": "focused",
+              "expected": true,
+              "score": 0.03672075644135475,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Terminal - git diff src/auth/session.py",
+              "label": "focused",
+              "expected": true,
+              "score": 0.04437687620520592,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - OAuth 2.0 refresh token rotation - Auth0 Docs",
+              "label": "focused",
+              "expected": true,
+              "score": 0.04128133878111839,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Postman - POST /api/v1/auth/login - 401 Unauthorized",
+              "label": "focused",
+              "expected": true,
+              "score": 0.06050966680049896,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Deep Focus",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.018270447850227356,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Premier League highlights: matchweek 12 - YouTube",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.014039474539458752,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Discord - #general - 47 new messages",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.015503376722335815,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Wordle - The New York Times",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.019171735271811485,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Direct Messages",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.021318895742297173,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - The Office S3:E12",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.017224261537194252,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Domino's Pizza - checkout",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01624700240790844,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "TikTok - For You",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.019652947783470154,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Log in to your Netflix account",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.0244746170938015,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Sign in - Online Banking - HSBC UK",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.027852855622768402,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - A Bug's Life (1998) - watch on Disney+",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.018489044159650803,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Report a bug - Minecraft Bedrock launcher - GitHub",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.01974903605878353,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Customer Service - Track my Amazon order",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02584889717400074,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Rentokil - bed bug treatment prices",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.016585955396294594,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Two factor authentication setup - Instagram Help",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.031169399619102478,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Steam - Login - your wishlist is on sale",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.025011062622070312,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        },
+        "after": {
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 8,
+          "tn": 16,
+          "fp": 0,
+          "fn": 0,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 0,
+          "leak_rate": 0.0,
+          "focused_n": 8,
+          "focused_false_alarms": 0,
+          "false_alarm_rate": 0.0,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Visual Studio Code - auth_service.py - backend",
+              "label": "focused",
+              "expected": true,
+              "score": 0.07999143749475479,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Terminal - pytest tests/test_auth.py -k login",
+              "label": "focused",
+              "expected": true,
+              "score": 0.059186868369579315,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - JWT token expired error - Stack Overflow",
+              "label": "focused",
+              "expected": true,
+              "score": 0.05359604209661484,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Visual Studio Code - login_handler.py - backend",
+              "label": "focused",
+              "expected": true,
+              "score": 0.04902659356594086,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Issue #3120: intermittent 401 on login - GitHub",
+              "label": "focused",
+              "expected": true,
+              "score": 0.03672075644135475,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Terminal - git diff src/auth/session.py",
+              "label": "focused",
+              "expected": true,
+              "score": 0.04437687620520592,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - OAuth 2.0 refresh token rotation - Auth0 Docs",
+              "label": "focused",
+              "expected": true,
+              "score": 0.04128133878111839,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Postman - POST /api/v1/auth/login - 401 Unauthorized",
+              "label": "focused",
+              "expected": true,
+              "score": 0.06050966680049896,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Deep Focus",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.018270447850227356,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Premier League highlights: matchweek 12 - YouTube",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.014039474539458752,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Discord - #general - 47 new messages",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.015503376722335815,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Wordle - The New York Times",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.019171735271811485,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Direct Messages",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.021318895742297173,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - The Office S3:E12",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.017224261537194252,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Domino's Pizza - checkout",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01624700240790844,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "TikTok - For You",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.019652947783470154,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Log in to your Netflix account",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.0244746170938015,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Sign in - Online Banking - HSBC UK",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.027852855622768402,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - A Bug's Life (1998) - watch on Disney+",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.018489044159650803,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Report a bug - Minecraft Bedrock launcher - GitHub",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.01974903605878353,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Customer Service - Track my Amazon order",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02584889717400074,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Rentokil - bed bug treatment prices",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.016585955396294594,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Two factor authentication setup - Instagram Help",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.031169399619102478,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Steam - Login - your wishlist is on sale",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.025011062622070312,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        }
+      },
+      {
+        "goal": "Applying for graduate software engineering jobs",
+        "domain": "job hunting",
+        "threshold_before": 0.0486,
+        "threshold_after": 0.0674,
+        "threshold_delta": 0.0188,
+        "before": {
+          "accuracy": 0.875,
+          "precision": 0.7273,
+          "recall": 1.0,
+          "f1": 0.8421,
+          "tp": 8,
+          "tn": 13,
+          "fp": 3,
+          "fn": 0,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 3,
+          "leak_rate": 0.375,
+          "focused_n": 8,
+          "focused_false_alarms": 0,
+          "false_alarm_rate": 0.0,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Google Chrome - LinkedIn Jobs - Graduate Software Engineer, London",
+              "label": "focused",
+              "expected": true,
+              "score": 0.6341170072555542,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Microsoft Word - Areeba_Abid_CV_2026.docx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.050684213638305664,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Indeed - graduate developer roles, 214 results",
+              "label": "focused",
+              "expected": true,
+              "score": 0.22445596754550934,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Cover letter, Monzo grad scheme - Google Docs",
+              "label": "focused",
+              "expected": true,
+              "score": 0.10917891561985016,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Bright Network - application deadline tracker",
+              "label": "focused",
+              "expected": true,
+              "score": 0.05640135705471039,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Application status - Careers at Revolut",
+              "label": "focused",
+              "expected": true,
+              "score": 0.0989503562450409,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - interview prep: STAR answers",
+              "label": "focused",
+              "expected": true,
+              "score": 0.06267047673463821,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - LeetCode - Two Sum - Problem",
+              "label": "focused",
+              "expected": true,
+              "score": 0.06980698555707932,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Brooklyn Nine-Nine S5:E3",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.023440873250365257,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Today's Top Hits",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01984812319278717,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Explore Page",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.03474397584795952,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Ranking every crisp flavour in the UK - YouTube",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.020183488726615906,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Sara (2 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.024962762370705605,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Zara - New In: Winter Coats",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.03428028151392937,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "TikTok - For You",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.043130647391080856,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - BBC Sport - Live scores",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.024389227852225304,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Steve Jobs (2015) - IMDb",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.03880142420530319,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Apply for a provisional driving licence - GOV.UK",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.013764503411948681,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Graduation gown hire - University of London",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.0789070725440979,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - A day in the life of a software engineer at Google - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.0708085149526596,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Passport application tracking - HM Passport Office",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.05043657496571541,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Engineering marvels: how the Burj Khalifa was built - Reddit",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.011888406239449978,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Odd jobs near me - TaskRabbit",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.04532179981470108,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Application form - Council tax single person discount",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.040190838277339935,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        },
+        "after": {
+          "accuracy": 0.7917,
+          "precision": 0.7143,
+          "recall": 0.625,
+          "f1": 0.6667,
+          "tp": 5,
+          "tn": 14,
+          "fp": 2,
+          "fn": 3,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 2,
+          "leak_rate": 0.25,
+          "focused_n": 8,
+          "focused_false_alarms": 3,
+          "false_alarm_rate": 0.375,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Google Chrome - LinkedIn Jobs - Graduate Software Engineer, London",
+              "label": "focused",
+              "expected": true,
+              "score": 0.6341170072555542,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Microsoft Word - Areeba_Abid_CV_2026.docx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.050684213638305664,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Indeed - graduate developer roles, 214 results",
+              "label": "focused",
+              "expected": true,
+              "score": 0.22445596754550934,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Cover letter, Monzo grad scheme - Google Docs",
+              "label": "focused",
+              "expected": true,
+              "score": 0.10917891561985016,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Bright Network - application deadline tracker",
+              "label": "focused",
+              "expected": true,
+              "score": 0.05640135705471039,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Application status - Careers at Revolut",
+              "label": "focused",
+              "expected": true,
+              "score": 0.0989503562450409,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - interview prep: STAR answers",
+              "label": "focused",
+              "expected": true,
+              "score": 0.06267047673463821,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Safari - LeetCode - Two Sum - Problem",
+              "label": "focused",
+              "expected": true,
+              "score": 0.06980698555707932,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Brooklyn Nine-Nine S5:E3",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.023440873250365257,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Today's Top Hits",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01984812319278717,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Explore Page",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.03474397584795952,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Ranking every crisp flavour in the UK - YouTube",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.020183488726615906,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Sara (2 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.024962762370705605,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Zara - New In: Winter Coats",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.03428028151392937,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "TikTok - For You",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.043130647391080856,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - BBC Sport - Live scores",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.024389227852225304,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Steve Jobs (2015) - IMDb",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.03880142420530319,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Apply for a provisional driving licence - GOV.UK",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.013764503411948681,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Graduation gown hire - University of London",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.0789070725440979,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - A day in the life of a software engineer at Google - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.0708085149526596,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Passport application tracking - HM Passport Office",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.05043657496571541,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Engineering marvels: how the Burj Khalifa was built - Reddit",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.011888406239449978,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Odd jobs near me - TaskRabbit",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.04532179981470108,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Application form - Council tax single person discount",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.040190838277339935,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        }
+      },
+      {
+        "goal": "Doing my taxes and sorting out my bank statements",
+        "domain": "admin and finance",
+        "threshold_before": 0.0494,
+        "threshold_after": 0.0587,
+        "threshold_delta": 0.0094,
+        "before": {
+          "accuracy": 0.8333,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6667,
+          "tp": 4,
+          "tn": 16,
+          "fp": 0,
+          "fn": 4,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 0,
+          "leak_rate": 0.0,
+          "focused_n": 8,
+          "focused_false_alarms": 4,
+          "false_alarm_rate": 0.5,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Safari - HMRC - Self Assessment tax return 2025 to 2026",
+              "label": "focused",
+              "expected": true,
+              "score": 0.03306557238101959,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Microsoft Excel - expenses_2025.xlsx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.046823568642139435,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Online Banking - Download statements PDF - Barclays",
+              "label": "focused",
+              "expected": true,
+              "score": 0.07951092720031738,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Preview - Statement_Jan2026.pdf",
+              "label": "focused",
+              "expected": true,
+              "score": 0.05758049711585045,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Allowable expenses if you're self employed - GOV.UK",
+              "label": "focused",
+              "expected": true,
+              "score": 0.02745525725185871,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Microsoft Excel - tax_workings.xlsx - Sheet1",
+              "label": "focused",
+              "expected": true,
+              "score": 0.047967638820409775,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Government Gateway - sign in",
+              "label": "focused",
+              "expected": true,
+              "score": 0.05143142491579056,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - receipts still missing for Q3",
+              "label": "focused",
+              "expected": true,
+              "score": 0.0839238315820694,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Liked Songs",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.03518353030085564,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Bake Off: The Professionals",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.025751302018761635,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Reels",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.02545333281159401,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Minecraft but I can't touch grass - YouTube",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.02120918035507202,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Mum (3 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.0222794059664011,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Ryanair - flights to Lisbon in March",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.027158915996551514,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Discord - #gaming",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.027845770120620728,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "TikTok - For You",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.03413967415690422,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Food bank donation points near me",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.032194703817367554,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Tax the rich: why the system is broken - The Guardian",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.021297210827469826,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Mission statement examples for startups",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02159343846142292,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Bank Holiday 2026 dates UK",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.04472721368074417,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Work life balance tips - r/antiwork",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.03948746249079704,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - How to pay ZERO tax legally (the loophole) - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.025243515148758888,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Statement necklaces - ASOS",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.021774841472506523,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Ceramic piggy bank, handmade - Etsy",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.027344727888703346,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        },
+        "after": {
+          "accuracy": 0.75,
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4,
+          "tp": 2,
+          "tn": 16,
+          "fp": 0,
+          "fn": 6,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 0,
+          "leak_rate": 0.0,
+          "focused_n": 8,
+          "focused_false_alarms": 6,
+          "false_alarm_rate": 0.75,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Safari - HMRC - Self Assessment tax return 2025 to 2026",
+              "label": "focused",
+              "expected": true,
+              "score": 0.03306557238101959,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Microsoft Excel - expenses_2025.xlsx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.046823568642139435,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Online Banking - Download statements PDF - Barclays",
+              "label": "focused",
+              "expected": true,
+              "score": 0.07951092720031738,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Preview - Statement_Jan2026.pdf",
+              "label": "focused",
+              "expected": true,
+              "score": 0.05758049711585045,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Allowable expenses if you're self employed - GOV.UK",
+              "label": "focused",
+              "expected": true,
+              "score": 0.02745525725185871,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Microsoft Excel - tax_workings.xlsx - Sheet1",
+              "label": "focused",
+              "expected": true,
+              "score": 0.047967638820409775,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Government Gateway - sign in",
+              "label": "focused",
+              "expected": true,
+              "score": 0.05143142491579056,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Notes - receipts still missing for Q3",
+              "label": "focused",
+              "expected": true,
+              "score": 0.0839238315820694,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Liked Songs",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.03518353030085564,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Bake Off: The Professionals",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.025751302018761635,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Reels",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.02545333281159401,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Minecraft but I can't touch grass - YouTube",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.02120918035507202,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Mum (3 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.0222794059664011,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Ryanair - flights to Lisbon in March",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.027158915996551514,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Discord - #gaming",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.027845770120620728,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "TikTok - For You",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.03413967415690422,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Food bank donation points near me",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.032194703817367554,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Tax the rich: why the system is broken - The Guardian",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.021297210827469826,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Mission statement examples for startups",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02159343846142292,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Bank Holiday 2026 dates UK",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.04472721368074417,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Work life balance tips - r/antiwork",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.03948746249079704,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - How to pay ZERO tax legally (the loophole) - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.025243515148758888,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Statement necklaces - ASOS",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.021774841472506523,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Ceramic piggy bank, handmade - Etsy",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.027344727888703346,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        }
+      },
+      {
+        "goal": "Editing the video for my YouTube channel",
+        "domain": "creative work",
+        "threshold_before": 0.0383,
+        "threshold_after": 0.0372,
+        "threshold_delta": -0.0011,
+        "before": {
+          "accuracy": 0.625,
+          "precision": 0.4545,
+          "recall": 0.625,
+          "f1": 0.5263,
+          "tp": 5,
+          "tn": 10,
+          "fp": 6,
+          "fn": 3,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 6,
+          "leak_rate": 0.75,
+          "focused_n": 8,
+          "focused_false_alarms": 3,
+          "false_alarm_rate": 0.375,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Final Cut Pro - channel_ep14.fcpbundle",
+              "label": "focused",
+              "expected": true,
+              "score": 0.049184657633304596,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Adobe Premiere Pro - ep14_rough_cut.prproj",
+              "label": "focused",
+              "expected": true,
+              "score": 0.0488528311252594,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - YouTube Studio - Content - Drafts",
+              "label": "focused",
+              "expected": true,
+              "score": 0.4783596098423004,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Audacity - voiceover_take3.wav",
+              "label": "focused",
+              "expected": true,
+              "score": 0.01823160983622074,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Royalty free background music - Epidemic Sound",
+              "label": "focused",
+              "expected": true,
+              "score": 0.027164680883288383,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Adobe Photoshop - ep14_thumbnail.psd",
+              "label": "focused",
+              "expected": true,
+              "score": 0.015035890974104404,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - YouTube Studio - Analytics - Last 28 days",
+              "label": "focused",
+              "expected": true,
+              "score": 0.14818373322486877,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - ep14 edit list: cut intro to 15s",
+              "label": "focused",
+              "expected": true,
+              "score": 0.09857234358787537,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - BBC News - Home",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.017717545852065086,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Discover Weekly",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.02054743841290474,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Flat Group (12 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.014675736427307129,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Browse TV Shows",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.02141992188990116,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Uber Eats - checkout",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.015527517534792423,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Direct Messages",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.028809743002057076,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Wordle - The New York Times",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01752845011651516,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Amazon.co.uk - Your Orders",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01467322837561369,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Watch Later - 62 videos - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.05092690512537956,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - How I edit my videos in 10 minutes (full workflow) - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.7112076878547668,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Best video editing laptops 2026 - TechRadar reviews",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.10532167553901672,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Channel 4 - Gogglebox catch up",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.04275873675942421,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Music video: Taylor Swift - Fortnight - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.040370408445596695,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Instagram - Edit your profile",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.05232063680887222,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Video doorbell installation - Ring Help",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.019434647634625435,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Discord - #video-clips - 14 new",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02292143926024437,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        },
+        "after": {
+          "accuracy": 0.625,
+          "precision": 0.4545,
+          "recall": 0.625,
+          "f1": 0.5263,
+          "tp": 5,
+          "tn": 10,
+          "fp": 6,
+          "fn": 3,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 6,
+          "leak_rate": 0.75,
+          "focused_n": 8,
+          "focused_false_alarms": 3,
+          "false_alarm_rate": 0.375,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Final Cut Pro - channel_ep14.fcpbundle",
+              "label": "focused",
+              "expected": true,
+              "score": 0.049184657633304596,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Adobe Premiere Pro - ep14_rough_cut.prproj",
+              "label": "focused",
+              "expected": true,
+              "score": 0.0488528311252594,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - YouTube Studio - Content - Drafts",
+              "label": "focused",
+              "expected": true,
+              "score": 0.4783596098423004,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Audacity - voiceover_take3.wav",
+              "label": "focused",
+              "expected": true,
+              "score": 0.01823160983622074,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Royalty free background music - Epidemic Sound",
+              "label": "focused",
+              "expected": true,
+              "score": 0.027164680883288383,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Adobe Photoshop - ep14_thumbnail.psd",
+              "label": "focused",
+              "expected": true,
+              "score": 0.015035890974104404,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - YouTube Studio - Analytics - Last 28 days",
+              "label": "focused",
+              "expected": true,
+              "score": 0.14818373322486877,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - ep14 edit list: cut intro to 15s",
+              "label": "focused",
+              "expected": true,
+              "score": 0.09857234358787537,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - BBC News - Home",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.017717545852065086,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Discover Weekly",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.02054743841290474,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Flat Group (12 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.014675736427307129,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Browse TV Shows",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.02141992188990116,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Uber Eats - checkout",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.015527517534792423,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Direct Messages",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.028809743002057076,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Wordle - The New York Times",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01752845011651516,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Amazon.co.uk - Your Orders",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01467322837561369,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Watch Later - 62 videos - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.05092690512537956,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - How I edit my videos in 10 minutes (full workflow) - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.7112076878547668,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Best video editing laptops 2026 - TechRadar reviews",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.10532167553901672,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Channel 4 - Gogglebox catch up",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.04275873675942421,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Music video: Taylor Swift - Fortnight - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.040370408445596695,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Instagram - Edit your profile",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.05232063680887222,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Video doorbell installation - Ring Help",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.019434647634625435,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Discord - #video-clips - 14 new",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02292143926024437,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        }
+      }
+    ],
+    "pooled": {
+      "before": {
+        "accuracy": 0.7639,
+        "precision": 0.6129,
+        "recall": 0.7917,
+        "f1": 0.6909,
+        "tp": 38,
+        "tn": 72,
+        "fp": 24,
+        "fn": 10,
+        "hard_negative_n": 48,
+        "hard_negative_leaked": 24,
+        "leak_rate": 0.5,
+        "focused_n": 48,
+        "focused_false_alarms": 10,
+        "false_alarm_rate": 0.2083,
+        "distraction_n": 48,
+        "distraction_leaked": 0,
+        "distraction_leak_rate": 0.0
+      },
+      "after": {
+        "accuracy": 0.7778,
+        "precision": 0.6667,
+        "recall": 0.6667,
+        "f1": 0.6667,
+        "tp": 32,
+        "tn": 80,
+        "fp": 16,
+        "fn": 16,
+        "hard_negative_n": 48,
+        "hard_negative_leaked": 16,
+        "leak_rate": 0.3333,
+        "focused_n": 48,
+        "focused_false_alarms": 16,
+        "false_alarm_rate": 0.3333,
+        "distraction_n": 48,
+        "distraction_leaked": 0,
+        "distraction_leak_rate": 0.0
+      }
+    }
+  },
+  "held_out": {
+    "dataset": "HELD OUT, evaluation_set_holdout.json",
+    "path": "data/workspace_dumps/evaluation_set_holdout.json",
+    "n_goals": 3,
+    "n_samples": 72,
+    "per_goal": [
+      {
+        "goal": "Planning my marathon training schedule",
+        "domain": "health and fitness",
+        "threshold_before": 0.0247,
+        "threshold_after": 0.0264,
+        "threshold_delta": 0.0017,
+        "before": {
+          "accuracy": 0.875,
+          "precision": 0.7778,
+          "recall": 0.875,
+          "f1": 0.8235,
+          "tp": 7,
+          "tn": 14,
+          "fp": 2,
+          "fn": 1,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 2,
+          "leak_rate": 0.25,
+          "focused_n": 8,
+          "focused_false_alarms": 1,
+          "false_alarm_rate": 0.125,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Safari - Hal Higdon Novice 1 marathon training plan, week 8",
+              "label": "focused",
+              "expected": true,
+              "score": 0.35325634479522705,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Strava - My Activities - Long run 18km",
+              "label": "focused",
+              "expected": true,
+              "score": 0.1449623554944992,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Calendar - Training schedule - April 2026",
+              "label": "focused",
+              "expected": true,
+              "score": 0.14903953671455383,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - London Marathon 2026 - Entry confirmation",
+              "label": "focused",
+              "expected": true,
+              "score": 0.039877261966466904,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Numbers - weekly_mileage.numbers",
+              "label": "focused",
+              "expected": true,
+              "score": 0.02342916466295719,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Garmin Connect - Training Status: Productive",
+              "label": "focused",
+              "expected": true,
+              "score": 0.0810953676700592,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - How to avoid shin splints during a marathon build - Runner's World",
+              "label": "focused",
+              "expected": true,
+              "score": 0.06074957922101021,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - race day kit list and fuelling plan",
+              "label": "focused",
+              "expected": true,
+              "score": 0.2737543284893036,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Bridgerton S3:E1",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.006428610999137163,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Explore Page",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.021278850734233856,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Discover Weekly",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.014451795257627964,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Dad (1 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01081289816647768,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Uber Eats - checkout",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.012899535708129406,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Wordle - The New York Times",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01419740915298462,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "TikTok - For You",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.023548483848571777,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Zara - New In: Winter Coats",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01808146759867668,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Netflix marathon: every Marvel film in order - Digital Spy",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.011610723100602627,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Train times London to Manchester - Trainline",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.043107178062200546,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Nike Air Zoom Pegasus 41, 30% off - Sports Direct",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.01611720770597458,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Schedule a dentist appointment - NHS",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.010738830082118511,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Formula 1: Miami Grand Prix race highlights - Sky Sports",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.010466567240655422,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Running out of storage on iPhone - Apple Support",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.013653953559696674,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - The Marathon Continues: Nipsey Hussle documentary - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02882358245551586,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Planning permission for a loft conversion - GOV.UK",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.007980454713106155,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        },
+        "after": {
+          "accuracy": 0.875,
+          "precision": 0.7778,
+          "recall": 0.875,
+          "f1": 0.8235,
+          "tp": 7,
+          "tn": 14,
+          "fp": 2,
+          "fn": 1,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 2,
+          "leak_rate": 0.25,
+          "focused_n": 8,
+          "focused_false_alarms": 1,
+          "false_alarm_rate": 0.125,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Safari - Hal Higdon Novice 1 marathon training plan, week 8",
+              "label": "focused",
+              "expected": true,
+              "score": 0.35325634479522705,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Strava - My Activities - Long run 18km",
+              "label": "focused",
+              "expected": true,
+              "score": 0.1449623554944992,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Calendar - Training schedule - April 2026",
+              "label": "focused",
+              "expected": true,
+              "score": 0.14903953671455383,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - London Marathon 2026 - Entry confirmation",
+              "label": "focused",
+              "expected": true,
+              "score": 0.039877261966466904,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Numbers - weekly_mileage.numbers",
+              "label": "focused",
+              "expected": true,
+              "score": 0.02342916466295719,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Garmin Connect - Training Status: Productive",
+              "label": "focused",
+              "expected": true,
+              "score": 0.0810953676700592,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - How to avoid shin splints during a marathon build - Runner's World",
+              "label": "focused",
+              "expected": true,
+              "score": 0.06074957922101021,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - race day kit list and fuelling plan",
+              "label": "focused",
+              "expected": true,
+              "score": 0.2737543284893036,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Bridgerton S3:E1",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.006428610999137163,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Explore Page",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.021278850734233856,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Discover Weekly",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.014451795257627964,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Dad (1 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01081289816647768,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Uber Eats - checkout",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.012899535708129406,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Wordle - The New York Times",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01419740915298462,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "TikTok - For You",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.023548483848571777,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Zara - New In: Winter Coats",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.01808146759867668,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Netflix marathon: every Marvel film in order - Digital Spy",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.011610723100602627,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Train times London to Manchester - Trainline",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.043107178062200546,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Nike Air Zoom Pegasus 41, 30% off - Sports Direct",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.01611720770597458,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Schedule a dentist appointment - NHS",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.010738830082118511,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Formula 1: Miami Grand Prix race highlights - Sky Sports",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.010466567240655422,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Running out of storage on iPhone - Apple Support",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.013653953559696674,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - The Marathon Continues: Nipsey Hussle documentary - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02882358245551586,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Planning permission for a loft conversion - GOV.UK",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.007980454713106155,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        }
+      },
+      {
+        "goal": "Practising Spanish for my B2 exam",
+        "domain": "language learning",
+        "threshold_before": 0.012,
+        "threshold_after": 0.014,
+        "threshold_delta": 0.002,
+        "before": {
+          "accuracy": 0.8333,
+          "precision": 0.7,
+          "recall": 0.875,
+          "f1": 0.7778,
+          "tp": 7,
+          "tn": 13,
+          "fp": 3,
+          "fn": 1,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 3,
+          "leak_rate": 0.375,
+          "focused_n": 8,
+          "focused_false_alarms": 1,
+          "false_alarm_rate": 0.125,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Duolingo - Spanish - Unit 14, subjunctive",
+              "label": "focused",
+              "expected": true,
+              "score": 0.05072864890098572,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Anki - Spanish B2 vocab - 42 cards due",
+              "label": "focused",
+              "expected": true,
+              "score": 0.1254820078611374,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - DELE B2 past papers - Instituto Cervantes",
+              "label": "focused",
+              "expected": true,
+              "score": 0.04037582874298096,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Preview - DELE_B2_modelo_2024.pdf",
+              "label": "focused",
+              "expected": true,
+              "score": 0.017981376498937607,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Spanish subjunctive practice exercises - SpanishDict",
+              "label": "focused",
+              "expected": true,
+              "score": 0.0468304269015789,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - Spanish irregular verbs to review",
+              "label": "focused",
+              "expected": true,
+              "score": 0.010761398822069168,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Safari - B2 exam speaking task examples - Instituto Cervantes",
+              "label": "focused",
+              "expected": true,
+              "score": 0.18688154220581055,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Microsoft Word - spanish_essay_draft.docx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.02305936999619007,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Browse TV Shows",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.005075613968074322,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Today's Top Hits",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.006734341848641634,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Direct Messages",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.005549184512346983,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Domino's Pizza - checkout",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.0072008888237178326,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Flat Group (12 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.00883287750184536,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - BBC Sport - Live scores",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.007785172201693058,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "TikTok - For You",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.0068659125827252865,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Discord - #general - 47 new messages",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.006210516672581434,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Spanish holidays: best beaches in Costa Brava - TripAdvisor",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.008205151185393333,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Spanish omelette recipe - BBC Good Food",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.006786569487303495,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - La Liga: Real Madrid vs Barcelona live - ESPN",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.005802202504128218,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Driving theory test practice questions - GOV.UK",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.014062383212149143,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Netflix - Money Heist (La Casa de Papel) S5:E4",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.007138208486139774,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Exam stress: how to cope - Student Minds",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02492910996079445,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Spanish Grand Prix qualifying results - Formula 1",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.015944307669997215,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Vitamin B12 deficiency symptoms - NHS",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.008261749520897865,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        },
+        "after": {
+          "accuracy": 0.8333,
+          "precision": 0.7,
+          "recall": 0.875,
+          "f1": 0.7778,
+          "tp": 7,
+          "tn": 13,
+          "fp": 3,
+          "fn": 1,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 3,
+          "leak_rate": 0.375,
+          "focused_n": 8,
+          "focused_false_alarms": 1,
+          "false_alarm_rate": 0.125,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Duolingo - Spanish - Unit 14, subjunctive",
+              "label": "focused",
+              "expected": true,
+              "score": 0.05072864890098572,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Anki - Spanish B2 vocab - 42 cards due",
+              "label": "focused",
+              "expected": true,
+              "score": 0.1254820078611374,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - DELE B2 past papers - Instituto Cervantes",
+              "label": "focused",
+              "expected": true,
+              "score": 0.04037582874298096,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Preview - DELE_B2_modelo_2024.pdf",
+              "label": "focused",
+              "expected": true,
+              "score": 0.017981376498937607,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Spanish subjunctive practice exercises - SpanishDict",
+              "label": "focused",
+              "expected": true,
+              "score": 0.0468304269015789,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - Spanish irregular verbs to review",
+              "label": "focused",
+              "expected": true,
+              "score": 0.010761398822069168,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Safari - B2 exam speaking task examples - Instituto Cervantes",
+              "label": "focused",
+              "expected": true,
+              "score": 0.18688154220581055,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Microsoft Word - spanish_essay_draft.docx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.02305936999619007,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Browse TV Shows",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.005075613968074322,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Today's Top Hits",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.006734341848641634,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Direct Messages",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.005549184512346983,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Domino's Pizza - checkout",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.0072008888237178326,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Flat Group (12 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.00883287750184536,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - BBC Sport - Live scores",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.007785172201693058,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "TikTok - For You",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.0068659125827252865,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Discord - #general - 47 new messages",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.006210516672581434,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Spanish holidays: best beaches in Costa Brava - TripAdvisor",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.008205151185393333,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Spanish omelette recipe - BBC Good Food",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.006786569487303495,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - La Liga: Real Madrid vs Barcelona live - ESPN",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.005802202504128218,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Driving theory test practice questions - GOV.UK",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.014062383212149143,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Netflix - Money Heist (La Casa de Papel) S5:E4",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.007138208486139774,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Exam stress: how to cope - Student Minds",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02492910996079445,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Spanish Grand Prix qualifying results - Formula 1",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.015944307669997215,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Vitamin B12 deficiency symptoms - NHS",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.008261749520897865,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        }
+      },
+      {
+        "goal": "Organising my sister's wedding",
+        "domain": "event planning",
+        "threshold_before": 0.0268,
+        "threshold_after": 0.0271,
+        "threshold_delta": 0.0003,
+        "before": {
+          "accuracy": 0.75,
+          "precision": 0.5833,
+          "recall": 0.875,
+          "f1": 0.7,
+          "tp": 7,
+          "tn": 11,
+          "fp": 5,
+          "fn": 1,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 5,
+          "leak_rate": 0.625,
+          "focused_n": 8,
+          "focused_false_alarms": 1,
+          "false_alarm_rate": 0.125,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Google Chrome - Hitched - venue availability, September 2026",
+              "label": "focused",
+              "expected": true,
+              "score": 0.03832980617880821,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Microsoft Excel - wedding_budget.xlsx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.060299426317214966,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - guest list, 94 confirmed",
+              "label": "focused",
+              "expected": true,
+              "score": 0.02271319553256035,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Bridesmaid dresses - Coast - shortlist",
+              "label": "focused",
+              "expected": true,
+              "score": 0.046000994741916656,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Wedding invitations - Papier - proof review",
+              "label": "focused",
+              "expected": true,
+              "score": 0.05275113135576248,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Mail - Re: Catering quote for 94 guests",
+              "label": "focused",
+              "expected": true,
+              "score": 0.0314624048769474,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Calendar - Venue viewing, Saturday 11am",
+              "label": "focused",
+              "expected": true,
+              "score": 0.03992578014731407,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Wedding photographer portfolio - Sarah Jones Photography",
+              "label": "focused",
+              "expected": true,
+              "score": 0.03793841972947121,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - The Office S3:E12",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.015705686062574387,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Liked Songs",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.012539579533040524,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Reels",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.015060988254845142,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Ryanair - flights to Lisbon in March",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.017296509817242622,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Mum (3 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.021982654929161072,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Amazon.co.uk - Your Orders",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.013364407233893871,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "TikTok - For You",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.017243916168808937,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - BBC News - Home",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.020404554903507233,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Four Weddings and a Funeral (1994)",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.01882416196167469,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Say Yes to the Dress, Season 12 - TLC",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.025762241333723068,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Wedding Crashers - watch on Prime Video",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.05026252940297127,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - My sister ruined my wedding - r/AmITheAsshole - Reddit",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.09525776654481888,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Royal wedding: what Kate wore - Hello! Magazine",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.04308108985424042,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Marriage visa application requirements - GOV.UK",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.03866519406437874,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Wedding dress fails compilation - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02882964350283146,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Guest WiFi setup - BT Help",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02616495080292225,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        },
+        "after": {
+          "accuracy": 0.75,
+          "precision": 0.5833,
+          "recall": 0.875,
+          "f1": 0.7,
+          "tp": 7,
+          "tn": 11,
+          "fp": 5,
+          "fn": 1,
+          "hard_negative_n": 8,
+          "hard_negative_leaked": 5,
+          "leak_rate": 0.625,
+          "focused_n": 8,
+          "focused_false_alarms": 1,
+          "false_alarm_rate": 0.125,
+          "distraction_n": 8,
+          "distraction_leaked": 0,
+          "distraction_leak_rate": 0.0,
+          "per_sample": [
+            {
+              "sample": "Google Chrome - Hitched - venue availability, September 2026",
+              "label": "focused",
+              "expected": true,
+              "score": 0.03832980617880821,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Microsoft Excel - wedding_budget.xlsx",
+              "label": "focused",
+              "expected": true,
+              "score": 0.060299426317214966,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Notes - guest list, 94 confirmed",
+              "label": "focused",
+              "expected": true,
+              "score": 0.02271319553256035,
+              "predicted": false,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Bridesmaid dresses - Coast - shortlist",
+              "label": "focused",
+              "expected": true,
+              "score": 0.046000994741916656,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Wedding invitations - Papier - proof review",
+              "label": "focused",
+              "expected": true,
+              "score": 0.05275113135576248,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Mail - Re: Catering quote for 94 guests",
+              "label": "focused",
+              "expected": true,
+              "score": 0.0314624048769474,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Calendar - Venue viewing, Saturday 11am",
+              "label": "focused",
+              "expected": true,
+              "score": 0.03992578014731407,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Wedding photographer portfolio - Sarah Jones Photography",
+              "label": "focused",
+              "expected": true,
+              "score": 0.03793841972947121,
+              "predicted": true,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - The Office S3:E12",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.015705686062574387,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Spotify - Liked Songs",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.012539579533040524,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Instagram - Reels",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.015060988254845142,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Ryanair - flights to Lisbon in March",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.017296509817242622,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "WhatsApp - Mum (3 unread)",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.021982654929161072,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Amazon.co.uk - Your Orders",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.013364407233893871,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "TikTok - For You",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.017243916168808937,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - BBC News - Home",
+              "label": "distraction",
+              "expected": false,
+              "score": 0.020404554903507233,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Netflix - Four Weddings and a Funeral (1994)",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.01882416196167469,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Safari - Say Yes to the Dress, Season 12 - TLC",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.025762241333723068,
+              "predicted": false,
+              "correct": true
+            },
+            {
+              "sample": "Google Chrome - Wedding Crashers - watch on Prime Video",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.05026252940297127,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - My sister ruined my wedding - r/AmITheAsshole - Reddit",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.09525776654481888,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Royal wedding: what Kate wore - Hello! Magazine",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.04308108985424042,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Marriage visa application requirements - GOV.UK",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.03866519406437874,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Google Chrome - Wedding dress fails compilation - YouTube",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02882964350283146,
+              "predicted": true,
+              "correct": false
+            },
+            {
+              "sample": "Safari - Guest WiFi setup - BT Help",
+              "label": "hard_negative",
+              "expected": false,
+              "score": 0.02616495080292225,
+              "predicted": false,
+              "correct": true
+            }
+          ]
+        }
+      }
+    ],
+    "pooled": {
+      "before": {
+        "accuracy": 0.8194,
+        "precision": 0.6774,
+        "recall": 0.875,
+        "f1": 0.7636,
+        "tp": 21,
+        "tn": 38,
+        "fp": 10,
+        "fn": 3,
+        "hard_negative_n": 24,
+        "hard_negative_leaked": 10,
+        "leak_rate": 0.4167,
+        "focused_n": 24,
+        "focused_false_alarms": 3,
+        "false_alarm_rate": 0.125,
+        "distraction_n": 24,
+        "distraction_leaked": 0,
+        "distraction_leak_rate": 0.0
+      },
+      "after": {
+        "accuracy": 0.8194,
+        "precision": 0.6774,
+        "recall": 0.875,
+        "f1": 0.7636,
+        "tp": 21,
+        "tn": 38,
+        "fp": 10,
+        "fn": 3,
+        "hard_negative_n": 24,
+        "hard_negative_leaked": 10,
+        "leak_rate": 0.4167,
+        "focused_n": 24,
+        "focused_false_alarms": 3,
+        "false_alarm_rate": 0.125,
+        "distraction_n": 24,
+        "distraction_leaked": 0,
+        "distraction_leak_rate": 0.0
+      }
+    }
+  },
+  "live_observations": {
+    "goal": "Writing my project proposal",
+    "threshold_before": 0.0232,
+    "threshold_after": 0.0378,
+    "note": "Motivating examples, not evidence. n=2, hand picked because they failed.",
+    "observations": [
+      {
+        "sample": "Microsoft Word - Areeba_Abid_AIAutomation_CV",
+        "score": 0.0269,
+        "expected": "off task",
+        "before": {
+          "threshold": 0.0232,
+          "verdict": "on task",
+          "correct": false,
+          "margin": 0.0036
+        },
+        "after": {
+          "threshold": 0.0378,
+          "verdict": "off task",
+          "correct": true,
+          "margin": -0.0109
+        }
+      },
+      {
+        "sample": "Terminal - CogAlign_copy osascript python3 src/app.py 80x24",
+        "score": 0.0333,
+        "expected": "off task",
+        "before": {
+          "threshold": 0.0232,
+          "verdict": "on task",
+          "correct": false,
+          "margin": 0.0101
+        },
+        "after": {
+          "threshold": 0.0378,
+          "verdict": "off task",
+          "correct": true,
+          "margin": -0.0045
+        }
+      }
+    ]
+  }
+}

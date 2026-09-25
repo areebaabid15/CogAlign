@@ -1,0 +1,25 @@
+{
+    "_about": "Goal agnostic distractions that look like real work but are not any particular goal: email, other documents, admin, system chrome. Added because workspace_samples.json's original 50 distraction samples are entertainment, social media and shopping only, so the calibrated threshold was drawn just above that level and any document or terminal window, on task or not, cleared it easily. Kept separate from workspace_samples.json rather than merged into it, since results/classifier_evaluation.json (report Table 6) was computed against that file's original 50 and must stay reproducible from it. calibrate_threshold() in engine.py scores this file alongside workspace_samples.json when calibrating, unlike the hard negative templates this is on by default, since these samples share no vocabulary with any specific goal and so do not carry the false alarm risk that experiment did.",
+    "distraction": [
+        "Mail - Inbox 48 unread",
+        "Microsoft Outlook - Inbox",
+        "Slack - general - 12 new messages",
+        "Calendar - September 2026",
+        "Microsoft Excel - household budget.xlsx",
+        "Microsoft Word - CV.docx",
+        "Microsoft Word - Cover letter draft.docx",
+        "Finder - Downloads",
+        "System Settings - Software Update",
+        "Safari - Council tax account login",
+        "Terminal - brew upgrade",
+        "Notes - grocery list",
+        "Microsoft Excel - monthly expenses tracker.xlsx",
+        "Mail - Compose - Re flight booking confirmation",
+        "Google Chrome - Gmail - Promotions",
+        "Calendar - Dentist appointment reminder",
+        "System Settings - Storage management",
+        "Finder - Applications",
+        "Notes - packing list for trip",
+        "Microsoft Word - Flat viewing notes.docx"
+    ]
+}

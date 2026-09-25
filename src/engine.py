@@ -26,6 +26,9 @@ DISTRACTION_SAMPLES_PATH = os.path.join(
 HARD_NEGATIVE_TEMPLATES_PATH = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "data", "workspace_dumps", "hard_negative_templates.json"
 )
+WORK_LIKE_DISTRACTIONS_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "..", "data", "workspace_dumps", "work_like_distractions.json"
+)
 
 # Generated hard negatives are OFF in the live system. Setting this to
 # HARD_NEGATIVE_TEMPLATES_PATH turns them back on.
@@ -47,6 +50,21 @@ HARD_NEGATIVE_TEMPLATES_PATH = os.path.join(
 # stays reproducible. See notes/CogAlign_Model_Testing_Log.md section 8 and
 # results/classifier_calibration_fix.json for the full per goal numbers.
 GENERATED_HARD_NEGATIVES_DEFAULT = None
+
+# The work-like bank is OFF on the live path too. Setting this to
+# WORK_LIKE_DISTRACTIONS_PATH turns it back on.
+#
+# Measured on both labelled sets, see results/final_eval/e2_calibration.json.
+# On the three held-out goals it changes nothing at all: thresholds move by
+# 0.0003 to 0.002 and not one sample changes class. On the six in-sample goals
+# it cuts the hard negative leak from 50.0% to 33.3%, but raises false alarms
+# on genuine work from 20.8% to 33.3% and takes mean per goal F1 from 0.69
+# down to 0.65. That is the same backwards trade as the generated hard
+# negatives above: it buys silence on distractions by interrupting real work.
+#
+# The loader, data/workspace_dumps/work_like_distractions.json and
+# tests/evaluate_worklike_fix.py all stay so the experiment stays reproducible.
+WORK_LIKE_DEFAULT = None
 
 # Upper bound on the calibrated threshold, see calibrate_threshold() for the
 # empirical justification. A pathological goal must not be able to push the
@@ -195,6 +213,42 @@ def generate_hard_negatives(goal, templates_path=HARD_NEGATIVE_TEMPLATES_PATH, m
         return []
 
 
+def load_work_like_distractions(path=WORK_LIKE_DISTRACTIONS_PATH):
+    """
+    Loads the goal-agnostic "looks like work but is not the stated goal" bank:
+    email, other documents, admin, system chrome. workspace_samples.json's
+    original 50 distraction samples are entertainment, social media and
+    shopping only, so the calibrated threshold sat just above that level and
+    a CV, a Terminal window, or an inbox, on task or not, cleared it easily.
+    Confirmed live: with the goal "Writing my project proposal", an unrelated
+    CV in Microsoft Word scored 0.03 against a calibrated threshold of 0.0232
+    and read as on task.
+
+    Kept in its own file rather than merged into workspace_samples.json,
+    since results/classifier_evaluation.json (report Table 6) was computed
+    against that file's original 50 samples and must stay reproducible from
+    it unchanged.
+
+    Off on the live path, like the hard negative templates, see
+    WORK_LIKE_DEFAULT for the measured reason. The assumption behind it was
+    that goal-agnostic samples would raise the threshold evenly rather than
+    punishing genuine work the way the hard negative experiment did. Measured
+    against the labelled sets that did not hold: in sample the false alarm rate
+    rose from 20.8% to 33.3% while F1 fell, and on the held-out goals it made
+    no difference at all.
+
+    Returns [] on any failure, same contract as generate_hard_negatives, so a
+    missing or broken file degrades to the previous generic-bank-only
+    calibration rather than failing startup.
+    """
+    try:
+        with open(path, "r") as f:
+            data = json.load(f)
+        return list(data.get("distraction", []))
+    except Exception:
+        return []
+
+
 def calibrate_threshold(
     classifier,
     goal,
@@ -204,6 +258,7 @@ def calibrate_threshold(
     default=DEFAULT_THRESHOLD,
     templates_path=GENERATED_HARD_NEGATIVES_DEFAULT,
     max_threshold=CALIBRATION_CEILING,
+    work_like_path=WORK_LIKE_DEFAULT,
 ):
     """
     Calibrates a per-goal threshold instead of using the fixed 0.01 default, which
@@ -220,23 +275,33 @@ def calibrate_threshold(
     examples in workspace_samples.json alone: Netflix, Instagram, food delivery,
     none of which share vocabulary with any goal.
 
-    A second population can be added by passing templates_path explicitly:
-    goal-specific hard negatives synthesised by substituting the goal's own
-    content words into the off-task templates in hard_negative_templates.json.
-    That is the rejected calibration experiment, off on the live path (see
-    GENERATED_HARD_NEGATIVES_DEFAULT above for why) and switched on by
-    tests/test_calibration.py and tests/evaluate_calibration_fix.py so it stays
-    reproducible. It halved the vocabulary-sharing leak and nearly tripled the
-    false alarm rate on genuine work, which is the wrong trade for a focus tool.
-    See notes/CogAlign_Model_Testing_Log.md section 8.
+    Two further populations exist and both are off on the live path. Each is
+    switched on explicitly by tests/test_calibration.py and by its own
+    evaluation runner, so both rejected experiments stay reproducible.
+
+    Passing templates_path adds goal-specific hard negatives, synthesised by
+    substituting the goal's own content words into the off-task templates in
+    hard_negative_templates.json. See GENERATED_HARD_NEGATIVES_DEFAULT above
+    for why it is off, and tests/evaluate_calibration_fix.py. It halved the
+    vocabulary-sharing leak and nearly tripled the false alarm rate on genuine
+    work, which is the wrong trade for a focus tool.
+
+    Passing work_like_path adds the goal-agnostic work-like bank: email, other
+    documents, admin, system chrome. See WORK_LIKE_DEFAULT above for why it is
+    off, and tests/evaluate_worklike_fix.py. It changed nothing on the held-out
+    goals, and in sample it bought a lower hard negative leak with a higher
+    false alarm rate and lower F1.
+
+    See notes/CogAlign_Model_Testing_Log.md section 8 and
+    results/final_eval/e2_calibration.json.
 
     Runs once per session at startup, not per tick. Falls back to the fixed
     default threshold if calibration fails for any reason (file missing, empty
-    scores, etc.) so the system stays functional either way. Hard negative
-    generation is additive and independently guarded: if it yields nothing, for
-    any reason including a goal with no extractable content words or a missing
-    template file, calibration proceeds on the generic bank alone, which is
-    exactly the previous behaviour.
+    scores, etc.) so the system stays functional either way. Both optional
+    populations are additive and independently guarded: if either yields
+    nothing, for any reason including a goal with no extractable content words
+    or a missing file, calibration proceeds on whatever remains, and with both
+    off that is the generic bank alone.
     """
     try:
         with open(samples_path, "r") as f:
@@ -246,14 +311,15 @@ def calibrate_threshold(
         if not distractions:
             return default
 
-        # Two populations, both additive. The generic bank (always) and
-        # generated hard negatives (off on the live path, templates_path
-        # defaults to None). The generator swallows its own failures and
-        # returns [], so a missing or broken template file degrades
-        # calibration back to the generic bank alone rather than failing
-        # startup.
+        # Three populations, all additive. The generic bank (always), the
+        # work-like distractions and the generated hard negatives (both off on
+        # the live path, work_like_path and templates_path both default to
+        # None). Each loader swallows its own failures and returns [], so a
+        # missing or broken file degrades calibration one population at a time
+        # rather than failing startup.
         calibration_samples = (
             list(distractions)
+            + load_work_like_distractions(path=work_like_path)
             + generate_hard_negatives(goal, templates_path=templates_path)
         )
 
