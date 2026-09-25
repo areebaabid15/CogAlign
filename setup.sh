@@ -1,5 +1,5 @@
 #!/bin/bash
-# setup.sh — one-command setup for CogAlign reviewers.
+# setup.sh: one-command setup for CogAlign reviewers.
 #
 # Automates everything that CAN be automated: Homebrew presence check,
 # Ollama install + model pull, terminal-notifier install, Python venv

@@ -117,19 +117,19 @@ def test_200_response_returns_stripped_quote_stripped_content(engine):
 def test_non_200_response_returns_formatted_error(engine):
     with patch("nudge_engine.requests.post", return_value=make_response(500)):
         result = engine.generate_nudge(1)
-    assert result == "[Nudge unavailable — Ollama error 500]"
+    assert result == "[Nudge unavailable: Ollama error 500]"
 
 
 def test_timeout_exception_returns_formatted_message(engine):
     with patch("nudge_engine.requests.post", side_effect=requests.exceptions.Timeout()):
         result = engine.generate_nudge(1)
-    assert result == "[Nudge unavailable — Ollama timed out]"
+    assert result == "[Nudge unavailable: Ollama timed out]"
 
 
 def test_generic_exception_returns_formatted_message_with_real_text(engine):
     with patch("nudge_engine.requests.post", side_effect=RuntimeError("connection refused")):
         result = engine.generate_nudge(1)
-    assert result == "[Nudge unavailable — connection refused]"
+    assert result == "[Nudge unavailable: connection refused]"
 
 
 # --- payload shape, consistent across all levels ---
