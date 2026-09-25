@@ -8,30 +8,23 @@ from engine import CogAlignEngine
 
 app = Flask(__name__)
 
-# This is a single-user local app (one person, one machine), so a module-level
-# dict is enough state to track the current session, no need for a real session
-# store or database for this scope.
+# Single-user local app, so a module-level dict is enough to hold the current
+# session's state.
 state = {
     "tracking": False,
     "goal": None,
     "thread": None,
 }
 
-# Shared between this module and the engine loop running in a background
-# thread. engine.start()'s KeyboardInterrupt handling only ever catches
-# Ctrl+C on the main thread, so it does nothing for a background thread,
-# this Event is the actual way a running session gets stopped.
+# Stops the engine loop, which runs in a background thread where Ctrl+C never
+# arrives.
 stop_event = threading.Event()
 
 
 def _run_engine(goal):
     """
-    Runs CogAlignEngine's monitoring loop for the lifetime of the session.
-    This is a daemon thread: it prints to the server console and fires
-    notifications exactly as running engine.py directly would, but it is
-    not woven into Flask's own request/response cycle at all, so it can't
-    block the web server. Passing stop_event lets /stop end the loop
-    cleanly instead of leaving it running until the whole process is killed.
+    Runs the monitoring loop for the session in a daemon thread, so it never
+    blocks the web server. /stop ends it cleanly through stop_event.
     """
     engine = CogAlignEngine(goal=goal)
     engine.start(interval=3, stop_event=stop_event)

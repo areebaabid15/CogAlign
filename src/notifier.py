@@ -6,24 +6,15 @@ TERMINAL_NOTIFIER = "terminal-notifier"
 
 def send_notification(title: str, message: str, timeout: int = 3) -> bool:
     """
-    Triggers a macOS notification banner via the terminal-notifier CLI.
+    Shows a macOS notification banner through the terminal-notifier CLI.
 
-    osascript's `display notification` reaches usernoted (the request itself
-    succeeds, no exception, no error) but on modern macOS it never registers an
-    entry in Notification Center when called from a background thread rather
-    than an interactive session, so nothing actually appears on screen.
-    terminal-notifier registers as its own real app with Notification Center,
-    which is what makes the banner actually appear.
+    osascript's display notification does not appear when called from a
+    background thread on current macOS, while terminal-notifier registers as
+    its own app and does. Arguments go in as a list, not through a shell, so
+    no quote escaping is needed.
 
-    Uses subprocess.run with an argument list, not a shell string, so title
-    and message reach the OS directly with no shell involved. That means no
-    quote or backslash escaping is needed the way the old osascript string
-    embedding required, each argument is passed through as-is.
-
-    Returns True if terminal-notifier exited with status 0, False otherwise,
-    including if the binary isn't installed or the call raises for any other
-    reason. This only confirms the CLI call itself succeeded, not that the
-    banner was actually shown.
+    Returns True if the CLI call succeeded. That confirms the call ran, not
+    that the banner was seen.
     """
     try:
         result = subprocess.run(

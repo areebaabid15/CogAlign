@@ -11,25 +11,11 @@ class WindowTracker:
         The deque automatically ejects older states as new ones arrive.
         """
         self.history = deque(maxlen=window_size)
-        # Gets the frontmost app name via System Events, then reads window 1's
-        # name, also via System Events, for every app, Chrome and Safari
-        # included. This used to route Chrome and Safari through their own
-        # AppleScript dictionaries ("tell application Google Chrome/Safari to
-        # ...") instead, since that was the only way confirmed to get the real
-        # active tab title, System Events' generic window name read was
-        # believed to come back empty for them specifically. Live retesting
-        # found that belief no longer holds (it may have reflected an
-        # unrelated Accessibility permission problem at the time, not a real
-        # limitation of the method itself): "name of window 1" via System
-        # Events returns the real tab title for both browsers, matching the
-        # direct dictionary call exactly for Safari, and for Chrome once its
-        # " - Google Chrome" window title suffix is stripped. Confirmed live
-        # across 16 back to back trials switching real Chrome and Safari tabs
-        # and windows, 0 failures, consistently under 0.4s, actually a little
-        # faster than the two-dictionary approach it replaces. The payoff is
-        # that Chrome and Safari no longer need the separate Automation
-        # permission prompt at all, so the app asks for three permissions
-        # rather than four, and this file only ever needs Accessibility.
+        # Reads the frontmost app and its window title through System Events
+        # for every app, Chrome and Safari included, then strips Chrome's
+        # " - Google Chrome" suffix. This replaced per-browser AppleScript
+        # calls that needed a separate Automation permission, so the app now
+        # asks for three permissions instead of four.
         self.applescript_cmd = (
             'tell application "System Events" to tell (first application process whose frontmost is true) '
             "to set currentApp to name\n"
@@ -46,11 +32,7 @@ class WindowTracker:
     FALLBACK_APP_LABELS = ("Unknown", "Timeout", "Error")
 
     def _query_window_once(self):
-        """
-        A single AppleScript query attempt. Unchanged from the original
-        get_active_window() logic, just factored out so get_active_window()
-        can call it more than once.
-        """
+        """One AppleScript query, split out so get_active_window() can retry it."""
         try:
             proc = subprocess.run(
                 ["osascript", "-e", self.applescript_cmd],
@@ -72,17 +54,12 @@ class WindowTracker:
 
     def get_active_window(self, max_retries=2, retry_delay=0.15):
         """
-        Fetches the active application and window title via AppleScript,
-        entirely through System Events for every app, Chrome and Safari
-        included (see the comment on applescript_cmd for why, and for the
-        Chrome title suffix stripping).
+        Returns (app name, window title) for the frontmost window.
 
-        Confirmed live against Microsoft Word: a non-empty app name paired
-        with an empty window title is very likely a timing race in when the
-        accessibility tree is queried relative to window state, not a real
-        "no window" case, and not specific to any one app. If that happens,
-        retry the same call up to max_retries more times with a short delay
-        before accepting the empty result.
+        An app name with an empty title is usually a timing race in the
+        accessibility query rather than a real "no window" case (seen live
+        with Microsoft Word), so the query is retried up to max_retries times
+        before an empty title is accepted.
         """
         app_name, window_title = self._query_window_once()
 

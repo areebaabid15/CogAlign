@@ -5,7 +5,6 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
 import os
-import time
 import sounddevice as sd
 import scipy.io.wavfile as wav
 import whisper
@@ -18,6 +17,7 @@ TICK_INTERVAL = 3  # seconds between workspace checks
 
 
 def record_goal_audio():
+    """Records RECORD_SECONDS of microphone audio to AUDIO_FILE."""
     print("\n🎙️ [WHISPER] Speak your focus goal now!")
     print(f"   You have {RECORD_SECONDS} seconds...")
     print("   Example: 'I am writing my dissertation literature review'")
@@ -36,6 +36,10 @@ def record_goal_audio():
 
 
 def transcribe_goal():
+    """
+    Transcribes AUDIO_FILE with Whisper tiny and returns the goal text. The
+    recording is deleted straight afterwards, so no audio is kept.
+    """
     print("🧠 [WHISPER] Transcribing your goal...")
     model = whisper.load_model("tiny")
     result = model.transcribe(AUDIO_FILE)
@@ -48,6 +52,7 @@ def transcribe_goal():
 
 
 def confirm_goal(goal):
+    """Lets the user accept the transcribed goal or type a correction."""
     print(f"✨ [WHISPER] Goal transcribed: '{goal}'")
     correction = input(
         "Did I hear that right? Press Enter to confirm, or type the correct goal and press Enter: "
@@ -56,6 +61,10 @@ def confirm_goal(goal):
 
 
 def run_pipeline():
+    """
+    Command line version of the app: records and confirms the goal, then
+    starts monitoring. app.py offers the same flow from a web page.
+    """
     print("=" * 50)
     print("       COGALIGN — FOCUS MONITORING SYSTEM")
     print("=" * 50)

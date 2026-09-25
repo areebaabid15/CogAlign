@@ -1,8 +1,9 @@
 # CogAlign
 
 A local, privacy-preserving AI pipeline that listens to a user's spoken goal,
-monitors their active workspace content, detects semantic distraction in real time,
-and delivers escalating persona-driven nudges to restore focus.
+checks the title of the active window every three seconds, detects semantic
+distraction in real time, and delivers escalating persona-driven nudges to
+restore focus.
 
 CM3020 Artificial Intelligence, Final Project
 University of London
@@ -10,6 +11,16 @@ Student: Areeba Abid
 
 **macOS only.** Window tracking uses native AppleScript, there is no Windows
 or Linux equivalent in this codebase.
+
+## How it works
+
+Three pre-trained models run on the user's own machine, and nothing leaves it:
+
+- **Whisper** (`tiny`) transcribes the spoken goal once, at session start.
+- **mxbai-rerank-xsmall-v1**, a cross-encoder, scores the active window's app name and title against the goal.
+- **Qwen2.5 1.5B** (`qwen2.5:1.5b`, served by Ollama) writes each nudge, in one of three personas.
+
+A deterministic state machine (`src/state_machine.py`) decides when to nudge, and the relevance threshold is calibrated per goal at session start (`calibrate_threshold()` in `src/engine.py`). The app runs a demonstration timing profile, nudging after 5, 10 and 15 seconds of drift, so a session can be shown in minutes.
 
 ## Quickstart for reviewers
 
@@ -66,7 +77,19 @@ pip install -r requirements.txt
 
 ## Project Structure
 
-- `src/`: pipeline code
-- `data/`: audio recordings, workspace dumps, task profiles
-- `results/`: model evaluation logs
-- `tests/`: automated pytest suites and model comparison scripts
+- `src/`: the application (`app.py` web interface, `pipeline.py` command line version, `engine.py` monitoring loop and threshold calibration)
+- `data/`: labelled window title sets, the calibration banks, the 20 goal sentences used for the Whisper test (the recordings stay local), and anonymised user study responses
+- `experiments/`: the final evaluation scripts, E0 to E5 and H1 (see `experiments/README.md`)
+- `results/`: raw outputs of the evaluations, with the final runs in `results/final_eval/`
+- `tests/`: pytest suites plus manual model comparison scripts (see below)
+
+## Running the tests
+
+```bash
+source venv/bin/activate
+python -m pytest tests/
+```
+
+This runs 111 tests across five suites: `test_calibration.py`, `test_classifier.py`, `test_nudge_engine.py`, `test_state_machine.py` and `test_window_tracker.py`. The other `test_*.py` files in `tests/` (the Whisper, Qwen, Ollama, bi-encoder and cross-encoder comparisons) are manual scripts run directly with Python. They need the real models and contain no pytest tests.
+
+To rerun the automated evaluations, run `bash experiments/run_automated.sh`, which logs to `results/final_eval/run_log.txt`.

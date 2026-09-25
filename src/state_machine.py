@@ -58,10 +58,8 @@ class CogAlignStateMachine:
 
         # Step D: Climbing the Escalation Ladder & Waving the White Flag
         elif self.state == "ESCALATING":
-            # Work out which level we should be at given elapsed time alone,
-            # not whether a tick happened to land inside a specific window.
-            # This guarantees we catch up to the correct level on the very next
-            # tick even if earlier ticks were skipped or delayed past a threshold.
+            # Target level from elapsed time alone, so a late or skipped tick
+            # still catches up on the next one.
             if elapsed >= self.level_3_threshold:
                 target_level = 3
             elif elapsed >= self.level_2_threshold:
@@ -69,12 +67,9 @@ class CogAlignStateMachine:
             else:
                 target_level = 1
 
-            # Climb exactly one level per qualifying tick rather than jumping
-            # straight to target_level. This guarantees every persona fires in
-            # order, at the cost of a level sometimes firing later than its
-            # exact threshold when a tick lands late (e.g. due to nudge
-            # generation delay). Forward progress still happens on every call
-            # where target_level is ahead of us, so this can never get stuck.
+            # Climb one level per tick rather than jumping to target_level, so
+            # every persona fires in order. A level can fire late if a tick is
+            # delayed, but the climb can never get stuck.
             if target_level > self.last_nudge_level_fired:
                 next_level = self.last_nudge_level_fired + 1
                 self.last_nudge_level_fired = next_level

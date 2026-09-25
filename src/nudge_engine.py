@@ -12,9 +12,16 @@ PLACEHOLDER_DISTRACTIONS = ("Unknown - ", "Timeout - ", "Error - ")
 
 
 def _is_real_distraction(distraction: str) -> bool:
+    """True for a real window, False for a window_tracker failure label."""
     return bool(distraction) and not distraction.startswith(PLACEHOLDER_DISTRACTIONS)
 
 class QwenNudgeEngine:
+    """
+    Writes one sentence nudges with Qwen2.5 1.5B (qwen2.5:1.5b), served
+    locally by Ollama. Each escalation level has its own persona: 1 the
+    Empathetic Coach, 2 the Sarcastic Friend, 3 the Deadline Supervisor.
+    """
+
     def __init__(self):
         self.personas = {
             1: {
@@ -45,6 +52,12 @@ class QwenNudgeEngine:
         }
 
     def generate_nudge(self, level: int, goal: str = None, distraction: str = None) -> str:
+        """
+        Returns one nudge sentence for the given level (1 to 3, anything else
+        falls back to 1). The user's goal is added to the prompt, and Level 2
+        also names the current distraction. If Ollama fails or times out, it
+        returns a "[Nudge unavailable: ...]" message instead of raising.
+        """
         if level not in self.personas:
             level = 1
 

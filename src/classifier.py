@@ -23,7 +23,7 @@ class WorkspaceClassifier:
 
     def is_related(self, window_text, core_goal, threshold=0.01):
         """
-        Compares the active window text against your core research goal.
+        Compares the active window text against the session goal.
         Returns True if the score is above the threshold, False otherwise.
         """
         if not window_text.strip():
